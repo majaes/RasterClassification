@@ -30,7 +30,7 @@ from qgis.PyQt.QtWidgets import (
 )
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
-from ..core import dock_progress
+from ..core import dock_progress, theme
 from .collapsible import CollapsibleBox
 from ..core.language import tr, use_qm_files
 
@@ -303,6 +303,10 @@ class DockClassSimplifiedDialog(QDockWidget):
         ui.gridLayout_12.addLayout(root, 1, 0, 1, 1)
         ui.gridLayout_12.setRowStretch(1, 1)
 
+    def apply_theme(self):
+        """ Modern style of the buttons of the panel. """
+        theme.apply(self)
+
     def retranslate_custom(self):
         """ Texts written by hand, in the language of the plugin (called at
         the creation and each time the language changes). """
@@ -439,6 +443,7 @@ class DockClassSimplifiedDialog(QDockWidget):
                 QSizePolicy.Policy.Expanding), 5, 0, 1, 1)
             self._rebuild_roi_layout()
             self.retranslate_custom()
+            self.apply_theme()
             # the Preview button switches the preview on and off
             ui.previewButton.setCheckable(True)
             ui.previewButton.setToolTip(

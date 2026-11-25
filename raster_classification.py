@@ -1024,6 +1024,7 @@ def apply_language():
         dock.ui.retranslateUi(dock)
         cfg.dialog.ui.retranslateUi(cfg.dialog)
         dock.retranslate_custom()
+        dock.apply_theme()
         cfg.composition_presets.retranslate()
         dock_progress.retranslate()
         cfg.bst.retranslate_table()
@@ -1234,6 +1235,7 @@ def connect_gui():
         dock_ui.bandset_roi_tabs.addTab(settings, 'Settings')
         dock_ui.settings_page = settings
         cfg.dock_class_simpl_dlg.retranslate_custom()
+        cfg.dock_class_simpl_dlg.apply_theme()
     except Exception as err:
         cfg.logger.log.error('download tab: %s' % str(err))
     download_i = cfg.dock_class_simpl_dlg.ui.download_images_toolButton_2

@@ -41,6 +41,7 @@ class CollapsibleBox(QWidget):
                                    QSizePolicy.Policy.Expanding)
             return
         self.header = QToolButton(self)
+        self.header.setObjectName('collapsibleHeader')
         self.header.setText(title)
         self.header.setCheckable(True)
         self.header.setChecked(expanded)

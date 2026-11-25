@@ -1,102 +1,57 @@
 <RCC>
   <qresource prefix="/plugins/raster_classification">
-    <file>icons/raster_classification_copernicus_browser_link.svg</file>
-    <file>icons/raster_classification_zonal_stat_raster_tool.svg</file>
-    <file>icons/raster_classification_undo_edit_raster.svg</file>
-    <file>icons/raster_classification_edit_raster.svg</file>
-    <file>icons/raster_classification_clustering.svg</file>
-    <file>icons/raster_classification_order_by_date.svg</file>
-    <file>icons/raster_classification_cross_classification.svg</file>
-    <file>icons/raster_classification_import_spectral_library.svg</file>
-    <file>icons/raster_classification_select_all.svg</file>
-    <file>icons/raster_classification_add_sign_tool.svg</file>
-    <file>icons/raster_classification_download_image_preview.svg</file>
-    <file>icons/raster_classification_clip_tool.svg</file>
-    <file>icons/raster_classification_cloud_masking_tool.svg</file>
-    <file>icons/raster_classification_classification_dilation.svg</file>
-    <file>icons/raster_classification_class_tool.svg</file>
-    <file>icons/raster_classification_calculate_spectral_distances.svg</file>
-    <file>icons/raster_classification_batch.svg</file>
-    <file>icons/raster_classification_bandset_tool.svg</file>
-    <file>icons/raster_classification_bandcalc_tool.svg</file>
-    <file>icons/raster_classification_bandcalc_expression.svg</file>
-    <file>icons/raster_classification_band_processing.svg</file>
-    <file>icons/raster_classification_band_combination_tool.svg</file>
-    <file>icons/raster_classification_add_bandset_tool.svg</file>
-    <file>icons/raster_classification_add.svg</file>
-    <file>icons/raster_classification_accuracy_tool.svg</file>
-    <file>icons/guide.svg</file>
-    <file>icons/raster_classification_enter.svg</file>
-    <file>icons/raster_classification_kml_add.svg</file>
+    <file>icons/help.svg</file>
     <file>icons/raster_classification.svg</file>
-    <file>icons/raster_classification_zoom_to_ROI.svg</file>
-    <file>icons/raster_classification_zoom_to_preview.svg</file>
-    <file>icons/raster_classification_zoom_to_Image.svg</file>
-    <file>icons/raster_classification_roi_single.svg</file>
-    <file>icons/raster_classification_roi_redo.svg</file>
-    <file>icons/raster_classification_preview.svg</file>
-    <file>icons/raster_classification_preview_redo.svg</file>
-    <file>icons/raster_classification_manual_ROI.svg</file>
-    <file>icons/raster_classification_classification.svg</file>
-    <file>icons/raster_classification_bandset_std_dev_stretch_tool.svg</file>
-    <file>icons/raster_classification_bandset_cumulative_stretch_tool.svg</file>
-    <file>icons/raster_classification_post_process.svg</file>
-    <file>icons/raster_classification_home.svg</file>
+    <file>icons/raster_classification_accuracy_tool.svg</file>
+    <file>icons/raster_classification_add.svg</file>
+    <file>icons/raster_classification_add_bandset_tool.svg</file>
+    <file>icons/raster_classification_add_sign_tool.svg</file>
+    <file>icons/raster_classification_batch.svg</file>
+    <file>icons/raster_classification_calculate_spectral_distances.svg</file>
+    <file>icons/raster_classification_docks.svg</file>
+    <file>icons/raster_classification_download_arrow.svg</file>
+    <file>icons/raster_classification_download_image_preview.svg</file>
     <file>icons/raster_classification_download_login.svg</file>
     <file>icons/raster_classification_download_search.svg</file>
-    <file>icons/raster_classification_classification_erosion.svg</file>
-    <file>icons/raster_classification_classification_sieve.svg</file>
-    <file>icons/raster_classification_fit_plot.svg</file>
-    <file>icons/raster_classification_pointer_tool.svg</file>
-    <file>icons/raster_classification_move_down.svg</file>
-    <file>icons/raster_classification_order_by_name.svg</file>
-    <file>icons/raster_classification_osm_add.svg</file>
-    <file>icons/raster_classification_pca_tool.svg</file>
-    <file>icons/raster_classification_move_up.svg</file>
-    <file>icons/raster_classification_reload.svg</file>
-    <file>icons/raster_classification_import.svg</file>
+    <file>icons/raster_classification_enter.svg</file>
     <file>icons/raster_classification_export.svg</file>
-    <file>icons/raster_classification_run.svg</file>
-    <file>icons/raster_classification_report_tool.svg</file>
-    <file>icons/raster_classification_reproject_raster_bands.svg</file>
-    <file>icons/raster_classification_reset.svg</file>
-    <file>icons/raster_classification_rgb_tool.svg</file>
+    <file>icons/raster_classification_export_spectral_library.svg</file>
+    <file>icons/raster_classification_fit_plot.svg</file>
+    <file>icons/raster_classification_help.svg</file>
+    <file>icons/raster_classification_import.svg</file>
+    <file>icons/raster_classification_import_spectral_library.svg</file>
+    <file>icons/raster_classification_landsat8_tool.svg</file>
+    <file>icons/raster_classification_manual_ROI.svg</file>
+    <file>icons/raster_classification_merge_sign_tool.svg</file>
+    <file>icons/raster_classification_move_down.svg</file>
+    <file>icons/raster_classification_move_up.svg</file>
     <file>icons/raster_classification_new_file.svg</file>
     <file>icons/raster_classification_open_dir.svg</file>
-    <file>icons/raster_classification_remove.svg</file>
     <file>icons/raster_classification_open_file.svg</file>
-    <file>icons/raster_classification_export_spectral_library.svg</file>
-    <file>icons/raster_classification_download_arrow.svg</file>
-    <file>icons/raster_classification_spectral_distance.svg</file>
-    <file>icons/raster_classification_split_raster.svg</file>
-    <file>icons/raster_classification_stack_raster.svg</file>
-    <file>icons/raster_classification_threshold_tool.svg</file>
-    <file>icons/raster_classification_training_input.svg</file>
-    <file>icons/raster_classification_undo_save_roi.svg</file>
-    <file>icons/raster_classification_vector_to_raster_tool.svg</file>
-    <file>icons/raster_classification_reclassification_tool.svg</file>
-    <file>icons/raster_classification_docks.svg</file>
-    <file>icons/raster_classification_neighbor_pixels.svg</file>
-    <file>icons/raster_classification_class_to_vector_tool.svg</file>
-    <file>icons/help.svg</file>
-    <file>icons/raster_classification_scatter_raster_temp_ROI.svg</file>
-    <file>icons/raster_classification_scatter_tool.svg</file>
-    <file>icons/raster_classification_search_images.svg</file>
-    <file>icons/raster_classification_landsat8_tool.svg</file>
-    <file>icons/fromGIStoRS.png</file>
-    <file>icons/raster_classification_roi_multiple.svg</file>
-    <file>icons/raster_classification_roi_options.svg</file>
-    <file>icons/raster_classification_roi_tool.svg</file>
     <file>icons/raster_classification_options.svg</file>
-    <file>icons/raster_classification_settings_tool.svg</file>
-    <file>icons/raster_classification_sign_tool.svg</file>
+    <file>icons/raster_classification_order_by_date.svg</file>
+    <file>icons/raster_classification_order_by_name.svg</file>
+    <file>icons/raster_classification_osm_add.svg</file>
+    <file>icons/raster_classification_pointer_tool.svg</file>
+    <file>icons/raster_classification_preview.svg</file>
     <file>icons/raster_classification_redo_save_roi.svg</file>
+    <file>icons/raster_classification_reload.svg</file>
+    <file>icons/raster_classification_remove.svg</file>
+    <file>icons/raster_classification_reset.svg</file>
+    <file>icons/raster_classification_rgb_tool.svg</file>
+    <file>icons/raster_classification_roi_single.svg</file>
+    <file>icons/raster_classification_run.svg</file>
     <file>icons/raster_classification_save_plot_image.svg</file>
     <file>icons/raster_classification_save_roi.svg</file>
-    <file>icons/raster_classification_merge_sign_tool.svg</file>
-    <file>icons/raster_classification_mosaic_tool.svg</file>
+    <file>icons/raster_classification_search_images.svg</file>
+    <file>icons/raster_classification_select_all.svg</file>
+    <file>icons/raster_classification_sign_tool.svg</file>
+    <file>icons/raster_classification_threshold_tool.svg</file>
+    <file>icons/raster_classification_undo_edit_raster.svg</file>
+    <file>icons/raster_classification_undo_save_roi.svg</file>
+    <file>icons/raster_classification_zoom_to_ROI.svg</file>
   </qresource>
-  <qresource prefix="pointer">
+  <qresource prefix="/pointer">
     <file>icons/pointer/ROI_pointer.svg</file>
   </qresource>
 </RCC>
