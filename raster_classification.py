@@ -63,6 +63,7 @@ from qgis.gui import QgsRubberBand
 from .__init__ import version as semiautomatic_class_version
 # import SemiAutomaticClassificationPlugin
 from .core import config as cfg
+from .core import language, custom_sources
 try:
     from .core import util_qgis
 except Exception as error:
@@ -444,7 +445,11 @@ class RasterClassification:
                         '%s/i18n/raster_classification_%s.qm'
                         % (cfg.plugin_dir, locale_settings)
                 )
-            if locale_settings != 'en' and QFileInfo(locale_path).exists():
+            if plugin_language in language.LANGUAGES:
+                # English or French: dictionaries of the plugin, changed
+                # from the Settings tab
+                language.set_language(plugin_language, remember=False)
+            elif locale_settings != 'en' and QFileInfo(locale_path).exists():
                 transl = QTranslator()
                 transl.load(locale_path)
                 QCoreApplication.installTranslator(transl)
@@ -1008,6 +1013,14 @@ class RasterClassification:
                 # backward compatibility remotior sensus < 0.2
                 for product in cfg.rs.configurations.product_list:
                     cfg.dialog.ui.landsat_satellite_combo.addItem(product)
+            # sources added by the user
+            try:
+                for source in custom_sources.load():
+                    custom_sources.register(cfg.rs.configurations, source)
+                    cfg.dialog.ui.landsat_satellite_combo.addItem(
+                        source['name'])
+            except Exception as err:
+                str(err)
             # add color list to combo
             cfg.scatter_plot.add_colormap_to_combo(cfg.scatter_color_map)
             cfg.usgs_spectral_lib.add_spectral_library_to_combo()
@@ -1143,6 +1156,23 @@ class RasterClassification:
                         ),
                         level=Qgis.Info
                     )
+
+
+
+# apply the language to the whole panel
+def apply_language():
+    try:
+        dock = cfg.dock_class_simpl_dlg
+        dock.ui.retranslateUi(dock)
+        cfg.dialog.ui.retranslateUi(cfg.dialog)
+        dock.retranslate_custom()
+        cfg.composition_presets.retranslate()
+        dock_progress.retranslate()
+        cfg.bst.retranslate_table()
+        if cfg.scp_training is not None:
+            cfg.scp_training.roi_signature_table_tree()
+    except Exception as err:
+        cfg.logger.log.error('apply_language: %s' % str(err))
 
 
 # get first installation
@@ -1360,23 +1390,35 @@ def connect_gui():
             custom_widget, 1, 0, 1, 2
         )
         presets_combo.custom_widget = custom_widget
-        # Download products: the page of the main window becomes the third
-        # tab of the panel (a placeholder keeps the tab numbers of the window)
+        # Download products (third tab) and Settings (fourth tab): the
+        # widgets of the main window are placed in the panel (a placeholder
+        # keeps the tab numbers of the window)
         try:
-            from qgis.PyQt.QtWidgets import QWidget, QScrollArea, QFrame
+            from qgis.PyQt.QtWidgets import QWidget
+            from .ui import download_layout
+            from .ui.settings_page import SettingsPage
+            dock_ui = cfg.dock_class_simpl_dlg.ui
             old_tabs = cfg.dialog.ui.SCP_tabs
             page = cfg.dialog.ui.tab_download_products
             index = old_tabs.indexOf(page)
             if index >= 0:
                 old_tabs.removeTab(index)
                 old_tabs.insertTab(index, QWidget(), 'Download products')
-                scroll = QScrollArea()
-                scroll.setWidgetResizable(True)
-                scroll.setFrameShape(QFrame.Shape.NoFrame)
-                scroll.setWidget(page)
-                cfg.dock_class_simpl_dlg.ui.bandset_roi_tabs.addTab(
-                    scroll, 'Download products')
-                cfg.download_dock_page = scroll
+            scroll, boxes = download_layout.build(cfg.dialog.ui)
+            dock_ui.bandset_roi_tabs.addTab(scroll, 'Download products')
+            dock_ui.download_boxes = boxes
+            cfg.download_dock_page = scroll
+            settings = SettingsPage(semiautomatic_class_version())
+            settings.on_language_changed = apply_language
+            login = cfg.dialog.ui.tab_login
+            login_tabs = cfg.dialog.ui.tabWidget_3
+            login_index = login_tabs.indexOf(login)
+            if login_index >= 0:
+                login_tabs.removeTab(login_index)
+            settings.set_accounts_widget(login)
+            dock_ui.bandset_roi_tabs.addTab(settings, 'Settings')
+            dock_ui.settings_page = settings
+            cfg.dock_class_simpl_dlg.retranslate_custom()
         except Exception as err:
             cfg.logger.log.error('download tab: %s' % str(err))
         download_i = cfg.dock_class_simpl_dlg.ui.download_images_toolButton_2

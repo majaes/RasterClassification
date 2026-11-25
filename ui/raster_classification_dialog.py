@@ -31,6 +31,7 @@ from qgis.PyQt.QtWidgets import (
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
 from ..core import dock_progress
+from ..core.language import tr, use_qm_files
 
 from .ui_raster_classification import (
     Ui_RasterClassification
@@ -73,7 +74,7 @@ class RasterClassificationDialog(QDialog):
         if QFileInfo(self.plugin_dir).exists():
             locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
-        if QFileInfo(locale_path).exists():
+        if QFileInfo(locale_path).exists() and use_qm_files():
             self.translator = QTranslator()
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)
@@ -180,7 +181,7 @@ class DockClassDialog(QDockWidget):
         if QFileInfo(self.plugin_dir).exists():
             locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
-        if QFileInfo(locale_path).exists():
+        if QFileInfo(locale_path).exists() and use_qm_files():
             self.translator = QTranslator()
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)
@@ -208,7 +209,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         if QFileInfo(self.plugin_dir).exists():
             locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
-        if QFileInfo(locale_path).exists():
+        if QFileInfo(locale_path).exists() and use_qm_files():
             self.translator = QTranslator()
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)
@@ -258,6 +259,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         composition = QGridLayout()
         row = QHBoxLayout()
         label = QLabel('Composition', ui.frame_bandset)
+        ui.label_composition = label
         label.setToolTip('Color composition displayed for the band set')
         row.addWidget(label, 0)
         ui.horizontalLayout = row
@@ -303,6 +305,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         root.setSpacing(6)
         # 1. training file
         box_file = QGroupBox('Training file', frame)
+        ui.box_file = box_file
         grid_file = QGridLayout(box_file)
         for column, widget in enumerate((
                 ui.button_new_input, ui.trainingFile_toolButton,
@@ -315,6 +318,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         root.addWidget(box_file)
         # 2. class: number, name, create, delete
         box_class = QGroupBox('Class', frame)
+        ui.box_class = box_class
         row_class = QHBoxLayout(box_class)
         row_class.addWidget(ui.label_44)
         row_class.addWidget(ui.ROI_Macroclass_ID_spin)
@@ -325,6 +329,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         root.addWidget(box_class)
         # 3. ROI: drawing tools, undo and redo, delete, spectral plot
         box_roi = QGroupBox('ROI', frame)
+        ui.box_roi = box_roi
         grid_roi = QGridLayout(box_roi)
         grid_roi.addWidget(ui.polygonROI_Button, 0, 0)
         grid_roi.addWidget(ui.pointerButton, 0, 1)
@@ -341,6 +346,51 @@ class DockClassSimplifiedDialog(QDockWidget):
         root.addWidget(ui.sig_widget, 1)
         ui.gridLayout_12.addLayout(root, 1, 0, 1, 1)
         ui.gridLayout_12.setRowStretch(1, 1)
+
+    def retranslate_custom(self):
+        """ Texts written by hand, in the language of the plugin (called at
+        the creation and each time the language changes). """
+        ui = self.ui
+        try:
+            tabs = ui.bandset_roi_tabs
+            names = ('Band set definition', 'ROI && Classification',
+                     'Download products', 'Settings')
+            for index in range(min(tabs.count(), len(names))):
+                tabs.setTabText(index, tr(names[index]))
+            tabs.tabBar().setToolTip('')
+            ui.label_composition.setText(tr('Composition'))
+            ui.label_150.setText(tr('Satellite'))
+            ui.box_file.setTitle(tr('Training file'))
+            ui.box_class.setTitle(tr('Class'))
+            ui.box_roi.setTitle(tr('ROI'))
+            ui.label_60.setText(tr('Processing'))
+            ui.pointerButton.setText(tr('Circle'))
+            ui.button_Save_ROI.setText(tr('Create'))
+            ui.delete_class_Button.setText(tr('Delete Class'))
+            ui.delete_class_Button.setToolTip(
+                tr('Delete the selected class with all its ROIs'))
+            ui.previewButton.setToolTip(tr(
+                'Preview: click to switch on, then click on the map; '
+                'click again to switch off'))
+            ui.pointerButton.setToolTip(tr(
+                'Circle ROI: left click = center, move, right click = '
+                'radius (adds the circle to the class)'))
+            ui.polygonROI_Button.setToolTip(tr(
+                'Polygon ROI: left click = vertex, right click = close '
+                '(adds the polygon to the class)'))
+            ui.button_Save_ROI.setToolTip(tr(
+                'Create the class (number and name) that receives the '
+                'ROIs'))
+            boxes = getattr(ui, 'download_boxes', None)
+            if boxes:
+                for box, text in zip(boxes, ('Search parameters',
+                                             'Product list', 'Download')):
+                    box.setTitle(tr(text))
+            page = getattr(ui, 'settings_page', None)
+            if page is not None:
+                page.retranslate()
+        except Exception as err:
+            str(err)
 
     def _build_tabs(self):
         """ Two tabs: the band set (color composition) and the
@@ -367,6 +417,10 @@ class DockClassSimplifiedDialog(QDockWidget):
             grid.addWidget(tabs, 2, 0, 1, 1)
             grid.setRowStretch(2, 1)
             ui.bandset_roi_tabs = tabs
+            # the tabs share the width of the panel
+            tabs.setUsesScrollButtons(False)
+            tabs.tabBar().setExpanding(True)
+            tabs.tabBar().setElideMode(Qt.TextElideMode.ElideRight)
             # the RGB= list is replaced by the predefined compositions; it
             # stays in the panel (hidden) because the plugin still uses it
             ui.label_61.setVisible(False)
@@ -378,7 +432,6 @@ class DockClassSimplifiedDialog(QDockWidget):
                            ui.image_conversion_toolButton_3,
                            ui.download_images_toolButton_2):
                 widget.setVisible(False)
-            ui.label_60.setText('Traitement')
             # the Pointer button draws circles
             ui.pointerButton.setText('Circle')
             # the button that creates the class is called Create
@@ -404,6 +457,7 @@ class DockClassSimplifiedDialog(QDockWidget):
                 20, 40, QSizePolicy.Policy.Minimum,
                 QSizePolicy.Policy.Expanding), 5, 0, 1, 1)
             self._rebuild_roi_layout()
+            self.retranslate_custom()
             # the Preview button switches the preview on and off
             ui.previewButton.setCheckable(True)
             ui.previewButton.setToolTip(
@@ -451,7 +505,7 @@ class ScatterPlotDialog(QDialog):
         if QFileInfo(self.plugin_dir).exists():
             locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
-        if QFileInfo(locale_path).exists():
+        if QFileInfo(locale_path).exists() and use_qm_files():
             self.translator = QTranslator()
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)
@@ -476,7 +530,7 @@ class SpectralSignatureDialog(QDialog):
         if QFileInfo(self.plugin_dir).exists():
             locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
-        if QFileInfo(locale_path).exists():
+        if QFileInfo(locale_path).exists() and use_qm_files():
             self.translator = QTranslator()
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)

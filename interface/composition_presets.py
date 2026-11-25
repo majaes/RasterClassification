@@ -25,6 +25,7 @@ from qgis.analysis import QgsRasterCalculator, QgsRasterCalculatorEntry
 
 from ..core import config as cfg
 from ..core import dock_progress
+from ..core.language import tr
 
 # spectral roles: (center wavelength in micrometers, tolerance)
 ROLES = {
@@ -469,6 +470,17 @@ def preset_selected(combo, previous):
         combo.blockSignals(True)
         combo.setCurrentIndex(previous)
         combo.blockSignals(False)
+
+
+def retranslate():
+    """ The entries of the lists are shown in the language of the plugin. """
+    for combo in COMBOS:
+        labels = [c[0] for c in COMPOSITES] + [i[0] for i in INDICES]
+        for index, label in enumerate(labels):
+            if index < combo.count():
+                combo.setItemText(index, tr(label))
+        if combo.count() > len(labels):
+            combo.setItemText(len(labels), tr(CUSTOM_LABEL))
 
 
 def create_combo(parent, with_custom=False):

@@ -108,6 +108,15 @@ def search(
                 copernicus_user=copernicus_user,
                 copernicus_password=copernicus_password
             )
+        elif product in cfg.custom_stac_sources:
+            result = query_stac_custom(
+                product=product, date_from=date_from, date_to=date_to,
+                max_cloud_cover=max_cloud_cover, result_number=result_number,
+                name_filter=name_filter, coordinate_list=coordinate_list,
+                progress_message=progress_message, proxy_host=proxy_host,
+                proxy_port=proxy_port, proxy_user=proxy_user,
+                proxy_password=proxy_password
+            )
         elif product == cfg.sentinel2_aws:
             result = query_sentinel2_aws(
                 date_from=date_from, date_to=date_to,
@@ -984,6 +993,62 @@ def download(
                 min_progress += progress_step
                 max_progress += progress_step
             output_raster_lists.append(output_raster_dic)
+        elif product_table['product'][i] in cfg.custom_stac_sources:
+            # source added by the user: the assets listed for the source
+            source = cfg.custom_stac_sources[product_table['product'][i]]
+            ref_url = product_table['ref_url'][i]
+            response, stac_data = download_tools.request_stac(
+                url=ref_url, proxy_host=proxy_host,
+                proxy_port=proxy_port, proxy_user=proxy_user,
+                proxy_password=proxy_password
+            )
+            if response:
+                stac_data = json.loads(stac_data)
+                product_name = product_table['product_id'][i]
+                acquisition_date = product_table['acquisition_date'][i]
+                base_output_dir = '%s/%s_%s' % (
+                    output_path, product_name.replace('.', '_'),
+                    str(acquisition_date))
+                output_directory_list.append(base_output_dir)
+                output_raster_dic = {cfg.no_satellite: []}
+                for asset_name in source['assets']:
+                    if asset_name not in stac_data.get('assets', {}):
+                        continue
+                    url = stac_data['assets'][asset_name]['href']
+                    if exporter:
+                        output_file_list.append(url)
+                    else:
+                        suffix = cfg.tif_suffix
+                        if url.lower().split('?')[0].endswith('.jp2'):
+                            suffix = '.jp2'
+                        output_file = '%s/%s_%s%s' % (
+                            base_output_dir, product_name.replace('.', '_'),
+                            asset_name, suffix)
+                        cfg.multiprocess.multi_download_file(
+                            url_list=[url], output_path_list=[output_file],
+                            proxy_host=proxy_host, proxy_port=proxy_port,
+                            proxy_user=proxy_user,
+                            proxy_password=proxy_password,
+                            progress=progress_message,
+                            message='downloading %s' % asset_name,
+                            min_progress=min_progress,
+                            max_progress=max_progress, timeout=2,
+                            ignore_errors=ignore_errors
+                        )
+                        if files_directories.is_file(output_file):
+                            output_file_list.append(output_file)
+                            output_raster_dic[cfg.no_satellite].append(
+                                output_file)
+                        else:
+                            cfg.logger.log.error(
+                                'failed download %s %s'
+                                % (product_name, asset_name))
+                    min_progress += progress_step
+                    max_progress += progress_step
+                output_raster_lists.append(output_raster_dic)
+            else:
+                if not ignore_errors:
+                    return_check = False
         elif product_table['product'][i] == cfg.sentinel2_aws:
             # Earth Search: open cloud optimized GeoTIFF, no account
             ref_url = product_table['ref_url'][i]
@@ -2672,6 +2737,129 @@ def query_sentinel2_aws(
         cfg.logger.log.error('error: search failed')
         cfg.messages.error('error: search failed')
         return OutputManager(check=False)
+
+
+def query_stac_custom(
+        product, date_from, date_to, max_cloud_cover=100, result_number=50,
+        name_filter=None, coordinate_list=None, progress_message=True,
+        proxy_host=None, proxy_port=None, proxy_user=None, proxy_password=None
+) -> OutputManager:
+    """Perform the query of a STAC API added by the user.
+
+    The source is defined in cfg.custom_stac_sources with its address
+    (STAC API root), its collection and the assets to download.
+
+    Args:
+        product: name of the source
+        date_from: date defining the starting period of the query
+        date_to:
+        max_cloud_cover:
+        result_number:
+        name_filter:
+        coordinate_list:
+        progress_message:
+        proxy_host:
+        proxy_port:
+        proxy_user:
+        proxy_password:
+
+    Returns:
+        object OutputManger
+
+    """
+    cfg.logger.log.info('start')
+    if progress_message:
+        cfg.progress.update(process='search', message='starting', start=True)
+    source = cfg.custom_stac_sources[product]
+    collection = source['collection']
+    root_url = source['url'].rstrip('/')
+    if root_url.endswith('/search'):
+        root_url = root_url[:-len('/search')]
+    base_url = root_url + '/search'
+    image_find_list = []
+    if name_filter:
+        for f in name_filter.replace(' ', '').split(','):
+            image_find_list.append(f)
+    else:
+        image_find_list.append('')
+    max_result_number = min(result_number, 1000)
+    params = {
+        'collections': collection,
+        'datetime': '%sT00:00:00Z/%sT23:59:59Z' % (date_from, date_to),
+        'limit': str(max_result_number)
+    }
+    if max_cloud_cover is not None and int(max_cloud_cover) < 100:
+        params['query'] = json.dumps(
+            {'eo:cloud_cover': {'lt': max_cloud_cover}}
+        )
+    # coordinate list left, top, right, bottom
+    if coordinate_list is not None:
+        params['bbox'] = '%s,%s,%s,%s' % (
+            coordinate_list[0], coordinate_list[3], coordinate_list[2],
+            coordinate_list[1]
+        )
+    response, stac_data = download_tools.request_stac(
+        url=base_url, params=params, proxy_host=proxy_host,
+        proxy_port=proxy_port, proxy_user=proxy_user,
+        proxy_password=proxy_password
+    )
+    if not response:
+        cfg.logger.log.error('error: search failed')
+        cfg.messages.error('error: search failed')
+        return OutputManager(check=False)
+    stac_data = json.loads(stac_data)
+    entries = stac_data.get('features', [])
+    product_table_list = []
+    e = 0
+    for entry in entries:
+        e += 1
+        cfg.progress.update(
+            message='search in progress',
+            step=int(80 * e / len(entries) + 20),
+            percentage=int(100 * e / len(entries)), ping=True
+        )
+        producer_image_id = entry['id']
+        ref_url = '%s/collections/%s/items/%s' % (
+            root_url, collection, producer_image_id)
+        for link in entry.get('links', []):
+            if link.get('rel') == 'self':
+                ref_url = link['href']
+        properties = entry.get('properties', {})
+        preview = None
+        for key in ('thumbnail', 'rendered_preview', 'overview'):
+            if key in entry.get('assets', {}):
+                preview = entry['assets'][key]['href']
+                break
+        date_text = str(properties.get(
+            'datetime', properties.get('start_datetime', '1970-01-01')
+        ))
+        img_acquisition_date = date_text[0:10]
+        cloud_cover_percentage = properties.get('eo:cloud_cover', 0)
+        bbox = entry.get('bbox', [0, 0, 0, 0])
+        for f in image_find_list:
+            if f.lower() in producer_image_id.lower():
+                product_table_list.append(
+                    tm.create_product_table(
+                        product=product, product_id=producer_image_id,
+                        acquisition_date=img_acquisition_date,
+                        cloud_cover=float(cloud_cover_percentage),
+                        zone_path=None, row=None,
+                        min_lat=float(bbox[1]), min_lon=float(bbox[0]),
+                        max_lat=float(bbox[3]), max_lon=float(bbox[2]),
+                        collection=collection, size=None, preview=preview,
+                        uid=producer_image_id, image=producer_image_id,
+                        ref_url=ref_url
+                    )
+                )
+    cfg.progress.update(end=True)
+    cfg.logger.log.info('end')
+    return OutputManager(
+        extra={
+            'product_table': tm.stack_product_table(
+                product_list=product_table_list
+            )
+        }
+    )
 
 
 def export_product_table_as_xml(product_table, output_path=None):

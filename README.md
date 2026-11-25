@@ -26,7 +26,12 @@ draw a few training areas for each class and run the classification. The panel g
 * **Classification** with several algorithms (maximum likelihood by default), with a *Preview* on a small area before
   running the whole image, plus tools for the pre- and post-processing of the images.
 * **Works offline**: the processing library is bundled with the plugin.
-* One panel docked on the right of QGIS, with two tabs: *Band set definition* and *ROI & Classification*.
+* One panel docked on the right of QGIS, with four tabs: *Band set definition*, *ROI & Classification*,
+  *Download products* and *Settings*.
+* **Download** from Copernicus Data Space (Sentinel-2), Earth Search on AWS (Sentinel-2 L2A, no account), Microsoft
+  Planetary Computer (Landsat, Sentinel-2, MODIS, ASTER, Copernicus DEM) and NASA HLS. Other STAC catalogues can be added
+  in *Settings*, where the links of all the sources can be checked.
+* **English and French**: the language is changed in *Settings* without restarting QGIS.
 
 ## Requirements
 

@@ -418,6 +418,15 @@ def add_band_set_tab_simplified():
     cfg.logger.log.debug('add bandset simplified')
 
 
+# header of the table of the bands in the language of the plugin
+def retranslate_table():
+    table_w = cfg.dock_class_simpl_dlg.ui.tableWidget
+    table_w.horizontalHeaderItem(0).setText(
+        QApplication.translate('RasterClassification', 'Band name'))
+    table_w.horizontalHeaderItem(1).setText(
+        QApplication.translate('RasterClassification', 'Center wavelength'))
+
+
 # add loaded band to current band set
 def add_loaded_band_to_bandset():
     cfg.logger.log.info('add_loaded_band_to_bandset')

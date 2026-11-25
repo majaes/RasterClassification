@@ -606,7 +606,8 @@ def display_images():
             elif (sat == cfg.rs.configurations.landsat_hls
                   or sat == cfg.rs.configurations.sentinel2_hls):
                 display_nasa_images(image_id)
-            elif (sat == cfg.rs.configurations.landsat_mpc
+            elif (sat in cfg.rs.configurations.custom_stac_sources
+                  or sat == cfg.rs.configurations.landsat_mpc
                   or sat == cfg.rs.configurations.sentinel2_aws
                   or sat == cfg.rs.configurations.sentinel2_mpc
                   or sat == cfg.rs.configurations.modis_09q1_mpc
@@ -644,7 +645,8 @@ def table_click():
         elif (sat == cfg.rs.configurations.landsat_hls
               or sat == cfg.rs.configurations.sentinel2_hls):
             display_nasa_images(row, True)
-        elif (sat == cfg.rs.configurations.landsat_mpc
+        elif (sat in cfg.rs.configurations.custom_stac_sources
+              or sat == cfg.rs.configurations.landsat_mpc
               or sat == cfg.rs.configurations.sentinel2_aws
               or sat == cfg.rs.configurations.sentinel2_mpc
               or sat == cfg.rs.configurations.modis_09q1_mpc
@@ -1264,7 +1266,8 @@ def download_mpc_thumbnail(
     )
     check = False
     if (
-            sat == cfg.rs.configurations.landsat_mpc
+            sat in cfg.rs.configurations.custom_stac_sources
+            or sat == cfg.rs.configurations.landsat_mpc
             or sat == cfg.rs.configurations.sentinel2_aws
             or sat == cfg.rs.configurations.sentinel2_mpc
             or sat == cfg.rs.configurations.modis_09q1_mpc

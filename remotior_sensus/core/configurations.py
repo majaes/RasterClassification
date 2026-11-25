@@ -122,6 +122,9 @@ sensor_oli = 'oli_tirs'
 sensor_etm = 'etm'
 sensor_tm = 'tm'
 sensor_mss = 'mss'
+# sources added by the user: name -> {'url', 'collection', 'assets'}
+# (STAC API search and download of the listed assets)
+custom_stac_sources = {}
 # Sentinel-2 Level-2A cloud optimized GeoTIFF from Earth Search (Element 84,
 # AWS Open Data), free and without account
 # https://earth-search.aws.element84.com/v1

@@ -13,6 +13,8 @@ themselves when finished.
 """
 
 from qgis.PyQt.QtCore import QTimer
+
+from .language import tr
 from qgis.PyQt.QtWidgets import (
     QProgressBar, QSizePolicy, QWidget, QHBoxLayout, QPushButton
 )
@@ -45,8 +47,8 @@ def create_bar(parent):
     bar.setFormat('%p%')
     bar.setMaximumHeight(18)
     bar.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-    button = QPushButton('Cancel', box)
-    button.setToolTip('Cancel the processing or the loading')
+    button = QPushButton(tr('Cancel'), box)
+    button.setToolTip(tr('Cancel the processing or the loading'))
     button.clicked.connect(cancel)
     layout.addWidget(bar, 1)
     layout.addWidget(button, 0)
@@ -57,6 +59,14 @@ def create_bar(parent):
     box.setVisible(True)
     BOXES.append(box)
     return box
+
+
+def retranslate():
+    """ Texts of the buttons in the language of the plugin. """
+    def set_text(box):
+        box.button.setText(tr('Cancel'))
+        box.button.setToolTip(tr('Cancel the processing or the loading'))
+    _each(set_text)
 
 
 def _each(function):
