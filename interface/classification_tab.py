@@ -695,11 +695,16 @@ def create_preview(preview_point, classification_confidence=None):
         return False
     cfg.preview_point = point
     # the algorithm is the one chosen in the Algorithm list of the panel
-    output = run_classifier(
-        preview_point=point,
-        classification_confidence=classification_confidence,
-        simplified=True if cfg.simplified else None
-    )
+    try:
+        output = run_classifier(
+            preview_point=point,
+            classification_confidence=classification_confidence,
+            simplified=True if cfg.simplified else None
+        )
+    except Exception as err:
+        cfg.logger.log.error(str(err))
+        cfg.ui_utils.remove_progress_bar(sound=False, failed=True)
+        return False
     if output is None or output is False:
         return False
     elif output.check:

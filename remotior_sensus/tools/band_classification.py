@@ -2051,15 +2051,29 @@ def _get_x_y_arrays_from_rois(
                 # covariance matrix (degree of freedom=1 for unbiased estimate)
                 cov_matrix = np.ma.cov(np.ma.masked_invalid(matrix), ddof=1)
                 try:
-                    # inverse
-                    inv = np.linalg.inv(cov_matrix)
-                    if np.isnan(inv[0, 0]):
-                        pass
+                    # inverse; a singular matrix (few pixels, identical or
+                    # correlated bands) is regularised with a small ridge
+                    cov_matrix = np.ma.getdata(cov_matrix)
+                    ridge = 0.0
+                    scale = max(float(np.nanmean(np.diag(cov_matrix))), 1e-12)
+                    for _ in range(8):
+                        try:
+                            inv = np.linalg.inv(
+                                cov_matrix + ridge * np.eye(
+                                    cov_matrix.shape[0]))
+                            if np.all(np.isfinite(inv)):
+                                break
+                        except np.linalg.LinAlgError:
+                            pass
+                        ridge = 1e-6 * scale if ridge == 0 else ridge * 10
                     else:
-                        covariance_matrices_dict[s] = cov_matrix
+                        raise ValueError('covariance matrix')
+                    covariance_matrices_dict[s] = cov_matrix + ridge * np.eye(
+                        cov_matrix.shape[0])
                 except Exception as err:
                     cfg.logger.log.error(str(err))
                     cfg.messages.error('covariance matrix')
+                    return OutputManager(check=False)
         return OutputManager(
             extra={
                 'x': x_matrix.T, 'y': y,
