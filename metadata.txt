@@ -3,11 +3,11 @@ name=Raster Classification
 qgisMinimumVersion=3.34
 qgisMaximumVersion=4.98
 supportsQt6=True
-description=Supervised classification of remote sensing images in QGIS, with tools to download, preprocess and postprocess Landsat and Sentinel-2 images.
+description=From satellite bands to a land cover map in one panel: colour compositions, spectral indices, supervised classification and download of Sentinel-2, Landsat, MODIS, ASTER and DEM data. English and French.
 version=1.0.0
 author=ANABA MANGA
 email=majaesabana@gmail.com
-about=<b>Raster Classification</b> is a QGIS plugin for the supervised classification of remote sensing images: it provides tools for the download, the preprocessing and the postprocessing of images, and several algorithms for land cover classification. Search and download is available for Landsat and Sentinel-2 images.<br><br>Created and maintained by ANABA MANGA (<a href="https://anbmng.com">anbmng.com</a>), copyright 2026. Raster Classification is derived from the Semi-Automatic Classification Plugin (SCP) by Luca Congedo (copyright 2012-2026, <a href="https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin">source</a>), and, like it, is distributed under the GNU General Public License version 3 or later. It is built on the Remotior Sensus library, which is installed automatically if missing.
+about=<b>Raster Classification</b> guides you from the bands of a satellite image to a land cover map, in one panel of QGIS with four tabs.<br><br><b>Color composition</b>: load the bands of a Sentinel-2, Landsat or ASTER image (the satellite is recognised from the file names, or chosen by hand); display one of seven predefined compositions (natural colour, colour infrared, agriculture, healthy vegetation, short-wave infrared, urban, geology) or your own bands; calculate the NDVI, NDWI, NDBI and NBR indices in the background.<br><br><b>SV Classification</b>: create the classes, draw the training areas (polygons or circles) that are added to the class with a right click, check the spectral signatures, test the result on a small area with the preview, then classify the whole image with maximum likelihood, minimum distance, spectral angle mapping, random forest, support vector machine or neural network.<br><br><b>Download</b>: search and download Sentinel-2 (Copernicus Data Space and Earth Search on AWS), Landsat, Harmonized Landsat Sentinel-2, MODIS, ASTER and Copernicus DEM (Microsoft Planetary Computer, NASA Earthdata), and add your own STAC catalogues.<br><br><b>Settings</b>: English or French, check of the links of the sources, accounts, credits.<br><br>The processing library Remotior Sensus is bundled, so the processing works offline. Developed and maintained by ANABA MANGA (<a href="https://anbmng.com">anbmng.com</a>), copyright 2026, distributed under the GNU General Public License version 3 or later. It is built on the Semi-Automatic Classification Plugin by Luca Congedo (<a href="https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin">source</a>), whose copyright notices are kept as the licence requires.
 
 homepage=https://anbmng.com
 tracker=https://github.com/majaes/RasterClassification/issues
@@ -15,9 +15,13 @@ repository=https://github.com/majaes/RasterClassification
 tags=raster, classification, land cover, remote sensing, landsat, sentinel, supervised classification, spectral signature, random forest, processing
 changelog=
 	1.0.0
-	-First release of Raster Classification, derived from the Semi-Automatic Classification Plugin 9.0.5 by Luca Congedo (GPL v3).
-	-new name and identity; English is the default interface language.
-	-separate settings and Processing provider, so it can be installed beside the original plugin.
+	-First release of Raster Classification.
+	-A single panel with four tabs: Color composition, SV Classification, Download products and Settings.
+	-Predefined and custom colour compositions, NDVI, NDWI, NDBI and NBR calculated in the background.
+	-Classes created first, ROI drawn as polygons or circles and added with a right click, preview and classification.
+	-Download of Sentinel-2, Landsat, HLS, MODIS, ASTER and Copernicus DEM; new source Earth Search (AWS); sources of your own (STAC); check of the links.
+	-English and French, changed without restarting QGIS.
+	-Options locked while a processing runs; unused code removed.
 
 category=Raster
 icon=raster_classification.png

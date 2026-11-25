@@ -23,16 +23,25 @@ from ..core.language import tr
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 
+ABOUT_CREDIT = (
+    'Raster Classification guides you from the bands of a satellite image to '
+    'a land cover map: colour compositions and spectral indices, supervised '
+    'classification (classes, training areas, preview, classification) and '
+    'the download of Sentinel-2, Landsat, MODIS, ASTER and elevation data. '
+    'It works offline for the processing, in English and in French.'
+)
 AUTHOR_CREDIT = (
     '<b>Raster Classification</b> %s &copy; 2026 '
-    '<a href="https://anbmng.com">ANABA MANGA</a>'
+    '<a href="https://anbmng.com">ANABA MANGA</a>, developed and maintained '
+    'by the author (GNU General Public License v3 or later).'
 )
 DERIVED_CREDIT = (
-    'Derived from the <a href="https://github.com/semiautomaticgit/'
+    'Built on the <a href="https://github.com/semiautomaticgit/'
     'SemiAutomaticClassificationPlugin">Semi-Automatic Classification '
-    'Plugin</a> by Luca Congedo (GPL v3 or later) and built on the '
-    '<a href="https://github.com/fabriziopandini/remotior_sensus">Remotior '
-    'Sensus</a> library.'
+    'Plugin</a> and on the <a href="https://github.com/semiautomaticgit/'
+    'remotior_sensus">Remotior Sensus</a> library by Luca Congedo, '
+    '&copy; 2012-2026, GPL v3 or later: his copyright notices are kept, as '
+    'the licence requires.'
 )
 DATA_CREDIT = (
     'Search and download: <a href="https://dataspace.copernicus.eu">'
@@ -366,8 +375,8 @@ class SettingsPage(QScrollArea):
         self.box_accounts.setTitle(tr('Accounts'))
         self._retranslate_accounts()
         self.box_credits.setTitle(tr('Credits'))
-        parts = [AUTHOR_CREDIT % self.version, tr(DERIVED_CREDIT),
-                 tr(DATA_CREDIT), tr(LICENSE_CREDIT)]
+        parts = [tr(ABOUT_CREDIT), tr(AUTHOR_CREDIT) % self.version,
+                 tr(DERIVED_CREDIT), tr(DATA_CREDIT), tr(LICENSE_CREDIT)]
         self.label_credits.setText('<p>' + '</p><p>'.join(parts) + '</p>')
         if self.table_sources.rowCount():
             self.refresh_sources()

@@ -87,16 +87,35 @@ EXTRA = {
     'Search parameters': 'Paramètres de recherche',
     'Product list': 'Liste de produits',
     'Download': 'Télécharger',
-    'Derived from the <a href="https://github.com/semiautomaticgit/'
+    'Raster Classification guides you from the bands of a satellite image to '
+    'a land cover map: colour compositions and spectral indices, supervised '
+    'classification (classes, training areas, preview, classification) and '
+    'the download of Sentinel-2, Landsat, MODIS, ASTER and elevation data. '
+    'It works offline for the processing, in English and in French.':
+        "Raster Classification vous guide des bandes d'une image satellite à "
+        "une carte d'occupation du sol : compositions colorées et indices "
+        "spectraux, classification supervisée (classes, zones "
+        "d'entraînement, aperçu, classification) et téléchargement de "
+        "données Sentinel-2, Landsat, MODIS, ASTER et d'altitude. Le "
+        "traitement fonctionne hors ligne, en anglais et en français.",
+    '<b>Raster Classification</b> %s &copy; 2026 '
+    '<a href="https://anbmng.com">ANABA MANGA</a>, developed and maintained '
+    'by the author (GNU General Public License v3 or later).':
+        '<b>Raster Classification</b> %s &copy; 2026 '
+        '<a href="https://anbmng.com">ANABA MANGA</a>, développé et maintenu '
+        'par l\'auteur (licence publique générale GNU v3 ou ultérieure).',
+    'Built on the <a href="https://github.com/semiautomaticgit/'
     'SemiAutomaticClassificationPlugin">Semi-Automatic Classification '
-    'Plugin</a> by Luca Congedo (GPL v3 or later) and built on the '
-    '<a href="https://github.com/fabriziopandini/remotior_sensus">Remotior '
-    'Sensus</a> library.':
-        'Dérivé du <a href="https://github.com/semiautomaticgit/'
+    'Plugin</a> and on the <a href="https://github.com/semiautomaticgit/'
+    'remotior_sensus">Remotior Sensus</a> library by Luca Congedo, '
+    '&copy; 2012-2026, GPL v3 or later: his copyright notices are kept, as '
+    'the licence requires.':
+        'Construit sur le <a href="https://github.com/semiautomaticgit/'
         'SemiAutomaticClassificationPlugin">Semi-Automatic Classification '
-        'Plugin</a> de Luca Congedo (GPL v3 ou ultérieure) et construit sur '
-        'la bibliothèque <a href="https://github.com/fabriziopandini/'
-        'remotior_sensus">Remotior Sensus</a>.',
+        'Plugin</a> et sur la bibliothèque <a href="https://github.com/'
+        'semiautomaticgit/remotior_sensus">Remotior Sensus</a> de Luca '
+        'Congedo, &copy; 2012-2026, GPL v3 ou ultérieure : ses mentions de '
+        'copyright sont conservées, comme l\'exige la licence.',
     'Search and download: <a href="https://dataspace.copernicus.eu">'
     'Copernicus Data Space Ecosystem</a>, <a href="https://planetary'
     'computer.microsoft.com">Microsoft Planetary Computer</a>, <a '

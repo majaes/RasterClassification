@@ -3,13 +3,20 @@ Raster Classification
 
 **Supervised classification of remote sensing images in QGIS: colour compositions, spectral indices and land cover classification, in one panel.**
 
-![QGIS Plugin](https://img.shields.io/badge/QGIS-Plugin-589632?logo=qgis&logoColor=white) ![version](https://img.shields.io/badge/version-1.0.0-0f6fb5) ![QGIS](https://img.shields.io/badge/QGIS-3.34%2B%20%7C%204.x-589632) ![Qt](https://img.shields.io/badge/Qt-5%20%7C%206-41cd52?logo=qt&logoColor=white) ![license](https://img.shields.io/badge/license-GPLv3%2B-e07b39) ![interface](https://img.shields.io/badge/interface-EN-555)
+![QGIS Plugin](https://img.shields.io/badge/QGIS-Plugin-589632?logo=qgis&logoColor=white) ![version](https://img.shields.io/badge/version-1.0.0-0f6fb5) ![QGIS](https://img.shields.io/badge/QGIS-3.34%2B%20%7C%204.x-589632) ![Qt](https://img.shields.io/badge/Qt-5%20%7C%206-41cd52?logo=qt&logoColor=white) ![license](https://img.shields.io/badge/license-GPLv3%2B-e07b39) ![interface](https://img.shields.io/badge/interface-EN%20%7C%20FR-555)
 
 *A plugin created, designed and maintained by [ANABA MANGA](https://anbmng.com).*
 
 Raster Classification is designed first of all to make **land cover maps from satellite images** without being an
-expert in remote sensing. You load the bands of an image (Sentinel-2, Landsat...), choose a colour composition,
-draw a few training areas for each class and run the classification. The panel guides you from the bands to the map.
+expert in remote sensing. You load the bands of an image (Sentinel-2, Landsat, ASTER...), choose a colour composition,
+create the classes, draw a few training areas for each class and run the classification. The panel guides you from the
+bands to the map, in four tabs:
+
+1. **Color composition**: the band set, the satellite, the compositions and the spectral indices.
+2. **SV Classification** (supervised classification): training file, classes, ROI, spectral signatures, preview and
+   classification.
+3. **Download products**: search and download of the images from several sources.
+4. **Settings**: language, sources and accounts of the download, credits.
 
 ## Features
 
@@ -42,6 +49,63 @@ the plugin warns when it is missing. The *Download products* tab needs an Intern
 accounts); everything else works offline.
 
 ### Development and test environment
+
+| Component | QGIS 3.44 LTR | QGIS 4.0 |
+|---|---|---|
+| QGIS | 3.44.15 | 4.0.1 |
+| Qt | 5.15 | 6.8 |
+| Python | 3.12 | 3.12 |
+| GDAL / PROJ / GEOS | 3.13 / 9.8 / 3.15 | 3.12 / 9.7 / 3.14 |
+| OS | Windows 11 | Windows 11 |
+
+On QGIS 4.0.1 the plugin was used in the interface (loading Sentinel-2 bands, colour compositions, NDVI on a full
+tile). On QGIS 3.44.15 the modules load and the panels are built; a complete run of the plugin in the interface is
+still to be confirmed. Other systems (macOS, Linux) have not been tested.
+
+## Installation
+
+* **From QGIS**: Plugins > Manage and Install Plugins, search for *Raster Classification* (once published in the
+  official plugin repository).
+* **From a ZIP**: download `RasterClassification-1.0.0.zip` from the [releases](releases) folder, then Plugins >
+  Manage and Install Plugins > Install from ZIP. Restart QGIS after the first installation.
+
+## Usage
+
+1. Open the panel from the *Raster Classification* menu.
+2. In **Color composition**, click *Open file* and choose the bands of your image (for example `B02`, `B03`, `B04`,
+   `B08` of a Sentinel-2 tile). The satellite is detected and the natural colour composition is displayed.
+3. Choose another composition or an index in the list of predefined compositions.
+4. In **SV Classification**, create a training file. Enter a class number and a name, then click *Save* to create
+   the class. Draw its ROI: with *Polygon*, left click adds a vertex and right click closes the polygon; with
+   *Circle*, left click sets the centre, move the cursor and right click sets the radius. The right click adds the
+   ROI to the class at once. Check the signatures with *Spectral plot*.
+5. Click *Preview* to test the classification on a small area, then *RUN* to classify the whole image.
+
+## Data and licences
+
+* Sentinel-2 and Landsat images: use the licence of your data provider (Copernicus, USGS).
+* The *Download products* tab uses the services of Copernicus and NASA Earthdata with your own accounts; no password
+  is stored by the plugin.
+* [Remotior Sensus](https://github.com/semiautomaticgit/remotior_sensus) (bundled, unmodified, version 0.8.0) by Luca
+  Congedo: GPL v3 or later.
+
+## Credits and licence
+
+**Raster Classification is developed and maintained by [ANABA MANGA](https://anbmng.com)** (copyright (C) 2026): the
+single panel and its four tabs, the colour compositions, the spectral indices, the satellite detection, the classes and
+the ROI drawing, the new download sources, the English and French interface, and the maintenance.
+
+It is built on the [Semi-Automatic Classification Plugin (SCP)](https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin)
+by **Luca Congedo** (copyright 2012-2026) and on his processing library Remotior Sensus. Both are released under the
+GNU General Public License, which requires the copyright notices of the original work to be kept: they are kept in the
+source files and in the *Credits* section of the plugin. If you use the classification workflow in a publication,
+please cite: Congedo, Luca (2021). Semi-Automatic Classification Plugin: A Python tool for the download and processing
+of remote sensing images in QGIS. Journal of Open Source Software, 6(64), 3172, https://doi.org/10.21105/joss.03172
+
+Raster Classification is free software released under the GNU General Public License, version 3 or (at your option)
+any later version, see [LICENSE](LICENSE).
+
+## Development and test environment
 
 | Component | QGIS 3.44 LTR | QGIS 4.0 |
 |---|---|---|
