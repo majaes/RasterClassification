@@ -370,6 +370,15 @@ class DockClassSimplifiedDialog(QDockWidget):
             # the RGB= list is replaced by the predefined compositions; it
             # stays in the panel (hidden) because the plugin still uses it
             ui.label_61.setVisible(False)
+            # simpler panel: no header (icon, version, manual), no title of
+            # the ROI frame, no Image conversion and Download buttons (the
+            # download is the third tab)
+            for widget in (ui.scp_pushButton, ui.plugin_version_label2,
+                           ui.userguide_toolButton_2, ui.label_48,
+                           ui.image_conversion_toolButton_3,
+                           ui.download_images_toolButton_2):
+                widget.setVisible(False)
+            ui.label_60.setText('Traitement')
             # the Pointer button draws circles
             ui.pointerButton.setText('Circle')
             # the button that creates the class is called Create

@@ -693,12 +693,14 @@ class TrainingVectorLayer:
             tree_widget.header().hideSection(3)
         tree_widget.header().setSortIndicator(order, sorter)
         cfg.util_qt.set_tree_column_width_list(
-            tree_widget, [[0, 60], [1, 30], [2, 100], [3, 40], [4, 30]]
+            tree_widget, [[0, 60], [1, 30], [2, 260], [3, 40], [4, 30]]
         )
+        # every column can be resized by hand; the last one (color) takes
+        # the remaining width
         tree_widget.header().setSectionResizeMode(
-            2, QHeaderView.ResizeMode.Stretch
+            2, QHeaderView.ResizeMode.Interactive
         )
-        tree_widget.header().setStretchLastSection(False)
+        tree_widget.header().setStretchLastSection(True)
         # connect to edited cell
         tree_widget.itemChanged.connect(self.edited_cell_tree)
         if cfg.simplified:

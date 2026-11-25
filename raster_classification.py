@@ -1360,6 +1360,25 @@ def connect_gui():
             custom_widget, 1, 0, 1, 2
         )
         presets_combo.custom_widget = custom_widget
+        # Download products: the page of the main window becomes the third
+        # tab of the panel (a placeholder keeps the tab numbers of the window)
+        try:
+            from qgis.PyQt.QtWidgets import QWidget, QScrollArea, QFrame
+            old_tabs = cfg.dialog.ui.SCP_tabs
+            page = cfg.dialog.ui.tab_download_products
+            index = old_tabs.indexOf(page)
+            if index >= 0:
+                old_tabs.removeTab(index)
+                old_tabs.insertTab(index, QWidget(), 'Download products')
+                scroll = QScrollArea()
+                scroll.setWidgetResizable(True)
+                scroll.setFrameShape(QFrame.Shape.NoFrame)
+                scroll.setWidget(page)
+                cfg.dock_class_simpl_dlg.ui.bandset_roi_tabs.addTab(
+                    scroll, 'Download products')
+                cfg.download_dock_page = scroll
+        except Exception as err:
+            cfg.logger.log.error('download tab: %s' % str(err))
         download_i = cfg.dock_class_simpl_dlg.ui.download_images_toolButton_2
         download_i.clicked.connect(
             cfg.input_interface.select_download_products_tab

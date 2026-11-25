@@ -1638,6 +1638,12 @@ def bandset_tab():
 
 # select tab 1
 def select_download_products_tab():
+    page = cfg.download_dock_page
+    if cfg.simplified and page is not None:
+        # the download is the third tab of the panel
+        cfg.dock_class_simpl_dlg.show()
+        cfg.dock_class_simpl_dlg.ui.bandset_roi_tabs.setCurrentWidget(page)
+        return
     cfg.dialog.ui.SCP_tabs.setCurrentIndex(1)
     if cfg.simplified:
         dock_tab_changed('Download products')

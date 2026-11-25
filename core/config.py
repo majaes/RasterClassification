@@ -42,6 +42,7 @@ composition_presets = composition_combo = None
 smtp_notification = smtp_server = smtp_user = smtp_pass = None
 smtp_recipients = main_menu = simplified = rs_version = None
 show_action = None
+download_dock_page = None
 # welcome url
 first_reply = second_reply = second_url = None
 # QGIS proxy
