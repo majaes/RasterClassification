@@ -442,7 +442,10 @@ class TrainingVectorLayer:
             table_config.setColumnHidden(0, True)
             table_config.setColumnHidden(1, True)
             self.layer.setAttributeTableConfig(table_config)
-            cfg.util_qgis.training_symbol(self.layer)
+            cfg.util_qgis.training_symbol(
+                self.layer, self.signature_catalog.macroclasses_color_string,
+                self.signature_catalog.macroclass_field
+            )
         except Exception as err:
             cfg.logger.log.error(str(err))
         cfg.map_canvas.setRenderFlag(True)
@@ -529,6 +532,15 @@ class TrainingVectorLayer:
         macroclass_info_completer(macroclass_list)
         # filter
         filter_tree()
+        # the ROIs take the color of their class on the map
+        try:
+            if self.layer is not None:
+                cfg.util_qgis.training_symbol(
+                    self.layer, self.signature_catalog.macroclasses_color_string,
+                self.signature_catalog.macroclass_field
+                )
+        except Exception as err:
+            cfg.logger.log.error(str(err))
         # connect signature threshold table
         cfg.signature_threshold.signature_thresholds_to_table()
         cfg.scp_training = self

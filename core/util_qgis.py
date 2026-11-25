@@ -27,8 +27,10 @@ from qgis.core import (
     QgsProject, QgsVectorFileWriter, QgsLayerTreeNode, QgsMapLayer,
     QgsRasterMinMaxOrigin, QgsContrastEnhancement, QgsRectangle, QgsPointXY,
     QgsVectorLayer, QgsFillSymbol, QgsFeatureRequest, QgsWkbTypes,
-    QgsCoordinateReferenceSystem
+    QgsCoordinateReferenceSystem, QgsCategorizedSymbolRenderer,
+    QgsRendererCategory
 )
+from qgis.PyQt.QtGui import QColor
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 
@@ -450,7 +452,32 @@ def qgis_layer_source(layer):
 
 
 # set layer color for ROIs
-def training_symbol(layer):
+def training_symbol(layer, class_colors=None, field=None):
+    """ Symbology of the training layer: each ROI takes the color of its
+    class when the colors are given, otherwise a dark fill. """
+    if class_colors:
+        field = field or cfg.rs.configurations.macroclass_field_name
+        categories = []
+        for class_id, color_string in class_colors.items():
+            color = QColor(str(color_string))
+            color.setAlpha(190)
+            symbol = QgsFillSymbol.createSimple({
+                'color': '%s,%s,%s,%s' % (
+                    color.red(), color.green(), color.blue(), color.alpha()),
+                'color_border': '255,255,255,230', 'style': 'solid',
+                'style_border': 'dash'
+            })
+            categories.append(
+                QgsRendererCategory(int(class_id), symbol, str(class_id))
+            )
+        default = QgsFillSymbol.createSimple({
+            'color': '0,0,0,230', 'color_border': '255,255,255,230',
+            'style': 'solid', 'style_border': 'dash'
+        })
+        categories.append(QgsRendererCategory(None, default, ''))
+        layer.setRenderer(QgsCategorizedSymbolRenderer(field, categories))
+        refresh_layer_symbology(layer)
+        return
     style = {
         'color': '0,0,0,230', 'color_border': '255,255,255,230',
         'style': 'solid', 'style_border': 'dash'
