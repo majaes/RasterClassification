@@ -30,6 +30,7 @@ import ast
 # import the PyQt libraries
 from qgis.PyQt.QtGui import QIcon, QPixmap, QCursor
 from qgis.PyQt.QtWidgets import QApplication
+from qgis.core import Qgis
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 
@@ -158,7 +159,25 @@ def run_classification_action():
 
 # perform classification
 def run_classification_action_simplified():
-    run_classifier(simplified=True)
+    try:
+        output = run_classifier(simplified=True)
+    except Exception as err:
+        cfg.logger.log.error(str(err))
+        cfg.ui_utils.remove_progress_bar(sound=False, failed=True)
+        cfg.iface.messageBar().pushMessage(
+            'Raster Classification', 'Classification failed: %s' % err,
+            level=Qgis.MessageLevel.Critical, duration=10
+        )
+        return
+    if output is False:
+        # no training data or an empty signature list
+        return
+    if output is not None and getattr(output, 'check', False):
+        cfg.iface.messageBar().pushMessage(
+            'Raster Classification',
+            'Classification finished: the map is added to the layers.',
+            level=Qgis.MessageLevel.Success, duration=6
+        )
 
 
 # save classifier
@@ -669,11 +688,13 @@ def create_preview(preview_point, classification_confidence=None):
         cfg.mx.msg_war_3()
         return False
     cfg.preview_point = point
+    # the algorithm is the one chosen in the Algorithm list of the panel
     output = run_classifier(
         preview_point=point,
-        classification_confidence=classification_confidence
+        classification_confidence=classification_confidence,
+        simplified=True if cfg.simplified else None
     )
-    if output is None:
+    if output is None or output is False:
         return False
     elif output.check:
         if classification_confidence is None:
@@ -729,11 +750,29 @@ def pointer_classification_preview_active():
     cfg.map_canvas.setMapTool(cfg.classification_preview_pointer)
     cursor = QCursor(QPixmap(':/pointer/icons/pointer/ROI_pointer.svg'))
     cfg.map_canvas.setCursor(cursor)
+    cfg.iface.messageBar().pushMessage(
+        'Raster Classification',
+        'Preview: click on the map where you want to see the '
+        'classification (a small area around the click is classified).',
+        level=Qgis.MessageLevel.Info, duration=8
+    )
 
 
 # left click pointer
 def pointer_left_click(point):
-    create_preview(point)
+    try:
+        if create_preview(point):
+            cfg.iface.messageBar().pushMessage(
+                'Raster Classification',
+                'Preview added to the map (layer at the top of the list).',
+                level=Qgis.MessageLevel.Success, duration=5
+            )
+    except Exception as err:
+        cfg.logger.log.error(str(err))
+        cfg.iface.messageBar().pushMessage(
+            'Raster Classification', 'Preview failed: %s' % err,
+            level=Qgis.MessageLevel.Critical, duration=10
+        )
 
 
 # right click pointer
