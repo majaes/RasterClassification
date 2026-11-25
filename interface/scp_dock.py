@@ -536,8 +536,9 @@ class TrainingVectorLayer:
         try:
             if self.layer is not None:
                 cfg.util_qgis.training_symbol(
-                    self.layer, self.signature_catalog.macroclasses_color_string,
-                self.signature_catalog.macroclass_field
+                    self.layer,
+                    self.signature_catalog.macroclasses_color_string,
+                    self.signature_catalog.macroclass_field
                 )
         except Exception as err:
             cfg.logger.log.error(str(err))
