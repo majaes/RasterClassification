@@ -42,7 +42,7 @@ try:
         Qt, QFileInfo, QSettings, QSize, QTranslator, QCoreApplication,
         QDir, QDate
     )
-    from qgis.PyQt.QtGui import QFont, QColor
+    from qgis.PyQt.QtGui import QFont, QColor, QIcon
     from qgis.PyQt.QtWidgets import QApplication, QHeaderView, QLineEdit, QComboBox
     qt_check = True
     plugin_check = True
@@ -631,6 +631,19 @@ class RasterClassification:
                     Qt.DockWidgetArea.RightDockWidgetArea, dock_widget
                 )
                 dock_widget.setFloating(False)
+                # menu entry and toolbar button to show or hide the panel:
+                # the panel can be opened again after it was closed
+                show_action = dock_widget.toggleViewAction()
+                show_action.setIcon(
+                    QIcon('%s/raster_classification.png' % cfg.plugin_dir)
+                )
+                show_action.setText('Raster Classification')
+                show_action.setToolTip(
+                    'Show or hide the Raster Classification panel'
+                )
+                cfg.iface.addPluginToMenu('Raster Classification', show_action)
+                cfg.iface.addToolBarIcon(show_action)
+                cfg.show_action = show_action
             except Exception as err:
                 str(err)
                 qgis_utils.iface.messageBar().pushMessage(
@@ -1091,6 +1104,14 @@ class RasterClassification:
                             ).path(), str(__name__).split('.')[0])
                           )
                 sys.path.remove(rs_dir)
+            except Exception as err:
+                str(err)
+            try:
+                if cfg.show_action is not None:
+                    qgis_utils.iface.removePluginMenu(
+                        'Raster Classification', cfg.show_action)
+                    qgis_utils.iface.removeToolBarIcon(cfg.show_action)
+                    cfg.show_action = None
             except Exception as err:
                 str(err)
             try:

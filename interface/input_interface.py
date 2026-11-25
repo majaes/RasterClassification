@@ -1048,6 +1048,10 @@ def load_menu():
     menu_bar.insertMenu(
         cfg.iface.firstRightStandardMenu().menuAction(), cfg.main_menu
     )
+    # first entry: show or hide the panel
+    if cfg.show_action is not None:
+        cfg.main_menu.addAction(cfg.show_action)
+        cfg.main_menu.addSeparator()
     function_dictionaries(cfg.simplified)
     for b in cfg.first_functions:
         add_menu_item(

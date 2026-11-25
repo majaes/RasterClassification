@@ -331,6 +331,8 @@ def add_band_set_tab(position=None, create_bandset_in_catalog=True):
         QApplication.translate('semiautomaticclassificationplugin', 'Date')
     )
     table_w.verticalHeader().setDefaultSectionSize(24)
+    # no wavelengths until a satellite is known
+    table_w.setColumnHidden(1, True)
     # the name column takes the free width, the wavelength column stays
     # visible beside it (no horizontal scrolling)
     header = table_w.horizontalHeader()
@@ -1113,6 +1115,7 @@ def band_set_to_table(bandset_number):
     else:
         table_w.blockSignals(True)
         cfg.util_qt.clear_table(table_w)
+        table_w.setColumnHidden(1, True)
         table_w.blockSignals(True)
         # band sets table
         cfg.dialog.ui.bandset_tableWidget.blockSignals(True)
