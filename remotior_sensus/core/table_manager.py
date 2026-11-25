@@ -1100,13 +1100,6 @@ def columns(matrix):
     return matrix.dtype.names
 
 
-# rename field matrices
-def rename_field(matrix, old_field, new_field):
-    new_matrix = rfn.rename_fields(matrix, {old_field: new_field})
-    cfg.logger.log.debug(
-        'old_field: %s; new_field: %s' % (old_field, new_field)
-    )
-    return new_matrix
 
 
 # append field matrix
@@ -1128,13 +1121,6 @@ def define_fields(matrix, field_list):
     return new_matrix
 
 
-# append values to table
-def append_values_to_table(matrix, value_list):
-    array_1 = np.array(value_list)
-    rec_array = np.rec.fromarrays(array_1, dtype=matrix.dtype)
-    a = append_tables(matrix, rec_array)
-    cfg.logger.log.debug('a.shape: %s' % a.shape)
-    return a
 
 
 # append two tables
@@ -1144,12 +1130,6 @@ def append_tables(matrix1, matrix2):
     return a
 
 
-# sort table
-def sort_table_by_field(matrix, field_name):
-    a = np.rec.array(np.copy(matrix))
-    a.sort(order=field_name)
-    cfg.logger.log.debug('a.shape: %s' % a.shape)
-    return a
 
 
 # add product to preprocess table
@@ -1181,11 +1161,6 @@ def add_product_to_preprocess(
     return rec_array
 
 
-# create generic table
-def create_generic_table(value_list, dtype_list):
-    rec_array = np.rec.fromrecords(value_list, dtype=dtype_list)
-    cfg.logger.log.debug('rec_array.shape: %s' % rec_array.shape)
-    return rec_array
 
 
 # create product table

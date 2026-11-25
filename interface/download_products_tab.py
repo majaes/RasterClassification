@@ -877,8 +877,6 @@ def download_images(exporter=False):
                                     cfg.reg_active_bandset_number] = (
                                     bandset_number)
                                 cfg.bst.band_set_to_table(bandset_number)
-                                cfg.band_calc.raster_band_table()
-                                cfg.band_calc.calculate(directories[n])
                     if load_in_qgis:
                         if output.paths is not None:
                             for x_path in output.paths:

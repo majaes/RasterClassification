@@ -37,10 +37,8 @@ from ..core.language import tr, use_qm_files
 from .ui_raster_classification import (
     Ui_RasterClassification
 )
-from .ui_raster_classification_dock_class import Ui_DockClass
 from .ui_raster_classification_dock_class_simplified import (
     Ui_DockClassSimplified)
-from .ui_raster_classification_scatter_plot import Ui_ScatterPlot
 from .ui_raster_classification_signature_plot import (
     Ui_SpectralSignaturePlot
 )
@@ -89,29 +87,13 @@ class RasterClassificationDialog(QDialog):
     def vector_to_raster_combo(self, vector):
         self.ui.vector_name_combo.addItem(vector)
 
-    def classification_layer_combo(self, layer):
-        self.ui.classification_name_combo.addItem(layer)
 
-    def classification_layer_combo_2(self, layer):
-        self.ui.classification_name_combo_2.addItem(layer)
 
-    def classification_report_combo(self, layer):
-        self.ui.classification_report_name_combo.addItem(layer)
 
-    def classification_to_vector_combo(self, layer):
-        self.ui.classification_vector_name_combo.addItem(layer)
 
-    def reclassification_combo(self, layer):
-        self.ui.reclassification_name_combo.addItem(layer)
 
-    def reference_layer_combo(self, shape):
-        self.ui.reference_name_combo.addItem(shape)
 
-    def reference_layer_combo_2(self, shape):
-        self.ui.reference_name_combo_2.addItem(shape)
 
-    def raster_layer_combo(self, layer):
-        self.ui.raster_name_combo.addItem(layer)
 
     def raster_extent_combo(self, layer):
         self.ui.raster_extent_combo.addItem(layer)
@@ -119,38 +101,20 @@ class RasterClassificationDialog(QDialog):
     def raster_extent_combo_2(self, layer):
         self.ui.raster_extent_combo_2.addItem(layer)
 
-    def cloud_mask_raster_combo(self, layer):
-        self.ui.classification_name_combo_4.addItem(layer)
 
-    def reference_raster_combo(self, layer):
-        self.ui.reference_raster_name_combo.addItem(layer)
 
-    def project_raster_combo(self, layer):
-        self.ui.raster_align_comboBox.addItem(layer)
 
-    def class_field_combo(self, field):
-        self.ui.class_field_comboBox.addItem(field)
 
-    def class_field_combo_2(self, field):
-        self.ui.class_field_comboBox_2.addItem(field)
 
-    def class_field_combo_3(self, field):
-        self.ui.class_field_comboBox_3.addItem(field)
 
     def reference_field_combo(self, field):
         self.ui.field_comboBox.addItem(field)
 
-    def statistic_name_combo2(self, field):
-        self.ui.statistic_name_combobox_2.addItem(field)
 
     def vector_edit_raster_combo(self, vector):
         self.ui.vector_name_combo_2.addItem(vector)
 
-    def edit_raster_combo(self, layer):
-        self.ui.edit_raster_name_combo.addItem(layer)
 
-    def zonal_stat_raster_combo(self, layer):
-        self.ui.classification_name_combo_5.addItem(layer)
 
     def vector_zonal_raster_combo(self, vector):
         self.ui.reference_name_combo_3.addItem(vector)
@@ -162,32 +126,6 @@ class RasterClassificationDialog(QDialog):
         self.ui.field_comboBox_2.addItem(field)
 
 
-# create the dialog
-class DockClassDialog(QDockWidget):
-    # noinspection PyArgumentList,PyUnusedLocal
-    def __init__(self, parent, iface):
-        QDockWidget.__init__(self)
-        # initialize plugin directory
-        try:
-            self.plugin_dir = QFileInfo(
-                QgsApplication.qgisUserDatabaseFilePath()
-            ).path() + '/python/plugins/RasterClassification'
-        except Exception as err:
-            str(err)
-            return
-        # locale name
-        self.locale_name = QSettings().value('locale/userLocale')[0:2]
-        # path to locale
-        locale_path = ''
-        if QFileInfo(self.plugin_dir).exists():
-            locale_path = ('%s/i18n/raster_classification_%s.qm'
-                           % (self.plugin_dir, self.locale_name))
-        if QFileInfo(locale_path).exists() and use_qm_files():
-            self.translator = QTranslator()
-            self.translator.load(locale_path)
-            QCoreApplication.installTranslator(self.translator)
-        self.ui = Ui_DockClass()
-        self.ui.setupUi(self)
 
 
 # create the dialog
@@ -526,34 +464,6 @@ class DockClassSimplifiedDialog(QDockWidget):
             str(err)
 
 
-# create the dialog
-# noinspection PyMissingConstructor
-class ScatterPlotDialog(QDialog):
-    # noinspection PyArgumentList
-    def __init__(self):
-        QDockWidget.__init__(self)
-        try:
-            self.setWindowFlags(Qt.WindowType.Window)
-        except Exception as err:
-            str(err)
-            return
-        # initialize plugin directory
-        self.plugin_dir = QFileInfo(
-            QgsApplication.qgisUserDatabaseFilePath()
-        ).path() + '/python/plugins/RasterClassification'
-        # locale name
-        self.locale_name = QSettings().value('locale/userLocale')[0:2]
-        # path to locale
-        locale_path = ''
-        if QFileInfo(self.plugin_dir).exists():
-            locale_path = ('%s/i18n/raster_classification_%s.qm'
-                           % (self.plugin_dir, self.locale_name))
-        if QFileInfo(locale_path).exists() and use_qm_files():
-            self.translator = QTranslator()
-            self.translator.load(locale_path)
-            QCoreApplication.installTranslator(self.translator)
-        self.ui = Ui_ScatterPlot()
-        self.ui.setupUi(self)
 
 
 # noinspection PyMissingConstructor

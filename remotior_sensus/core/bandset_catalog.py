@@ -280,12 +280,6 @@ class BandSet(object):
         cfg.logger.log.debug('absolute_paths: %s' % str(absolute_paths))
         return absolute_paths
 
-    def get_path(self, band_number) -> Union[str, None]:
-        """Gets the absolute path of band."""
-        if self.bands is not None:
-            return self.bands[self.bands['band_number'] == band_number]['path']
-        else:
-            return None
 
     def get_absolute_path(self, band_number) -> str:
         """Gets the absolute path of band."""
@@ -391,20 +385,6 @@ class BandSet(object):
                 result = bands['band_number'].tolist()
         return result
 
-    def get_band_alias(self) -> list:
-        """Gets bands alias (with band number) used in band_calc
-
-        Returns:
-            the list of band aliases.
-        """
-        result = []
-        if self.bands is not None:
-            for i in range(1, len(self.bands) + 1):
-                if not cfg.action:
-                    break
-                result.append('%s%s' % (cfg.variable_band_name, i))
-        cfg.logger.log.debug('result: %s' % str(result))
-        return result
 
     # noinspection PyTypeHints
     def get_band(self, number=None) -> np.array:
@@ -1254,38 +1234,6 @@ class BandSet(object):
             cfg.messages.error(str(err))
             return None
 
-    def calc(self, *args, **kwargs):
-        """Executes a calculation.
-
-        Executes a calculation directly from the BandSet, passing the argument input_bands.
-        The arguments are related to the function.
-        Bands in the BandSet can be reffered in the expressions such as "b1" or "b2";
-        also band alias such as "#RED#" and expression alias such as #NDVI# can be used.
-
-        Args:
-            kwargs: See :func:`~remotior_sensus.tools.band_calc`.
-
-        Returns:
-            The output of the function.
-
-        Examples:
-            Given that a session was previously started
-                >>> import remotior_sensus
-                >>> rs = remotior_sensus.Session()
-                >>> bandset = rs.bandset.create(
-                ...     ['file1.tif', 'file2.tif'], wavelengths=['Sentinel-2'],
-                ... )
-
-            Calculation of sum of the first two bands and saving the output in temporary directory
-                >>> output_object = bandset.calc('"b1" + "b2"')
-
-            Calculation of NDVI
-                >>> output_object = bandset.calc(output_path='output.tif', 
-                ...     expression_string='("#NIR#" - "#RED#") / ("#NIR#" + "#RED#")'
-                ... )
-        """  # noqa: E501
-        kwargs['input_bands'] = self
-        return cfg.band_calc(*args, **kwargs)
 
     def classification(self, *args, **kwargs):
         """Executes a classification.
@@ -1302,153 +1250,11 @@ class BandSet(object):
         kwargs['input_bands'] = self
         return cfg.band_classification(*args, **kwargs)
 
-    def combination(self, *args, **kwargs):
-        """Band combination.
 
-        Combines classifications directly from the BandSet, in order to get a raster where each value 
-        corresponds to a combination of class values.
-        The arguments are related to the function.
 
-        Args:
-            kwargs: See :func:`~remotior_sensus.tools.band_combination`.
 
-        Returns:
-            The output of the function.
 
-        Examples:
-            Given that a session was previously started
-                >>> import remotior_sensus
-                >>> rs = remotior_sensus.Session()
-                >>> bandset = rs.bandset.create(['file1.tif', 'file2.tif'])
 
-            Combination using two rasters having paths path_1 and path_2
-                >>> combination = bandset.combination(output_path='output_path')
-        """  # noqa: E501
-        kwargs['input_bands'] = self
-        return cfg.band_combination(*args, **kwargs)
-
-    def dilation(self, *args, **kwargs):
-        """Band dilation.
-
-        Band dilation directly from the BandSet, passing the argument input_bands.
-        The arguments are related to the function.
-
-        Args:
-            kwargs: See :func:`~remotior_sensus.tools.band_dilation`.
-
-        Returns:
-            The output of the function.
-
-        Examples:
-            Given that a session was previously started
-                >>> import remotior_sensus
-                >>> rs = remotior_sensus.Session()
-                >>> bandset = rs.bandset.create(['file1.tif', 'file2.tif'])
-
-            Dilation
-                >>> dilation = bandset.dilation(output_path='directory_path',
-                ...     value_list=[1, 2], size=5)
-        """  # noqa: E501
-        kwargs['input_bands'] = self
-        return cfg.band_dilation(*args, **kwargs)
-
-    def erosion(self, *args, **kwargs):
-        """Band erosion.
-
-        Band erosion directly from the BandSet, passing the argument input_bands.
-        The arguments are related to the function.
-
-        Args:
-            kwargs: See :func:`~remotior_sensus.tools.band_erosion`.
-
-        Returns:
-            The output of the function.
-
-        Examples:
-            Given that a session was previously started
-                >>> import remotior_sensus
-                >>> rs = remotior_sensus.Session()
-                >>> bandset = rs.bandset.create(['file1.tif', 'file2.tif'])
-
-            Erosion
-                >>> erosion = bandset.erosion(output_path='directory_path',
-                ...     value_list=[1, 2], size=1)
-        """  # noqa: E501
-        kwargs['input_bands'] = self
-        return cfg.band_erosion(*args, **kwargs)
-
-    def pca(self, *args, **kwargs):
-        """Band PCA.
-
-        Band PCA directly from the BandSet, passing the argument input_bands.
-        The arguments are related to the function.
-
-        Args:
-            kwargs: See :func:`~remotior_sensus.tools.band_pca`.
-
-        Returns:
-            The output of the function.
-
-        Examples:
-            Given that a session was previously started
-                >>> import remotior_sensus
-                >>> rs = remotior_sensus.Session()
-                >>> bandset = rs.bandset.create(['file1.tif', 'file2.tif'])
-
-            PCA
-                >>> pca = bandset.pca(output_path='directory_path')
-        """  # noqa: E501
-        kwargs['input_bands'] = self
-        return cfg.band_pca(*args, **kwargs)
-
-    def sieve(self, *args, **kwargs):
-        """Band sieve.
-
-        Band sieve directly from the BandSet, passing the argument input_bands.
-        The arguments are related to the function.
-
-        Args:
-            kwargs: See :func:`~remotior_sensus.tools.band_sieve`.
-
-        Returns:
-            The output of the function.
-
-        Examples:
-            Given that a session was previously started
-                >>> import remotior_sensus
-                >>> rs = remotior_sensus.Session()
-                >>> bandset = rs.bandset.create(['file1.tif', 'file2.tif'])
-
-            Sieve
-                >>> sieve = bandset.sieve(output_path='directory_path', size=3)
-        """  # noqa: E501
-        kwargs['input_bands'] = self
-        return cfg.band_sieve(*args, **kwargs)
-
-    def neighbor_pixels(self, *args, **kwargs):
-        """Band neighbor pixels.
-
-        Band neighbor pixels directly from the BandSet, passing the argument input_bands.
-        The arguments are related to the function.
-
-        Args:
-            kwargs: See :func:`~remotior_sensus.tools.band_neighbor_pixels`.
-
-        Returns:
-            The output of the function.
-
-        Examples:
-            Given that a session was previously started
-                >>> import remotior_sensus
-                >>> rs = remotior_sensus.Session()
-                >>> bandset = rs.bandset.create(['file1.tif', 'file2.tif'])
-
-            Neighbor pixels
-                >>> neighbor = bandset.neighbor_pixels(output_path='directory_path',
-                ... size=10, circular_structure=True, stat_name='Sum')
-        """  # noqa: E501
-        kwargs['input_bands'] = self
-        return cfg.band_neighbor_pixels(*args, **kwargs)
 
     @staticmethod
     def generate_uid() -> str:
@@ -2009,45 +1815,6 @@ class BandSetCatalog(object):
         )
         return result
 
-    def get_bbox(self, bandset_number: int = None) -> Union[None, list]:
-        """Get BandSet bounding box.
-
-        This function gets the bounding box coordinates of a BandSet.
-
-        Args:
-            bandset_number: number of the BandSet
-
-        Returns:
-            The bounding box coordinates [left, top, right, bottom].
-
-        Examples:
-            Get the bounding box of the BandSet 1.
-                >>> catalog = BandSetCatalog()
-                >>> names = catalog.get_bandset(bandset_number=1)
-                >>> print(names)
-                ['file1', 'file2', 'file3']
-
-            Get the BandSet 1.
-                >>> catalog = BandSetCatalog()
-                >>> bandset_1 = catalog.get_bandset(bandset_number=1)
-                >>> print(bandset_1)
-                BandSet
-        """
-        bbox = None
-        box_coordinates = self.get_bandset(bandset_number).box_coordinate_list
-        if box_coordinates is None:
-            try:
-                left = min(self.get_bandset(bandset_number, 'left'))
-                top = max(self.get_bandset(bandset_number, 'top'))
-                right = max(self.get_bandset(bandset_number, 'right'))
-                bottom = min(self.get_bandset(bandset_number, 'bottom'))
-                bbox = [left, top, right, bottom]
-            except Exception as err:
-                cfg.logger.log.error(str(err))
-                cfg.messages.error(str(err))
-        else:
-            bbox = box_coordinates
-        return bbox
 
     def reset(self):
         """Resets the BandSets Catalog.
@@ -2160,32 +1927,6 @@ class BandSetCatalog(object):
         cfg.logger.log.debug('end')
         return bst
 
-    def _load(self, bandset_catalog, current_bandset: int = 1):
-        """Loads a BandSet Catalog.
-
-        This function loads a BandSet Catalog, and optionally defines the
-        current BandSet.
-
-        Args:
-            bandset_catalog: BandSet Catalog
-            current_bandset: optional integer number of current BandSet
-        """
-        cfg.logger.log.debug('start')
-        self.reset()
-        # copy BandSet Catalog
-        bandset_catalog_copy = deepcopy(bandset_catalog)
-        if bandset_catalog_copy.bandsets is not None:
-            self.bandsets = bandset_catalog_copy.bandsets
-            # set current catalog
-            for b in self.bandsets:
-                self.bandsets[b].catalog = self
-        if bandset_catalog_copy.bandsets_table is None:
-            # empty BandSet
-            self._empty_bandset()
-        else:
-            self.bandsets_table = bandset_catalog_copy.bandsets_table
-        self.current_bandset = current_bandset
-        cfg.logger.log.debug('end')
 
     def move_band_in_bandset(
             self, band_number_input: int, band_number_output: int,
@@ -2590,12 +2331,6 @@ class BandSetCatalog(object):
         bandset.reset()
         cfg.logger.log.debug('clear bandset')
 
-    def print_bandset(self, bandset_number=None):
-        """Function to print a BandSet bands and attributes."""
-        cfg.logger.log.debug('print bandset')
-        bandset = self.get_bandset(bandset_number)
-        # bandset
-        bandset.print()
 
     def export_bandset_as_xml(self, bandset_number, output_path=None):
         """Function to export a BandSet as xml."""
@@ -3062,34 +2797,6 @@ class BandSetCatalog(object):
                     cfg.logger.log.error(str(err))
             bandset_x.sort_bands_by_wavelength()
 
-    # set band path
-    def set_paths(self, path_list, bandset_number=None):
-        """Sets BandSet band path.
-
-        Sets BandSet band path based on list of paths.
-
-        Args:
-            path_list: list of string paths.
-            bandset_number: number of BandSet; if None, current BandSet is used.
-
-        Examples:
-            Set BandSet 1 satellite wavelengths.
-                >>> catalog = BandSetCatalog()
-                >>> catalog.set_satellite_wavelength(
-                ... bandset_number=1, path_list=['path_1', 'path_2']
-                ... )
-        """  # noqa: E501
-        bandset_x = self.get_bandset_by_number(bandset_number)
-        bands = bandset_x.bands
-        if bands is not None:
-            for band in bands:
-                if not cfg.action:
-                    break
-                try:
-                    path = path_list[band['band_number'] - 1]
-                    band['path'] = path
-                except Exception as err:
-                    cfg.logger.log.error(str(err))
 
     def get_root_directory(self, bandset_number: Optional[int] = None) -> str:
         """Gets BandSet root directory.

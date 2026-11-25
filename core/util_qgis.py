@@ -196,15 +196,6 @@ def create_group(group_name):
     return group
 
 
-# Remove layer from map
-def remove_group(group_name):
-    root = get_qgis_project().layerTreeRoot()
-    group = root.findGroup(group_name)
-    try:
-        if group is not None:
-            root.removeChildNode(group)
-    except Exception as err:
-        str(err)
 
 
 # Set group visible
@@ -286,46 +277,8 @@ def select_layer_by_name(layer_name, filter_raster=None):
     return None
 
 
-# file path
-def get_file_path(layer_name):
-    try:
-        layer = select_layer_by_name(layer_name)
-        path = cfg.util_qgis.qgis_layer_source(layer)
-        return path
-    except Exception as err:
-        str(err)
 
 
-# set map extent from layer
-def set_map_extent_from_layer(layer):
-    ext = layer.extent()
-    upper_left_point = create_qgis_point(ext.xMinimum(), ext.yMaximum())
-    lower_right_point = create_qgis_point(ext.xMaximum(), ext.yMinimum())
-    point_1 = upper_left_point
-    point_2 = lower_right_point
-    # project extent
-    crs = get_crs_qgis(layer)
-    qgis_crs = get_qgis_crs()
-    if crs is None:
-        crs = qgis_crs
-    # projection of input point from raster's crs to project's crs
-    if qgis_crs != crs:
-        try:
-            point_1 = cfg.utils.project_qgis_point_coordinates(
-                upper_left_point, crs, qgis_crs
-            )
-            point_2 = cfg.utils.project_qgis_point_coordinates(
-                lower_right_point, crs, qgis_crs
-            )
-            if point_1 is False:
-                point_1 = upper_left_point
-                point_2 = lower_right_point
-        # Error latitude or longitude exceeded limits
-        except Exception as err:
-            str(err)
-            point_1 = upper_left_point
-            point_2 = lower_right_point
-    cfg.map_canvas.setExtent(QgsRectangle(point_1, point_2))
 
 
 # save a qml style
@@ -351,55 +304,8 @@ def edit_layer_features(layer, expression, field_name, value):
         return False
 
 
-# zoom to band set
-def zoom_to_bandset():
-    bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
-    bandset_x = cfg.bandset_catalog.get(bandset_number)
-    band_count = bandset_x.get_band_count()
-    if band_count == 0:
-        return
-    try:
-        crs = cfg.bandset_catalog.get_bandset(bandset_number).bands[0].crs
-        left = cfg.bandset_catalog.get_bandset(bandset_number).bands[0].left
-        top = cfg.bandset_catalog.get_bandset(bandset_number).bands[0].top
-        right = cfg.bandset_catalog.get_bandset(bandset_number).bands[0].right
-        bottom = cfg.bandset_catalog.get_bandset(bandset_number).bands[
-            0].bottom
-        upper_left_point = create_qgis_point(left, top)
-        lower_right_point = create_qgis_point(right, bottom)
-        point_1 = upper_left_point
-        point_2 = lower_right_point
-    except Exception as err:
-        cfg.logger.log.error(str(err))
-        return
-    qgis_crs = get_qgis_crs()
-    if crs is None:
-        crs = qgis_crs
-    # projection of input point from raster's crs to project's crs
-    if cfg.util_gdal.compare_crs(crs, qgis_crs) is False:
-        try:
-            point_1 = cfg.utils.project_qgis_point_coordinates(
-                upper_left_point, crs, qgis_crs
-            )
-            point_2 = cfg.utils.project_qgis_point_coordinates(
-                lower_right_point, crs, qgis_crs
-            )
-            if point_1 is False:
-                point_1 = upper_left_point
-                point_2 = lower_right_point
-        # Error latitude or longitude exceeded limits
-        except Exception as err:
-            str(err)
-            point_1 = upper_left_point
-            point_2 = lower_right_point
-    cfg.map_canvas.setExtent(QgsRectangle(point_1, point_2))
-
-    cfg.map_canvas.refresh()
 
 
-# Add layer to map
-def add_layer_to_map(layer):
-    get_qgis_project().addMapLayers([layer])
 
 
 # Add layer
@@ -440,15 +346,8 @@ def create_qgis_point(x, y):
     return QgsPointXY(x, y)
 
 
-# create reference system from wkt string
-def create_qgis_reference_system_from_wkt(wkt):
-    return QgsCoordinateReferenceSystem.fromWkt(wkt)
 
 
-# layer source
-def qgis_layer_source(layer):
-    source = layer.source().split("|layername=")[0]
-    return source
 
 
 # set layer color for ROIs
@@ -489,23 +388,8 @@ def training_symbol(layer, class_colors=None, field=None):
     refresh_layer_symbology(layer)
 
 
-# get ID by attributes
-def get_id_by_attributes(layer, field, attribute):
-    ids = []
-    features = layer.getFeatures(
-        QgsFeatureRequest().setFilterExpression(
-            '"%s" = \'%s\'' % (str(field), str(attribute))
-        )
-    )
-    for feature in features:
-        ids.append(feature.id())
-    return ids
 
 
-# Get last feature id
-def get_last_feature_id(layer):
-    *_, last_feature = layer.getFeatures()
-    return last_feature.id()
 
 
 # Get a feature from a shapefile by feature ID
@@ -519,26 +403,6 @@ def get_feature_by_id(layer, feature_id):
         return False
 
 
-# copy feature by ID to layer
-def copy_feature_to_qgis_layer(source_layer, feature_id, target_layer):
-    feature = get_feature_by_id(source_layer, feature_id)
-    # get geometry
-    geometry = feature.geometry()
-    feature.setGeometry(geometry)
-    try:
-        fields = target_layer.fields()
-        feature.initAttributes(fields.count())
-        if feature.hasGeometry() is not True:
-            pass
-        else:
-            # copy polygon to vector
-            target_layer.startEditing()
-            target_layer.addFeature(feature)
-            target_layer.commitChanges()
-            target_layer.dataProvider().createSpatialIndex()
-            target_layer.updateExtents()
-    except Exception as err:
-        str(err)
 
 
 # set raster color composite
@@ -601,36 +465,7 @@ def set_raster_contrast_enhancement(
         cfg.logger.log.error(str(err))
 
 
-# set local cumulative cut stretch
-def set_raster_cumulative_stretch():
-    if (cfg.project_registry[cfg.reg_active_bandset_number]
-            in cfg.virtual_bandset_dict):
-        layer = cfg.virtual_bandset_dict[
-            cfg.project_registry[cfg.reg_active_bandset_number]
-        ]
-        set_raster_contrast_enhancement(layer, cfg.cumulative_cut_contrast)
-        cfg.default_contrast = cfg.cumulative_cut_contrast
 
 
-# set local standard deviation stretch
-def set_raster_std_dev_stretch():
-    if (cfg.project_registry[cfg.reg_active_bandset_number]
-            in cfg.virtual_bandset_dict):
-        layer = cfg.virtual_bandset_dict[
-            cfg.project_registry[cfg.reg_active_bandset_number]
-        ]
-        set_raster_contrast_enhancement(layer, cfg.std_dev_contrast)
-        cfg.default_contrast = cfg.std_dev_contrast
 
 
-def activate_layer(layer_name):
-    group = group_index(layer_name)
-    if group is not None:
-        visible = group.isVisible()
-        set_group_visible(group, not visible)
-    else:
-        layer = select_layer_by_name(layer_name)
-        root = get_qgis_project().layerTreeRoot()
-        layer = root.findLayer(layer.id())
-        visible = layer.itemVisibilityChecked()
-        QgsLayerTreeNode.setItemVisibilityChecked(layer, not visible)

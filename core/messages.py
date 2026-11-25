@@ -30,9 +30,6 @@ cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 ui_name = 'semiautomaticclassificationplugin'
 
 
-# message box information
-def msg_box(title, message):
-    QMessageBox.information(cfg.iface.mainWindow(), str(title), str(message))
 
 
 # message box error
@@ -107,9 +104,6 @@ def error(message):
 ''' Information '''
 
 
-def msg_test(message):
-    # noinspection PyTypeChecker
-    msg_box(QApplication.translate(ui_name, 'Test results'), message)
 
 
 def msg_inf_1():
@@ -136,9 +130,6 @@ def msg_inf_4():
     msg_bar_info(QApplication.translate(ui_name, 'Training vector exported'))
 
 
-def msg_inf_5():
-    # noinspection PyTypeChecker
-    msg_bar_info(QApplication.translate(ui_name, 'Enter class values'))
 
 
 def msg_inf_6():
@@ -151,11 +142,6 @@ def msg_inf_7():
     msg_bar_info(QApplication.translate(ui_name, 'Training Band set updated'))
 
 
-def msg_inf_8():
-    # noinspection PyTypeChecker
-    msg_bar_info(QApplication.translate(
-        ui_name, 'Please restart QGIS for loading the interface'
-    ))
 
 
 """ Errors """
@@ -166,9 +152,6 @@ def msg_err_1():
     msg_bar_error(QApplication.translate(ui_name, 'Process failed'))
 
 
-def msg_err_2():
-    # noinspection PyTypeChecker
-    msg_bar_error(QApplication.translate(ui_name, 'Bandset not found'))
 
 
 def msg_err_3():
@@ -194,9 +177,6 @@ def msg_err_6():
     msg_bar_error(QApplication.translate(ui_name, 'Unable to calculate'))
 
 
-def msg_err_7():
-    # noinspection PyTypeChecker
-    msg_bar_error(QApplication.translate(ui_name, 'Expression error'))
 
 
 def msg_err_8():
@@ -208,20 +188,11 @@ def msg_err_8():
     )
 
 
-def msg_err_9(layer=None):
-    # noinspection PyTypeChecker
-    msg_bar_error(
-        QApplication.translate(ui_name, f'Unable to find layer {layer}')
-    )
 
 
 """ Warnings """
 
 
-def msg_war_1():
-    # noinspection PyTypeChecker
-    msg_bar_warning(QApplication.translate(ui_name,
-                                           'Pixel resolution undefined'))
 
 
 def msg_war_2():
@@ -278,6 +249,3 @@ def msg_war_8():
     msg_bar_warning(QApplication.translate(ui_name, 'No tool selected'))
 
 
-def msg_war_9():
-    # noinspection PyTypeChecker
-    msg_bar_warning(QApplication.translate(ui_name, 'Check the expression'))

@@ -705,11 +705,6 @@ class SpectralSignaturePlot:
             for signature in self.plot_catalog.catalog:
                 self.plot_catalog.catalog[signature].selected = 0
 
-    # show signature plot
-    def show_signature_plot_t(self):
-        self.signature_list_plot_table()
-        cfg.spectral_plot_dlg.close()
-        cfg.spectral_plot_dlg.show()
 
     # set plot legend max length
     def set_plot_legend_length(self):

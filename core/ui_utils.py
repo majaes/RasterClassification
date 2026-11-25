@@ -296,16 +296,13 @@ class UiUtils:
     @staticmethod
     def set_interface(state):
         # classification dock
-        if cfg.simplified:
-            cfg.dock_class_simpl_dlg.setEnabled(state)
-        else:
-            cfg.dock_class_dlg.setEnabled(state)
-            # toolbar
-            cfg.working_toolbar.setEnabled(state)
+        cfg.dock_class_simpl_dlg.setEnabled(state)
         # main interface
         cfg.dialog.setEnabled(state)
 
         if cfg.dialog is None:
+            from ..ui.raster_classification_dialog import (
+                RasterClassificationDialog)
             cfg.dialog = RasterClassificationDialog()
 
     # send SMTP message

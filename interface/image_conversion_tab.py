@@ -43,21 +43,6 @@ def input_image():
     populate_table(input_path=path)
 
 
-# metadata input
-# noinspection PyTypeChecker
-def input_metadata():
-    metadata = cfg.util_qt.get_open_file(
-        None, QApplication.translate('semiautomaticclassificationplugin',
-                                     'Select a MTL file'), '',
-        # 'MTL file .txt (*.txt);;MTL file .met (*.met);;MTD file .xml (*.xml)'
-        'MTD file .xml (*.xml)'
-    )
-    cfg.dialog.ui.label_27.setText(str(metadata))
-    if len(cfg.dialog.ui.label_26.text()) > 0:
-        populate_table(
-            input_path=cfg.dialog.ui.label_26.text(),
-            metadata_file_path=metadata
-        )
 
 
 # populate table
@@ -109,18 +94,7 @@ def perform_conversion(output_path=None, load_in_qgis=False):
     if output_path is None or output_path is False:
         output_path = cfg.util_qt.get_existing_directory()
     if output_path is not False and cfg.preprocess_band_table is not None:
-        if cfg.simplified:
-            add_bandset = False
-        elif cfg.dialog.ui.create_bandset_checkBox.isChecked() is True:
-            if cfg.dialog.ui.add_new_bandset_radioButton_1.isChecked() is True:
-                # added new bandset
-                add_bandset = True
-            else:
-                # replaced bandset
-                add_bandset = False
-        else:
-            # no added bandset
-            add_bandset = None
+        add_bandset = False
         if cfg.dialog.ui.DOS1_checkBox.isChecked() is True:
             dos1_correction = True
         else:
@@ -159,53 +133,6 @@ def perform_conversion(output_path=None, load_in_qgis=False):
         )
 
 
-# remove bands
-# noinspection PyTypeChecker
-def remove_highlighted_band():
-    # noinspection PyTypeChecker
-    answer = cfg.util_qt.question_box(
-        QApplication.translate('semiautomaticclassificationplugin',
-                               'Remove rows'),
-        QApplication.translate(
-            'semiautomaticclassificationplugin',
-            'Are you sure you want to remove highlighted rows from the table?'
-        )
-    )
-    if answer is True:
-        table = cfg.dialog.ui.bands_tableWidget
-        # list of item to remove
-        rows = []
-        for index in table.selectedIndexes():
-            rows.append(index.row())
-        selected_rows = list(set(rows))
-        band_name_list = []
-        count = table.rowCount()
-        for row in range(count):
-            if row not in selected_rows:
-                band_name_list.append(str(table.item(row, 3).text()))
-        enum_list = []
-        for n, band_name in enumerate(cfg.preprocess_band_table.band_name):
-            if str(band_name) in band_name_list:
-                enum_list.append(n)
-        cfg.preprocess_band_table = cfg.preprocess_band_table[enum_list]
-        cfg.util_qt.clear_table(table)
-        table.blockSignals(True)
-        table.setSortingEnabled(False)
-        total_products = cfg.preprocess_band_table.shape[0]
-        for product in range(total_products):
-            # add rows
-            count = table.rowCount()
-            table.setRowCount(count + 1)
-            n = 0
-            for field in cfg.preprocess_band_table.dtype.names:
-                if str(cfg.preprocess_band_table[field][product]) != 'None':
-                    cfg.util_qt.add_table_item(
-                        table, str(cfg.preprocess_band_table[field][product]),
-                        count, n
-                    )
-                n += 1
-        table.setSortingEnabled(True)
-        table.blockSignals(False)
 
 
 # set script button
@@ -263,4 +190,3 @@ def set_script():
             '"True"', 'True'
         )
     )
-    cfg.input_interface.script_tab()

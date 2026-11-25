@@ -43,21 +43,6 @@ def prepare_plot(x_label=None, y_label=None):
     return ax
 
 
-# prepare plot
-def prepare_scatter_plot(x_label=None, y_label=None):
-    if x_label is None:
-        x_label = 'Band X'
-    if y_label is None:
-        y_label = 'Band Y'
-    figure, ax = plt.subplots()
-    # Set empty ticks
-    ax.set_xticks([])
-    ax.set_yticks([])
-    ax.set_aspect('auto')
-    ax.grid('on')
-    ax.set_xlabel(x_label)
-    ax.set_ylabel(y_label)
-    return ax
 
 
 # add list of values to plot
@@ -121,30 +106,5 @@ def create_plot(
         return True
 
 
-# create plot
-def create_scatter_plot(
-        ax, plots, plot_names, x_ticks=None, y_ticks=None
-):
-    if x_ticks is None:
-        x_ticks = [0, 1]
-    if y_ticks is None:
-        y_ticks = [0, 1]
-    ax.legend(
-        plots, plot_names, bbox_to_anchor=(0.0, 0.0, 1.1, 1.0), loc=1,
-        borderaxespad=0.
-    ).set_draggable(True)
-    ax.set_xticks(x_ticks)
-    ax.set_yticks(y_ticks)
-    plt.show()
 
 
-# add values to plot
-def add_values_to_scatter_plot(histogram, ax):
-    pal = mpl_plot.get_cmap('rainbow')
-    pal.set_under('w', 0.0)
-    plot = ax.imshow(
-        histogram[0].T, origin='lower', interpolation='none',
-        extent=[histogram[1][0], histogram[1][-1], histogram[2][0],
-                histogram[2][-1]], cmap=pal, vmin=0.001
-    )
-    return plot

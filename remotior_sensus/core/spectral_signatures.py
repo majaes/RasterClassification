@@ -168,13 +168,7 @@ class SpectralSignaturesCatalog(object):
         )
         cfg.logger.log.debug('end')
 
-    # sets crs from bandset
-    def set_crs_from_bandset(self, bandset):
-        self.crs = bandset.crs
 
-    # sets macroclass color string
-    def set_macroclass_color(self, macroclass_id, color_string):
-        self.macroclasses_color_string[macroclass_id] = color_string
 
     # add spectral signature reference to Spectral Signatures Catalog
     def signature_to_catalog(
@@ -203,72 +197,6 @@ class SpectralSignaturesCatalog(object):
         if macroclass_id not in self.macroclasses_color_string:
             self.macroclasses_color_string[macroclass_id] = color_string
 
-    # calculate scatter plot for geometry from Spectral Signatures Catalog
-    def calculate_scatter_plot_by_id(
-            self, signature_id: str, band_x, band_y,
-            decimal_round: int = None, plot=False, n_processes: int = None
-    ):
-        cfg.logger.log.debug('start')
-        cfg.logger.log.debug(
-            'signature_id: %s; decimal_round: %s'
-            % (signature_id, decimal_round)
-        )
-        geometry = self.table[
-            self.table['signature_id'] == signature_id].geometry[0]
-        # geometry
-        if geometry == 1:
-            if (not files_directories.is_file(self.geometry_file)
-                    and 'vsimem' not in self.geometry_file):
-                cfg.logger.log.error(
-                    'geometry file not found: %s' % self.geometry_file
-                )
-                raise Exception('geometry file not found')
-            vector = raster_vector.get_polygon_from_vector(
-                vector_path=self.geometry_file,
-                attribute_filter="%s = '%s'" % (
-                    cfg.uid_field_name, signature_id)
-            )
-            value_list = self.calculate_scatter_plot(
-                roi_path=vector, band_x=band_x, band_y=band_y,
-                n_processes=n_processes
-            )
-            if value_list is False:
-                cfg.logger.log.error('unable to calculate')
-                cfg.messages.error('unable to calculate')
-                return False
-            # calculate histogram
-            histogram = shared_tools.calculate_2d_histogram(
-                x_values=value_list[0], y_values=value_list[1],
-                decimal_round=decimal_round
-            )
-            if plot:
-                ax = plot_tools.prepare_scatter_plot()
-                plots = plot_tools.add_values_to_scatter_plot(
-                    histogram=histogram, ax=ax
-                )
-                macroclass_value = self.table[
-                    self.table['signature_id'] == signature_id].macroclass_id[
-                    0]
-                macroclass_name = self.macroclasses[macroclass_value]
-                class_value = self.table[
-                    self.table['signature_id'] == signature_id].class_id[
-                    0]
-                class_name = self.table[
-                    self.table['signature_id'] == signature_id].class_name[
-                    0]
-                plot_names = '%s#%s %s#%s' % (
-                    macroclass_value, macroclass_name, class_value, class_name
-                )
-                plot_tools.create_scatter_plot(
-                    ax=ax, plots=[plots], plot_names=[plot_names]
-                )
-            cfg.logger.log.debug('end')
-            return histogram
-        # not geometry
-        else:
-            cfg.logger.log.error('unable to calculate, missing geometry')
-            cfg.messages.error('unable to calculate, missing geometry')
-            return False
 
     # remove spectral signature and geometry from Spectral Signatures Catalog
     def remove_signature_by_id(self, signature_id: str):
@@ -1473,29 +1401,6 @@ class SpectralSignaturePlotCatalog(object):
                 property_list.append(self.catalog[signature].wavelength)
         return property_list
 
-    def get_signature_standard_deviation(self, selected=True) -> list:
-        """Gets signature standard deviation in the catalog.
-
-        This function gets signature standard deviation from the catalog.
-
-        Returns:
-            The list of values.
-
-        """
-        property_list = []
-        for signature in self.catalog:
-            if not cfg.action:
-                break
-            if selected:
-                if self.catalog[signature].selected == 1:
-                    property_list.append(
-                        self.catalog[signature].standard_deviation
-                    )
-            else:
-                property_list.append(
-                    self.catalog[signature].standard_deviation
-                )
-        return property_list
 
     def get_signature_color(self, selected=True) -> list:
         """Gets signature color in the catalog.
@@ -1521,29 +1426,6 @@ class SpectralSignaturePlotCatalog(object):
                 )
         return property_list
 
-    def get_generic_attributes(self, selected=True) -> list:
-        """Gets generic attributes in the catalog.
-
-        This function gets generic attributes from the catalog.
-
-        Returns:
-            The list of values.
-
-        """
-        property_list = []
-        for signature in self.catalog:
-            if not cfg.action:
-                break
-            if selected:
-                if self.catalog[signature].selected == 1:
-                    property_list.append(
-                        self.catalog[signature].attributes
-                    )
-            else:
-                property_list.append(
-                    self.catalog[signature].attributes
-                )
-        return property_list
 
 
 # generate signature id

@@ -201,8 +201,8 @@ class USGSSpectralLib:
                         values=reflectance, wavelengths=wavelength,
                         standard_deviations=std, class_name=library_name
                     )
-                    cfg.dock_class_dlg.ui.undo_save_Button.setEnabled(True)
-                    cfg.dock_class_dlg.ui.redo_save_Button.setEnabled(False)
+                    cfg.dock_class_simpl_dlg.ui.undo_save_Button.setEnabled(True)
+                    cfg.dock_class_simpl_dlg.ui.redo_save_Button.setEnabled(False)
                 cfg.ui_utils.remove_progress_bar()
                 cfg.logger.log.debug(
                     'add_signature_to_catalog: %s' % library_name

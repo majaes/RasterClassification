@@ -64,18 +64,11 @@ from remotior_sensus.core.spectral_signatures import (
 )
 from remotior_sensus.core.temporary import Temporary
 from remotior_sensus.tools import (
-    band_calc, band_classification, band_clip, band_combination, band_dilation,
-    band_erosion, band_neighbor_pixels, band_pca, band_sieve, band_resample,
-    band_stack, band_mask, raster_split, band_clustering,
-    band_spectral_distance, band_super_resolution,
-    cross_classification, download_products, mosaic, preprocess_products,
-    raster_edit, raster_label, raster_reclassification, raster_report,
-    raster_to_vector, raster_zonal_stats, vector_to_raster
+    band_classification, download_products, preprocess_products
 )
 from remotior_sensus.util import (
     dates_times, system_tools, files_directories, download_tools, shared_tools
 )
-from remotior_sensus.ui.jupyter import JupyterInterface
 
 
 class Session(object):
@@ -280,79 +273,17 @@ class Session(object):
             self.output_manager = OutputManager
             self.table_manager = table_manager
             # available tools
-            self.band_calc = band_calc.band_calc
-            self.configurations.band_calc = band_calc.band_calc
             self.band_classification = band_classification.band_classification
             self.configurations.band_classification = (
                 band_classification.band_classification
             )
-            self.band_super_resolution = (
-                band_super_resolution.band_super_resolution)
-            self.configurations.band_super_resolution = (
-                band_super_resolution.band_super_resolution
-            )
             self.classifier = band_classification.Classifier
-            self.band_clustering = band_clustering.band_clustering
-            self.configurations.band_clustering = (
-                band_clustering.band_clustering
-            )
-            self.band_combination = band_combination.band_combination
-            self.configurations.band_combination = (
-                band_combination.band_combination
-            )
-            self.band_dilation = band_dilation.band_dilation
-            self.configurations.band_dilation = band_dilation.band_dilation
-            self.band_erosion = band_erosion.band_erosion
-            self.configurations.band_erosion = band_erosion.band_erosion
-            self.band_mask = band_mask.band_mask
-            self.configurations.band_mask = band_mask.band_mask
-            self.mosaic = mosaic.mosaic
-            self.band_neighbor_pixels = (
-                band_neighbor_pixels.band_neighbor_pixels
-            )
-            self.configurations.band_neighbor_pixels = (
-                band_neighbor_pixels.band_neighbor_pixels
-            )
-            self.band_spectral_distance = (
-                band_spectral_distance.band_spectral_distance
-            )
-            self.configurations.band_spectral_distance = (
-                band_spectral_distance.band_spectral_distance
-            )
-            self.band_pca = band_pca.band_pca
-            self.configurations.band_pca = band_pca.band_pca
-            self.band_clip = band_clip.band_clip
-            self.configurations.band_clip = band_clip.band_clip
-            self.band_sieve = band_sieve.band_sieve
-            self.configurations.band_sieve = band_sieve.band_sieve
-            self.band_resample = band_resample.band_resample
-            self.configurations.band_resample = band_resample.band_resample
-            self.band_stack = band_stack.band_stack
-            self.configurations.band_stack = band_stack.band_stack
-            self.cross_classification = (
-                cross_classification.cross_classification
-            )
-            self.configurations.cross_classification = (
-                cross_classification.cross_classification
-            )
             self.download_products = download_products
             self.preprocess_products = preprocess_products
-            self.raster_edit = raster_edit.raster_edit
-            self.raster_label = raster_label.raster_label
-            self.raster_reclassification = (
-                raster_reclassification.raster_reclassification
-            )
-            self.raster_report = raster_report.raster_report
-            self.raster_split = raster_split.raster_split
-            self.raster_to_vector = raster_to_vector.raster_to_vector
-            self.raster_zonal_stats = raster_zonal_stats.raster_zonal_stats
-            self.vector_to_raster = vector_to_raster.vector_to_raster
             self.dates_times = dates_times
             self.download_tools = download_tools
             self.shared_tools = shared_tools
             self.files_directories = files_directories
-            # jupyter interface
-            self.jupyter = self._jupyter_interface
         else:
             self.configurations = None
 
@@ -498,8 +429,6 @@ class Session(object):
 
     """Jupyter functions"""
 
-    def _jupyter_interface(self):
-        return JupyterInterface(self)
 
 
 # noinspection PyPackageRequirements

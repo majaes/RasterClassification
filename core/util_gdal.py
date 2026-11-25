@@ -94,39 +94,6 @@ def get_pixel_size(path):
     return p_x_size, p_y_size
 
 
-# Get CRS of a raster or vector
-def get_crs_gdal(path):
-    # try vector
-    opened_vector = ogr.Open(path)
-    # if raster
-    if opened_vector is None:
-        opened_vector = gdal.Open(path, gdal.GA_ReadOnly)
-        if opened_vector is None:
-            crs = None
-        else:
-            try:
-                # check projections
-                crs = opened_vector.GetProjection()
-                crs = crs.replace(' ', '')
-                if len(crs) == 0:
-                    crs = None
-            except Exception as err:
-                str(err)
-                crs = None
-    # if vector
-    else:
-        layer = opened_vector.GetLayer()
-        # check projection
-        proj = layer.GetSpatialRef()
-        try:
-            crs = proj.ExportToWkt()
-            crs = crs.replace(' ', '')
-            if len(crs) == 0:
-                crs = None
-        except Exception as err:
-            str(err)
-            crs = None
-    return crs
 
 
 # compare two crs
@@ -152,27 +119,6 @@ def get_gdal_version():
     return v
 
 
-# create a polygon shapefile with OGR
-def create_empty_shapefile_ogr(
-        crs_wkt, output_path, vector_format='ESRI Shapefile'
-):
-    try:
-        crs_wkt = str(crs_wkt.toWkt())
-    except Exception as err:
-        str(err)
-    driver = ogr.GetDriverByName(vector_format)
-    _source = driver.CreateDataSource(output_path)
-    spatial_reference = osr.SpatialReference()
-    spatial_reference.ImportFromWkt(crs_wkt)
-    name = cfg.rs.files_directories.file_name(output_path)
-    _layer = _source.CreateLayer(
-        name, spatial_reference, ogr.wkbMultiPolygon
-    )
-    field = ogr.FieldDefn(cfg.empty_field_name, ogr.OFTInteger)
-    _layer.CreateField(field)
-    _layer = None
-    _source = None
-    cfg.logger.log.debug('create_vector_ogr: %s' % output_path)
 
 
 # create a polygon gpkg with OGR

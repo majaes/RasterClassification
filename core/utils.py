@@ -63,75 +63,12 @@ cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 """ download functions """
 
 
-# check Remotior Sensus version
-def remotior_label():
-    try:
-        package = json.loads(
-            QByteArray(cfg.remotior_reply.readAll()).data().decode('utf-8')
-        )
-        latest_version = package['info']['version']
-        if parse(latest_version) > parse(cfg.rs_version):
-            if cfg.simplified:
-                cfg.dock_class_simpl_dlg.ui.rs_version.setText(
-                    'A new version of Remotior Sensus is available.'
-                    '\nPlease update the Remotior Sensus package.'
-                )
-            else:
-                cfg.dock_class_dlg.ui.rs_version.setText(
-                    'A new version of Remotior Sensus is available.'
-                    '\nPlease update the Remotior Sensus package.'
-                )
-    except Exception as err:
-        return str(err)
 
 
-# download html file
-def download_html(url, second_url=None):
-    request = QNetworkRequest(QUrl(url))
-    cfg.second_url = second_url
-    cfg.first_reply = QgsNetworkAccessManager.instance().get(request)
-    cfg.first_reply.finished.connect(reply_in_text_browser)
 
 
-# load reply in text browser
-# noinspection PyUnresolvedReferences
-def reply_in_text_browser():
-    cfg.first_reply.deleteLater()
-    html_data = cfg.first_reply.readAll().data()
-    html = bytes.decode(html_data)
-    # GitHub file not found
-    if '<h1>404</h1>' in html:
-        second_request = QNetworkRequest(QUrl(cfg.second_url))
-        cfg.second_reply = QgsNetworkAccessManager.instance().get(
-            second_request
-        )
-        cfg.second_reply.finished.connect(reply_in_text_browser_second_request)
-    if len(html) > 0:
-        cfg.dock_class_dlg.ui.main_textBrowser.clear()
-        cfg.dock_class_dlg.ui.main_textBrowser.setHtml(html)
-    cfg.first_reply.finished.disconnect()
-    cfg.first_reply.abort()
-    cfg.first_reply.close()
 
 
-# load reply in text browser
-# noinspection PyUnresolvedReferences
-def reply_in_text_browser_second_request():
-    cfg.second_reply.deleteLater()
-    html_data = cfg.second_reply.readAll().data()
-    html = bytes.decode(html_data)
-    if len(html) > 0:
-        cfg.dock_class_dlg.ui.main_textBrowser.clear()
-        cfg.dock_class_dlg.ui.main_textBrowser.setHtml(html)
-    else:
-        html_text_f = open('%s/ui/welcome.html' % cfg.plugin_dir, 'r')
-        html_text = html_text_f.read()
-        cfg.dock_class_dlg.ui.main_textBrowser.clear()
-        cfg.dock_class_dlg.ui.main_textBrowser.setHtml(html_text)
-        html_text_f.close()
-    cfg.second_reply.finished.disconnect()
-    cfg.second_reply.abort()
-    cfg.second_reply.close()
 
 
 """ encrypt functions """
@@ -168,54 +105,10 @@ def get_date():
 """ QGIS map and symbology functions """
 
 
-# refresh extent combo
-def refresh_raster_extent_combo():
-    layers = cfg.util_qgis.get_qgis_project().mapLayers().values()
-    cfg.dialog.ui.raster_extent_combo.clear()
-    cfg.dialog.raster_extent_combo(cfg.union_extent)
-    cfg.dialog.raster_extent_combo(cfg.map_extent)
-    cfg.dialog.raster_extent_combo(cfg.intersection_extent)
-    cfg.dialog.raster_extent_combo(cfg.custom_extent)
-    for layer in sorted(layers, key=lambda c: c.name()):
-        if layer.type() == cfg.util_qgis.get_qgis_map_raster():
-            cfg.dialog.raster_extent_combo(layer.name())
 
 
-# refresh raster align combo
-def refresh_raster_align_combo():
-    layers = cfg.util_qgis.get_qgis_project().mapLayers().values()
-    cfg.dialog.ui.raster_extent_combo_2.clear()
-    cfg.dialog.raster_extent_combo_2(cfg.default_align)
-    for layer in sorted(layers, key=lambda c: c.name()):
-        if layer.type() == cfg.util_qgis.get_qgis_map_raster():
-            cfg.dialog.raster_extent_combo_2(layer.name())
 
 
-# refresh classification combo
-def refresh_raster_layer():
-    ls = cfg.util_qgis.get_qgis_project().mapLayers().values()
-    cfg.dialog.ui.classification_name_combo.clear()
-    cfg.dialog.ui.classification_name_combo_2.clear()
-    cfg.dialog.ui.classification_report_name_combo.clear()
-    cfg.dialog.ui.classification_vector_name_combo.clear()
-    cfg.dialog.ui.classification_name_combo_5.clear()
-    cfg.dialog.ui.reclassification_name_combo.clear()
-    cfg.dialog.ui.classification_name_combo_4.clear()
-    cfg.dialog.ui.reference_raster_name_combo.clear()
-    cfg.dialog.ui.raster_align_comboBox.clear()
-    for layer in sorted(ls, key=lambda c: c.name()):
-        if layer.type() == cfg.util_qgis.get_qgis_map_raster():
-            if layer.bandCount() == 1:
-                cfg.dialog.classification_layer_combo(layer.name())
-                cfg.dialog.classification_layer_combo_2(layer.name())
-                cfg.dialog.classification_report_combo(layer.name())
-                cfg.dialog.classification_to_vector_combo(layer.name())
-                cfg.dialog.reclassification_combo(layer.name())
-                cfg.dialog.cloud_mask_raster_combo(layer.name())
-                cfg.dialog.reference_raster_combo(layer.name())
-                cfg.dialog.project_raster_combo(layer.name())
-                cfg.dialog.edit_raster_combo(layer.name())
-                cfg.dialog.zonal_stat_raster_combo(layer.name())
 
 
 # refresh vector combo
@@ -293,29 +186,6 @@ def refresh_raster_zonal_stats_vector_fields():
         return str(err)
 
 
-# set vector symbology
-def vector_symbol(layer, value_name_dictionary, value_color_dictionary):
-    symbol = QgsSymbol.defaultSymbol(layer.geometryType())
-    symbol.setColor(QColor('#000000'))
-    # noinspection PyTypeChecker
-    classes = [
-        QgsRendererCategory(
-            0, symbol,
-            '0 - %s' %
-            QApplication.translate('semiautomaticclassificationplugin',
-                                   'Unclassified'))
-    ]
-    for value in value_name_dictionary:
-        symbol = QgsSymbol.defaultSymbol(layer.geometryType())
-        symbol.setColor(QColor(value_color_dictionary[value]))
-        renderer = QgsRendererCategory(
-            value, symbol, '%s - %s' % (
-                str(value), value_name_dictionary[value]
-            )
-        )
-        classes.append(renderer)
-    raster = QgsCategorizedSymbolRenderer('DN', classes)
-    layer.setRenderer(raster)
 
 
 # set classification symbology
@@ -349,83 +219,11 @@ def classification_raster_symbol(
     cfg.util_qgis.refresh_layer_symbology(classification_layer)
 
 
-# Define raster symbology
-def raster_symbol_generic(
-        raster_layer, nodata_tag='0', raster_unique_value_list=None
-):
-    if raster_unique_value_list is None:
-        unique_value_list = raster_unique_value_list
-    else:
-        unique_value_list = raster_unique_value_list
-    try:
-        max_value = max(unique_value_list)
-    except Exception as err:
-        str(err)
-        max_value = 1
-    # Color list for ramp
-    color_list = [QgsPalettedRasterRenderer.Class(
-        0, QColor(0, 0, 0), nodata_tag
-    )]
-    for i in unique_value_list:
-        if i > max_value / 2:
-            c = QColor(
-                int(255 * (i / max_value)),
-                int(255 * (1 - (i / max_value))),
-                int(255 * (1 - (i / max_value)))
-            )
-            color_list.append(
-                QgsPalettedRasterRenderer.Class(i, c, str(i))
-            )
-        elif i > 0:
-            c = QColor(
-                int(255 * (i / max_value)),
-                int(255 * (i / max_value)),
-                int(255 * (1 - (i / max_value)))
-            )
-            color_list.append(
-                QgsPalettedRasterRenderer.Class(i, c, str(i))
-            )
-    # create the renderer
-    try:
-        renderer = QgsPalettedRasterRenderer(
-            raster_layer.dataProvider(), 1, color_list
-        )
-    except Exception as err:
-        str(err)
-        renderer = None
-    # Apply the renderer to rasterLayer
-    raster_layer.setRenderer(renderer)
-    # refresh legend
-    if hasattr(raster_layer, 'setCacheImage'):
-        raster_layer.setCacheImage(None)
-    raster_layer.triggerRepaint()
-    cfg.util_qgis.refresh_layer_symbology(raster_layer)
 
 
 """ process functions """
 
 
-# create value list from text
-def text_to_value_list(text):
-    values = []
-    if ',' in text:
-        commas = text.split(',')
-    elif '-' in text:
-        dashes = text.split('-')
-        for val in range(int(dashes[0]), int(dashes[-1]) + 1):
-            values.append(int(val))
-        commas = []
-    else:
-        values.append(int(text))
-        commas = []
-    for part in commas:
-        if '-' in part:
-            dashes = part.split('-')
-            for val in range(int(dashes[0]), int(dashes[-1]) + 1):
-                values.append(int(val))
-        else:
-            values.append(int(part))
-    return np.unique(values).tolist()
 
 
 # check if the clicked point is inside the image
@@ -531,200 +329,20 @@ def project_qgis_point_coordinates(
         return False
 
 
-# calculate the distance between points in array
-def pair_point_distance(numpy_array):
-    return cdist(numpy_array, numpy_array)
 
 
-# calculate random points in grid
-def random_points_in_grid(point_number, x_min, x_max, y_min, y_max):
-    x_coordinates = np.random.uniform(x_min, x_max, point_number)
-    y_coordinates = np.random.uniform(y_min, y_max, point_number)
-    points = list(zip(x_coordinates, y_coordinates))
-    return points
 
 
-# evaluate expression for dynamic use
-def evaluate_expression(expression, array):
-    if '>=' in expression:
-        left, right = expression.split('>=')
-        return array >= float(right)
-    if '<=' in expression:
-        left, right = expression.split('<=')
-        return array <= float(right)
-    if '>' in expression:
-        left, right = expression.split('>')
-        return array > float(right)
-    if '<' in expression:
-        left, right = expression.split('<')
-        return array < float(right)
-    if '==' in expression:
-        left, right = expression.split('==')
-        return array == float(right)
-    if '!=' in expression:
-        left, right = expression.split('!=')
-        return array != float(right)
-    raise ValueError('Invalid expression')
 
 
-def split_expression(expression, operator):
-    expressions = []
-    depth = 0
-    current = ''
-    i = 0
-    while i < len(expression):
-        if expression[i] == '(':
-            depth += 1
-        elif expression[i] == ')':
-            depth -= 1
-        if depth == 0 and expression[i:i+len(operator)] == operator:
-            expressions.append(current)
-            current = ''
-            i += len(operator)
-            continue
-        current += expression[i]
-        i += 1
-    expressions.append(current)
-    return expressions
 
 
-def evaluate_condition(condition, context):
-    name, a = next(iter(context.items()))
-    expression = condition.replace(name, 'a').strip()
-    or_parts = split_expression(expression, '|')
-    or_result = None
-    for part in or_parts:
-        and_parts = split_expression(part, '&')
-        and_result = None
-        for and_part in and_parts:
-            cond = evaluate_expression(and_part, a)
-            and_result = cond if and_result is None else (and_result & cond)
-        or_result = and_result if or_result is None else (or_result
-                                                          | and_result)
-    return or_result
 
 
-# calculate random points with condition
-def random_points_with_condition(
-        raster_path, point_number, condition, x_min, y_top
-):
-    # get pixel size
-    x_size, y_size = cfg.util_gdal.get_pixel_size(raster_path)
-    points = []
-    # band array
-    _array = cfg.util_gdal.read_raster(raster_path)
-    context = {
-        cfg.qgis_registry[cfg.reg_raster_variable_name]: _array
-    }
-    condition = condition.replace(
-        cfg.qgis_registry[cfg.reg_raster_variable_name], '_array'
-    )
-    _array = context[cfg.qgis_registry[cfg.reg_raster_variable_name]]
-    condition = evaluate_condition(condition, context)
-    arr = np.argwhere(condition)
-    rng = np.random.default_rng()
-    try:
-        pixels = rng.choice(arr, size=point_number)
-    except Exception as err:
-        cfg.logger.log.error(str(err))
-        return None
-    for pixel in pixels.tolist():
-        points.append(
-            [x_min + pixel[1] * x_size + x_size / 2,
-             y_top - pixel[0] * y_size - y_size / 2]
-        )
-    return points
 
 
-# create KML from map
-# noinspection SpellCheckingInspection,HttpUrlsUsage
-def create_kml_from_map():
-    cfg.ui_utils.add_progress_bar()
-    cfg.ui_utils.update_bar(10)
-    ext1 = cfg.map_canvas.extent()
-    qgis_crs = cfg.util_qgis.get_qgis_crs()
-    crs_wgs_84 = QgsCoordinateReferenceSystem(4326)
-    cfg.util_qgis.set_qgis_crs(crs_wgs_84)
-    cfg.map_canvas.refreshAllLayers()
-    QApplication.instance().processEvents()
-    cfg.ui_utils.update_bar(30)
-    time.sleep(1)
-    QApplication.instance().processEvents()
-    ext = cfg.map_canvas.extent()
-    # date time for temp name
-    _time = get_time()
-    png = '%s/%sSCP_kml.png' % (cfg.temp_dir, _time)
-    kml = '%s/SCP_kml.kml' % cfg.temp_dir
-    cfg.map_canvas.setCanvasColor(Qt.GlobalColor.transparent)
-    cfg.map_canvas.saveAsImage(png)
-    xml = '''<?xml version="1.0" encoding="UTF-8"?>
-         <kml xmlns="http://www.opengis.net/kml/2.2">
-          <GroundOverlay>
-           <name>%s</name>
-           <Icon>
-            <href>%s</href>
-           </Icon>
-           <LatLonBox>
-           <north>%.10f</north>
-           <south>%.10f</south>
-           <east>%.10f</east>
-           <west>%.10f</west>
-           </LatLonBox>
-           <Camera>       
-            <longitude>%.10f</longitude>       
-            <latitude>%.10f</latitude>       
-           <altitude>5000</altitude>
-        </Camera>
-          </GroundOverlay>
-         </kml>
-        '''
-    source = xml % (
-        'SCP_kml', '%sSCP_kml.png' % _time, ext.yMaximum(), ext.yMinimum(),
-        ext.xMaximum(),
-        ext.xMinimum(), (ext.xMaximum() + ext.xMinimum()) / 2,
-        (ext.yMinimum() + ext.yMaximum()) / 2)
-    layer = open(kml, 'w')
-    try:
-        layer.write(source)
-        layer.close()
-    except Exception as err:
-        str(err)
-    if check_file(kml):
-        if cfg.system_platform.startswith('darwin'):
-            subprocess.call(('open', kml))
-        elif cfg.system_platform.startswith('win'):
-            os.startfile(kml)
-        else:
-            subprocess.call(('xdg-open', kml))
-    cfg.util_qgis.set_qgis_crs(qgis_crs)
-    cfg.map_canvas.setExtent(ext1)
-    cfg.map_canvas.refreshAllLayers()
-    cfg.ui_utils.update_bar(100)
-    cfg.ui_utils.remove_progress_bar(sound=False)
 
 
-# create Copernicus browser link from map
-# noinspection SpellCheckingInspection,HttpUrlsUsage
-def create_copernicus_browser_link_from_map():
-    ext1 = cfg.map_canvas.extent()
-    qgis_crs = cfg.util_qgis.get_qgis_crs()
-    crs_wgs_84 = QgsCoordinateReferenceSystem(4326)
-    cfg.util_qgis.set_qgis_crs(crs_wgs_84)
-    cfg.map_canvas.refreshAllLayers()
-    QApplication.instance().processEvents()
-    cfg.ui_utils.update_bar(30)
-    time.sleep(1)
-    QApplication.instance().processEvents()
-    ext = cfg.map_canvas.extent()
-    lat = (ext.yMinimum() + ext.yMaximum()) / 2
-    lon = (ext.xMaximum() + ext.xMinimum()) / 2
-    url = (f'https://browser.dataspace.copernicus.eu/?zoom=14&lat={lat}'
-           f'&lng={lon}&datasetId=S2_L2A_CDAS&layerId=2_FALSE_COLOR')
-    QDesktopServices().openUrl(QUrl(url))
-    cfg.util_qgis.set_qgis_crs(qgis_crs)
-    cfg.map_canvas.setExtent(ext1)
-    cfg.map_canvas.refreshAllLayers()
-    return url
 
 
 """ raster color composite functions """
@@ -759,9 +377,6 @@ def set_rgb_color_composite(composite=None, bandset_number=None):
                                 set(cfg.project_registry[cfg.reg_rgb_list])
                             )
                         cfg.project_registry[cfg.reg_rgb_list] = rgb_list
-                    cfg.rgb_composite.rgb_table_from_list(
-                        cfg.project_registry[cfg.reg_rgb_list]
-                    )
                     return True
                 else:
                     return False
@@ -870,83 +485,15 @@ def read_project_variables():
     cfg.util_qt.set_combobox_items(
         cfg.rgb_combo, cfg.project_registry[cfg.reg_rgb_list]
     )
-    if cfg.simplified:
-        # ROI macroclass ID field
-        cfg.dock_class_simpl_dlg.ui.ROI_Macroclass_ID_spin.setValue(
-            int(cfg.project_registry[cfg.reg_roi_macroclass_id])
-        )
-        cfg.project_registry[cfg.reg_roi_macroclass_name] = (
-            cfg.project_registry)[cfg.reg_roi_class_name]
-        # ROI macroclass info field
-        cfg.dock_class_simpl_dlg.ui.ROI_Macroclass_line.setText(
-            cfg.project_registry[cfg.reg_roi_macroclass_name]
-        )
-    else:
-        # set vegetation index calculation checkbox state
-        cfg.dock_class_dlg.ui.display_cursor_checkBox.setCheckState(
-            cfg.util_qt.check_state_from_value(
-                int(cfg.project_registry[cfg.reg_index_calculation_check])
-            )
-        )
-        # set custom index
-        cfg.dock_class_dlg.ui.custom_index_lineEdit.setText(
-            cfg.project_registry[cfg.reg_custom_index_calculation]
-        )
-        # set signature calculation checkbox state
-        cfg.dock_class_dlg.ui.signature_checkBox.setCheckState(
-            cfg.util_qt.check_state_from_value(
-                int(cfg.project_registry[cfg.reg_signature_calculation_check])
-            )
-        )
-        cfg.dialog.ui.signature_checkBox2.setCheckState(
-            cfg.util_qt.check_state_from_value(
-                int(cfg.project_registry[cfg.reg_signature_calculation_check])
-            )
-        )
-        # set rapid ROI checkbox state
-        cfg.dock_class_dlg.ui.rapid_ROI_checkBox.setCheckState(
-            cfg.util_qt.check_state_from_value(
-                int(cfg.project_registry[cfg.reg_rapid_roi_check])
-            )
-        )
-        # set save training input
-        cfg.dock_class_dlg.ui.save_input_checkBox.setCheckState(
-            cfg.util_qt.check_state_from_value(
-                int(cfg.project_registry[cfg.reg_save_training_input_check])
-            )
-        )
-        # rapid ROI band
-        cfg.dock_class_dlg.ui.rapidROI_band_spinBox.setValue(
-            int(cfg.project_registry[cfg.reg_roi_main_band])
-        )
-        # ROI class ID field
-        cfg.dock_class_dlg.ui.ROI_ID_spin.setValue(
-            int(cfg.project_registry[cfg.reg_roi_class_id])
-        )
-        # ROI class info field
-        cfg.dock_class_dlg.ui.ROI_Class_line.setText(
-            cfg.project_registry[cfg.reg_roi_class_name]
-        )
-        # ROI macroclass ID field
-        cfg.dock_class_dlg.ui.ROI_Macroclass_ID_spin.setValue(
-            int(cfg.project_registry[cfg.reg_roi_macroclass_id])
-        )
-        # ROI macroclass info field
-        cfg.dock_class_dlg.ui.ROI_Macroclass_line.setText(
-            cfg.project_registry[cfg.reg_roi_macroclass_name]
-        )
-        # max ROI width
-        cfg.max_roi_width_spin.setValue(
-            int(cfg.project_registry[cfg.reg_roi_max_width])
-        )
-        # min ROI size
-        cfg.roi_min_size_spin.setValue(
-            int(cfg.project_registry[cfg.reg_roi_min_size])
-        )
-        # ROI range radius
-        cfg.Range_radius_spin.setValue(
-            float(cfg.project_registry[cfg.reg_roi_range_radius])
-        )
+    cfg.dock_class_simpl_dlg.ui.ROI_Macroclass_ID_spin.setValue(
+        int(cfg.project_registry[cfg.reg_roi_macroclass_id])
+    )
+    cfg.project_registry[cfg.reg_roi_macroclass_name] = (
+        cfg.project_registry)[cfg.reg_roi_class_name]
+    # ROI macroclass info field
+    cfg.dock_class_simpl_dlg.ui.ROI_Macroclass_line.setText(
+        cfg.project_registry[cfg.reg_roi_macroclass_name]
+    )
     # restore active bandset number
     active_bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
     # bandset restore
@@ -971,18 +518,13 @@ def read_project_variables():
         except Exception as err:
             str(err)
         cfg.bst.band_set_to_table(bandset_number)
-    if cfg.simplified:
-        active_bandset_number = 1
-        cfg.project_registry[cfg.reg_active_bandset_number] = 1
-        cfg.logger.log.debug('bandset restore simplified')
-        # add empty bandset
-        cfg.bst.add_band_set_tab_simplified()
-        cfg.bst.band_set_to_table_simplified()
+    active_bandset_number = 1
+    cfg.project_registry[cfg.reg_active_bandset_number] = 1
+    cfg.logger.log.debug('bandset restore simplified')
+    # add empty bandset
+    cfg.bst.add_band_set_tab_simplified()
+    cfg.bst.band_set_to_table_simplified()
     cfg.dialog.ui.bandset_number_spinBox.setValue(active_bandset_number)
-    # rgb list
-    cfg.rgb_composite.rgb_table_from_list(
-        cfg.project_registry[cfg.reg_rgb_list]
-    )
     # training path restore
     if len(cfg.project_registry[cfg.reg_training_input_path]) > 0:
         cfg.scp_dock.open_signature_catalog_file(
@@ -1047,9 +589,6 @@ def find_available_processors():
         cfg.dialog.ui.CPU_spinBox.setValue(2)
 
 
-# numpy array from list
-def numpy_array_from_list(values):
-    return np.array(values)
 
 
 # get random integer

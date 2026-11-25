@@ -237,9 +237,6 @@ EXTRA = {
 }
 
 
-def stored_language():
-    code = str(QSettings().value(SETTING_KEY, 'en'))
-    return code if code in LANGUAGES else 'en'
 
 
 _state = {'code': 'en', 'translator': None}

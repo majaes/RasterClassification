@@ -313,5 +313,3 @@ class SettingsPage(QScrollArea):
             self.refresh_sources()
 
 
-def content_parent(page):
-    return page.widget() if page.widget() is not None else page

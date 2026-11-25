@@ -304,41 +304,10 @@ def prepare_process_files(
     return prepared
 
 
-# create base structure
-def create_base_structure(size: int):
-    structure = np.ones((size, size))
-    return structure
 
 
-# create a circular structure
-def create_circular_structure(radius):
-    circle = np.zeros([radius * 2 + 1, radius * 2 + 1])
-    for x in range(radius * 2 + 1):
-        for y in range(radius * 2 + 1):
-            if (x - radius) ** 2 + (y - radius) ** 2 <= radius ** 2:
-                circle[x, y] = 1
-    return circle
 
 
-# open structure file
-def open_structure(structure):
-    text = open(structure, 'r')
-    lines = text.readlines()
-    c = None
-    for b in lines:
-        b = b.replace('nan', 'np.nan').replace(cfg.new_line, '')
-        a = eval(b)
-        i = np.array(a, dtype=np.float32)
-        try:
-            c = np.append(c, [i], axis=0)
-        except Exception as err:
-            str(err)
-            try:
-                c = np.append([c], [i], axis=0)
-            except Exception as err:
-                str(err)
-                c = i
-    return c
 
 
 # convert data type from string to numpy
@@ -377,201 +346,10 @@ def replace(input_string: str, old_value: str, new_value: str):
     return output
 
 
-# region growing polygon
-def region_growing_polygon(
-        coordinate_x, coordinate_y, input_bands: Union[list, int, BandSet],
-        output_vector=None, band_number=None, max_width=None,
-        max_spectral_distance=None, minimum_size=None, bandset_catalog=None,
-        n_processes=None
-):
-    log = cfg.logger.log
-    log.debug('start')
-    box_coordinate_list = tmp_vrt = None
-    if type(input_bands) is BandSet:
-        coord_list = input_bands.box_coordinate_list
-        if coord_list is not None:
-            box_coordinate_list = coord_list
-    elif type(input_bands) is int:
-        coord_list = bandset_catalog.get_bandset(
-            bandset_number=input_bands
-        ).box_coordinate_list
-        if coord_list is not None:
-            box_coordinate_list = coord_list
-    # get input list
-    band_list = BandSetCatalog.get_band_list(input_bands, bandset_catalog)
-    log.debug('band_list: %s' % str(band_list))
-    # get input files
-    prepared = prepare_input_list(
-        band_list=band_list, n_processes=n_processes
-    )
-    input_raster_list = prepared['input_list']
-    temporary_virtual_raster = raster_vector.create_temporary_virtual_raster(
-        input_raster_list=input_raster_list,
-        box_coordinate_list=box_coordinate_list
-    )
-    # input_path raster extent and pixel size
-    info = raster_vector.image_geotransformation(temporary_virtual_raster)
-    left = info['left']
-    right = info['right']
-    top = info['top']
-    bottom = info['bottom']
-    p_x = info['pixel_size_x']
-    p_y = info['pixel_size_y']
-    if max_width is None:
-        max_width = 3
-    if max_spectral_distance is None:
-        max_spectral_distance = 1
-    if minimum_size is None:
-        minimum_size = 1
-    # seed pixel
-    abs_seed_x = abs(int((abs(coordinate_x) - left) / p_x))
-    seed_x_min = left + abs_seed_x * p_x
-    seed_x_max = left + (abs_seed_x + 1) * p_x
-    abs_seed_y = abs(int((top - abs(coordinate_y)) / p_y))
-    seed_y_max = top - abs_seed_y * p_y
-    seed_y_min = top - (abs_seed_y + 1) * p_y
-    region_min_x = seed_x_min - int(max_width / 2) * p_x
-    if region_min_x < left:
-        region_min_x = left
-    region_max_x = seed_x_max + int(max_width / 2) * p_x
-    if region_max_x > right:
-        region_max_x = right
-    region_min_y = seed_y_min - int(max_width / 2) * p_y
-    if region_min_y < bottom:
-        region_min_y = bottom
-    region_max_y = seed_y_max + int(max_width / 2) * p_y
-    if region_max_y > top:
-        region_max_y = top
-    seed_x = abs(int((abs(coordinate_x) - region_min_x) / p_x))
-    seed_y = abs(int((region_max_y - abs(coordinate_y)) / p_y))
-    log.debug('seed_x: %s; seed_y: %s' % (seed_x, seed_y))
-    # extract each virtual band and apply extent from max_width and coordinates
-    extent_list = [region_min_x, region_max_y, region_max_x, region_min_y]
-    function_variable = []
-    virtual_raster_list = []
-    if band_number is None:
-        band_number_list = list(range(1, len(band_list) + 1))
-        # extract virtual band
-        for i in band_number_list:
-            tmp_vrt = raster_vector.create_temporary_virtual_raster(
-                input_raster_list=[temporary_virtual_raster],
-                box_coordinate_list=extent_list, band_number_list=[[i]]
-            )
-            virtual_raster_list.append(tmp_vrt)
-            function_variable.append(
-                [seed_x, seed_y, float(max_spectral_distance),
-                 int(minimum_size)]
-            )
-    else:
-        band_number_list = [[band_number]]
-        # extract virtual band
-        tmp_vrt = raster_vector.create_temporary_virtual_raster(
-            input_raster_list=[temporary_virtual_raster],
-            box_coordinate_list=extent_list, band_number_list=band_number_list
-        )
-        virtual_raster_list.append(tmp_vrt)
-        function_variable.append(
-            [seed_x, seed_y, float(max_spectral_distance), int(minimum_size)]
-        )
-    cfg.multiprocess.run_separated(
-        raster_path_list=virtual_raster_list, function=region_growing,
-        function_argument=band_number_list,
-        function_variable=function_variable, any_nodata_mask=True,
-        keep_output_argument=True, n_processes=n_processes,
-        progress_message='region growing'
-    )
-    cfg.multiprocess.multiprocess_region_growing()
-    if cfg.multiprocess.output is False:
-        log.error('unable to calculate')
-        return False
-    regions = cfg.multiprocess.output
-    if len(regions) > 0:
-        region = None
-        # run segmentation
-        for region_array in regions:
-            if region is None:
-                region = region_array.astype(int)
-            else:
-                region = region * region_array.astype(int)
-        if region[seed_y, seed_x] == 0:
-            region[seed_y, seed_x] = 1
-        if np.count_nonzero(region) > 0:
-            try:
-                region_label, num_features = label(region)
-                # noinspection PyUnresolvedReferences
-                region_seed_value = region_label[seed_y, seed_x]
-                new_region = (region_label == region_seed_value).astype(int)
-            except Exception as err:
-                str(err)
-                log.error('region growing label')
-                return False
-        else:
-            log.error('region growing empty')
-            return False
-    else:
-        new_region = regions[0]
-    # create vector from region
-    if np.count_nonzero(new_region) > 0 and new_region[seed_y, seed_x] == 1:
-        if output_vector is None:
-            output_vector = cfg.temp.temporary_file_path(
-                name_suffix=cfg.gpkg_suffix
-            )
-        raster_vector.array_to_polygon(
-            input_array=new_region, reference_raster=tmp_vrt,
-            output=output_vector
-        )
-        log.debug('end; roi vector: %s' % str(output_vector))
-        return output_vector
-    else:
-        log.error('region growing empty')
-        return False
 
 
-# calculate 2d histogram
-def calculate_2d_histogram(x_values, y_values, decimal_round=None):
-    if decimal_round is None:
-        decimal_round = 3
-    try:
-        x_values_2 = x_values[~np.isnan(x_values)]
-        y_values2 = y_values[~np.isnan(y_values)]
-        x_values = x_values_2[~np.isnan(y_values2)]
-        y_values = y_values2[~np.isnan(y_values2)]
-        del x_values_2
-        del y_values2
-        x_max = np.amax(x_values)
-        y_max = np.amax(y_values)
-    except Exception as err:
-        log = cfg.logger.log
-        log.error(str(err))
-        return False
-    precision = np.power(10, -float(decimal_round))
-    x_min = np.amin(x_values)
-    x_min = np.around(x_min, decimal_round) - precision
-    x_max = np.around(x_max, decimal_round) + precision
-    x_steps = calculate_steps(x_min, x_max, precision)
-    y_min = np.amin(y_values)
-    y_min = np.around(y_min, decimal_round) - precision
-    y_max = np.around(y_max, decimal_round) + precision
-    y_steps = calculate_steps(y_min, y_max, precision)
-    try:
-        histogram, x_edges, y_edges = np.histogram2d(
-            x_values, y_values, bins=(x_steps, y_steps)
-        )
-    except Exception as err:
-        log = cfg.logger.log
-        log.error(str(err))
-        return None
-    return [histogram, x_edges, y_edges]
 
 
-# calculate steps
-def calculate_steps(min_value, max_value, step):
-    steps = [min_value]
-    value = min_value
-    while value < max_value:
-        value += step
-        steps.append(value)
-    return steps
 
 
 # get random color
@@ -642,28 +420,10 @@ def project_point_coordinates(
     return coordinates
 
 
-# convert image to jpg
-def image_to_jpg(input_raster, output, quality=85, available_ram: int = None):
-    raster_vector.jpg_gdal(
-        input_raster=input_raster, output=output, quality=quality,
-        available_ram=available_ram
-    )
 
 
-# convert vector to json
-def vector_to_json(input_vector, output):
-    raster_vector.reproject_vector(
-        input_vector, output, output_epsg=4326, output_drive='GeoJSON'
-    )
 
 
-# convert coordinates to polygon
-def coordinates_to_polygon(coordinates, input_coordinates, output=None):
-    output_path = raster_vector.coordinates_to_polygon_gdal(
-        coordinates=coordinates, input_coordinates=input_coordinates,
-        output=output
-    )
-    return output_path
 
 
 # get vector fields
@@ -672,16 +432,8 @@ def get_vector_fields(input_layer):
     return fields
 
 
-# get raster pixel size
-def get_raster_pixel_size(input_raster):
-    info = raster_vector.image_geotransformation(input_raster)
-    return [info['pixel_size_x'], info['pixel_size_y']]
 
 
-# get raster bounding box
-def get_raster_bbox(input_raster):
-    info = raster_vector.image_geotransformation(input_raster)
-    return [info['left'], info['top'], info['right'], info['bottom']]
 
 
 # get raster data
@@ -692,18 +444,8 @@ def get_colored_raster(input_raster, value_color_dictionary):
     return data
 
 
-# calculate random coordinates in range
-def random_points_grid(sample_number, x_min, x_max, y_min, y_max):
-    x_coordinates = np.random.uniform(x_min, x_max, sample_number)
-    y_coordinates = np.random.uniform(y_min, y_max, sample_number)
-    coordinates = list(zip(x_coordinates, y_coordinates))
-    return coordinates
 
 
-# check nan in array
-def check_nan(array):
-    check = np.isnan(np.sum(array))
-    return check
 
 
 def mpi_bcast(value):

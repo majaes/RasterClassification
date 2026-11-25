@@ -34,11 +34,6 @@ from remotior_sensus.util import (
 )
 
 
-def product_names() -> list:
-    """Prints the products that can be searched and returns the list."""
-    for product in cfg.product_description:
-        print('%s: %s' % (product, cfg.product_description[product]))
-    return list(cfg.product_description.keys())
 
 
 def search(

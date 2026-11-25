@@ -161,10 +161,6 @@ def set_combobox_items(combobox, item_list):
             combobox.addItem(i)
 
 
-# get items in combobox
-def get_all_items_in_combobox(combobox):
-    it = [combobox.itemText(i) for i in range(combobox.count())]
-    return it
 
 
 """ table functions """
@@ -186,37 +182,8 @@ def all_items_set_state(table, value):
     table.blockSignals(False)
 
 
-# remove rows from table
-# noinspection PyTypeChecker
-def remove_rows_from_table(table):
-    answer = question_box(
-        QApplication.translate('semiautomaticclassificationplugin',
-                               'Remove rows'),
-        QApplication.translate(
-            'semiautomaticclassificationplugin',
-            'Are you sure you want to remove highlighted rows from the table?'
-        )
-    )
-    if answer:
-        table.blockSignals(True)
-        # list of item to remove
-        rows = []
-        for index in table.selectedIndexes():
-            rows.append(index.row())
-        selected_rows = list(set(rows))
-        # remove items
-        for row in reversed(list(range(0, len(selected_rows)))):
-            table.removeRow(selected_rows[row])
-        table.blockSignals(False)
 
 
-# select rows in table
-def select_rows_in_table(table, row_list):
-    count = table.columnCount()
-    for row in row_list:
-        table.setRangeSelected(
-            QTableWidgetSelectionRange(row, 0, row, count - 1), True
-        )
 
 
 # add item to table
@@ -300,12 +267,8 @@ def set_tree_column_width_list(tree, width_list):
         tree.header().resizeSection(value[0], value[1])
 
 
-def get_color_from_rgb(red, green, blue):
-    return QColor(red, green, blue)
 
 
-def get_color_from_text(text):
-    return QColor(text)
 
 
 def get_match_contains():

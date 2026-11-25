@@ -44,44 +44,5 @@ def open_text_file(input_path):
     return text
 
 
-# format csv file to new delimiter
-def format_csv_new_delimiter(table, delimiter):
-    table_f = table.replace(cfg.comma_delimiter, delimiter)
-    return table_f
 
 
-# format csv file to html table
-def format_csv_text_html(table):
-    text = ['<!DOCTYPE html>', cfg.new_line, '<html>', cfg.new_line,
-            '<head>', '''
-    <style>
-    table {
-        border-collapse: collapse;
-        width: 100 %;
-    }
-    td, th {
-        border: 1px solid  #dddddd;
-    }
-    </style>''', cfg.new_line, '</head>', cfg.new_line, '<body>', cfg.new_line,
-            cfg.tab_delimiter, '<table>', cfg.new_line]
-    count = 0
-    for line in table.split(cfg.new_line):
-        if count == 0:
-            text.append(cfg.tab_delimiter)
-            text.append('<tr>')
-            for record in line.split(cfg.comma_delimiter):
-                text.append('<th>%s</th>' % record)
-            text.append('</tr>%s%s' % (cfg.new_line, cfg.tab_delimiter))
-        elif len(line) > 0:
-            text.append('<tr>')
-            for record in line.split(cfg.comma_delimiter):
-                text.append('<td>%s</td>' % record)
-            text.append('</tr>%s%s' % (cfg.new_line, cfg.tab_delimiter))
-        count += 1
-    text.append('</table>')
-    text.append(cfg.new_line)
-    text.append('</body>')
-    text.append(cfg.new_line)
-    text.append('</html>')
-    html = ''.join(text)
-    return html

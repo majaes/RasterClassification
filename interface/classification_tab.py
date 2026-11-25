@@ -247,10 +247,7 @@ def run_classifier(
         classifier_name = cfg.dock_class_simpl_dlg.ui.alg_combo.currentText()
     else:
         # get bandset
-        if cfg.simplified:
-            bandset_number = 1
-        else:
-            bandset_number = cfg.dialog.ui.band_set_comb_spinBox_12.value()
+        bandset_number = 1
         cfg.logger.log.debug('bandset_number: %s' % bandset_number)
         classifier_index = cfg.dialog.ui.toolBox_classification.currentIndex()
         classifier_list = [
@@ -737,9 +734,6 @@ def create_preview(preview_point, classification_confidence=None):
         # enable map canvas render
         cfg.map_canvas.setRenderFlag(True)
         # enable Redo button
-        if not cfg.simplified:
-            cfg.show_preview_radioButton2.setChecked(True)
-            cfg.redoPreviewButton.setEnabled(True)
         return True
     else:
         cfg.mx.msg_err_1()
@@ -1186,4 +1180,3 @@ def set_script():
             '"True"', 'True'
         )
     )
-    cfg.input_interface.script_tab()

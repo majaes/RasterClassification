@@ -380,36 +380,4 @@ def request_url(url, headers=None, data=None, method=None):
         url=url, headers=headers, data=data, method=method
     )
 
-# get latest downloadable version from PyPI
-def get_latest_rs_version(proxy_host=None, proxy_port=None, proxy_user=None,
-                          proxy_password=None):
-    url = 'https://pypi.org/pypi/remotior-sensus/json'
-    response = open_general_url(
-        url=url, proxy_host=proxy_host, proxy_port=proxy_port,
-        proxy_user=proxy_user, proxy_password=proxy_password
-    )
-    if response is None:
-        return None
-    else:
-        response_text = json.loads(response.read())
-        info = response_text['info']
-        return info['version']
 
-
-# download version from PyPI
-def download_rs_version(
-        version, output_path, proxy_host=None, proxy_port=None,
-        proxy_user=None, proxy_password=None
-):
-    url = (f'https://pypi.org/packages/source/r/remotior-sensus/'
-           f'remotior_sensus-{version}.tar.gz')
-    downloaded = download_file(
-        url=url, output_path=output_path,proxy_host=proxy_host,
-        proxy_port=proxy_port, proxy_user=proxy_user,
-        proxy_password=proxy_password)
-    if downloaded is None or downloaded[0] is False:
-        cfg.logger.log.error('unable to download: %s' % url)
-        cfg.messages.error('unable to download: %s' % url)
-        return None
-    else:
-        return output_path

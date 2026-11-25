@@ -8,10 +8,9 @@
 | `core/` | configuration, messages, Qt and QGIS helpers |
 | `interface/` | one module per tool of the panel (band set, classification, ROI, download...), plus `composition_presets.py` (predefined compositions and indices) and `satellite_detection.py` |
 | `ui/` | Qt Designer files (`.ui`) and the generated Python; the panel tabs are built in `raster_classification_dialog.py` |
-| `qgis_processing/` | algorithms of the QGIS Processing toolbox |
 | `spectral_signature/`, `map_pointers/` | signature plots and map tools |
 | `remotior_sensus/` | bundled processing library (unmodified, version 0.8.0) |
-| `i18n/` | translation files (the interface is in English by default) |
+| `core/language.py`, `core/fr_translations.py`, `core/fr_extra.py` | English and French of the interface |
 | `dev/build_zip.py` | builds the installable zip |
 | `releases/` | the zip to install in QGIS |
 
@@ -22,8 +21,7 @@ The code uses the Raster Classification names (`raster_classification.py`, class
 `:/plugins/raster_classification/`). A few internal identifiers of the original plugin are kept on purpose:
 
 * the Qt translation context `semiautomaticclassificationplugin` (and the contexts of the generated `ui_*.py`
-  files): the translation files in `i18n/` are keyed by it, and the Qt tool that compiles them is not part of this
-  repository's workflow;
+  files): the French dictionaries (`core/fr_translations.py`, `core/fr_extra.py`) are keyed by the source texts;
 * the file formats of the original plugin (`.scp`, `.scpx` training inputs and signature libraries), so that existing
   files still open;
 * the `scp_*` attribute names of the configuration (`cfg.scp_dock`, `cfg.scp_training`...) and the matching
@@ -49,8 +47,15 @@ with the files tracked by git. In QGIS: Plugins > Manage and Install Plugins > I
 
 ## Language
 
-English is the default. To follow the language of QGIS, set the QGIS setting `RasterClassification/language` to `auto`
-(or to a locale code such as `fr`).
+English is the default; French is chosen in the *Settings* tab (stored in the QGIS setting
+`RasterClassification/language`, `en` or `fr`). The texts written by hand go through `core/language.py:tr()`, the
+generated interfaces through the dictionary translator installed by `set_language()`.
+
+## Code kept
+
+Only the code used by the four tabs of the panel is kept: band set, ROI and classification, download, settings. The
+other tools of the original plugin (band calculation, clustering, PCA, mosaic, Processing algorithms, ...) and the
+unused functions of the bundled Remotior Sensus library were removed.
 
 ## Line endings
 

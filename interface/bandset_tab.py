@@ -64,12 +64,9 @@ def set_satellite_wavelength(satellite_name=None, bandset_number=None):
         % str(satellite_name)
     )
     if satellite_name is None:
-        if cfg.simplified:
-            satellite_name = (
-                cfg.dock_class_simpl_dlg.ui.wavelength_sat_combo.currentText()
-            )
-        else:
-            satellite_name = cfg.dialog.ui.wavelength_sat_combo.currentText()
+        satellite_name = (
+            cfg.dock_class_simpl_dlg.ui.wavelength_sat_combo.currentText()
+        )
     if bandset_number is None:
         bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
     cfg.bandset_catalog.set_satellite_wavelength(
@@ -810,12 +807,8 @@ def move_up_bandset():
 
 # move down selected band
 def move_down_band():
-    if cfg.simplified:
-        bandset_number = 1
-        table = cfg.dock_class_simpl_dlg.ui.tableWidget
-    else:
-        bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
-        table = cfg.dialog.ui.table_widgets[cfg.bandset_tabs[bandset_number]]
+    bandset_number = 1
+    table = cfg.dock_class_simpl_dlg.ui.tableWidget
     selected = table.selectedItems()
     selected_list = []
     for i in range(0, len(selected)):
@@ -835,12 +828,8 @@ def move_down_band():
 
 # move up selected band
 def move_up_band():
-    if cfg.simplified:
-        bandset_number = 1
-        table = cfg.dock_class_simpl_dlg.ui.tableWidget
-    else:
-        bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
-        table = cfg.dialog.ui.table_widgets[cfg.bandset_tabs[bandset_number]]
+    bandset_number = 1
+    table = cfg.dock_class_simpl_dlg.ui.tableWidget
     selected = table.selectedItems()
     selected_list = []
     for i in range(0, len(selected)):
@@ -872,12 +861,8 @@ def sort_bands_by_name():
 # remove selected band
 # noinspection PyTypeChecker
 def remove_band():
-    if cfg.simplified:
-        bandset_number = 1
-        table_w = cfg.dock_class_simpl_dlg.ui.tableWidget
-    else:
-        bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
-        table_w = cfg.dialog.ui.table_widgets[cfg.bandset_tabs[bandset_number]]
+    bandset_number = 1
+    table_w = cfg.dock_class_simpl_dlg.ui.tableWidget
     answer = cfg.util_qt.question_box(
         QApplication.translate('semiautomaticclassificationplugin',
                                'Remove band'),
@@ -971,14 +956,12 @@ def stack_bandset(output_path=None, bandset_number=None):
 # noinspection PyTypeChecker
 def perform_bandset_tools():
     if (cfg.dialog.ui.overview_raster_bandset_checkBox.isChecked() is False
-            and cfg.dialog.ui.band_calc_checkBox.isChecked() is False
             and cfg.dialog.ui.stack_raster_bandset_checkBox.isChecked() is
             False
             and cfg.dialog.ui.virtual_raster_bandset_checkBox.isChecked() is
             False):
         cfg.mx.msg_war_8()
     elif (cfg.dialog.ui.overview_raster_bandset_checkBox.isChecked() is True
-          and cfg.dialog.ui.band_calc_checkBox.isChecked() is False
           and cfg.dialog.ui.stack_raster_bandset_checkBox.isChecked() is False
           and cfg.dialog.ui.virtual_raster_bandset_checkBox.isChecked() is
           False):
@@ -1002,10 +985,6 @@ def bandset_tools(output_directory, bandset_number=None, batch=True):
     if bandset_number is None:
         bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
     name = cfg.bandset_catalog.get_name(bandset_number)
-    if cfg.rs.configurations.action:
-        if cfg.dialog.ui.band_calc_checkBox.isChecked() is True:
-            cfg.band_calc.raster_band_table()
-            cfg.band_calc.calculate(output_directory)
     if cfg.rs.configurations.action:
         if cfg.dialog.ui.virtual_raster_bandset_checkBox.isChecked() is True:
             virtual_raster_bandset(
@@ -1371,9 +1350,6 @@ def select_all_bands():
                 )
 
 
-# function to explain import QTableWidget
-def explain_q_table_widget():
-    assert QTableWidget
 
 
 # add color composite
