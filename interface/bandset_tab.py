@@ -1166,6 +1166,18 @@ def band_set_to_table_simplified():
             cfg.logger.log.debug('band name: %s' % str(band['name']))
             cfg.util_qt.add_table_item(table_w, str(band['name']), c, 0)
             cfg.util_qt.add_table_item(table_w, str(band['wavelength']), c, 1)
+        # the wavelength column is shown only when the wavelengths are known
+        # (satellite detected or chosen); with "Band order" the values are
+        # just the band numbers
+        real = False
+        for band in bands:
+            try:
+                if (float(band['wavelength']) != float(band['band_number'])
+                        and float(band['wavelength']) > 0):
+                    real = True
+            except (TypeError, ValueError):
+                pass
+        table_w.setColumnHidden(1, not real)
         table_w.blockSignals(False)
         # add virtual raster
         cfg.composition_presets.apply_default()
