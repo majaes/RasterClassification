@@ -1245,6 +1245,8 @@ def connect_gui():
         cfg.input_interface.select_download_products_tab
     )
     wavelength_sat_combo = cfg.dock_class_simpl_dlg.ui.wavelength_sat_combo
+    # locked, like the compositions, while a processing runs
+    dock_progress.LOCKED.append(wavelength_sat_combo)
     wavelength_sat_combo.currentIndexChanged.connect(
         cfg.bst.set_satellite_wavelength_simplified
     )

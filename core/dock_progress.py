@@ -27,6 +27,8 @@ _generation = [0]
 _cancel_callback = [None]
 # True when the user has clicked Cancel
 cancel_requested = [False]
+# widgets locked while a processing runs (for example the satellite list)
+LOCKED = []
 # True while a processing or a loading runs
 _active = [False]
 
@@ -94,7 +96,17 @@ def is_cancelled():
     return cancel_requested[0]
 
 
+def _lock(state):
+    for widget in list(LOCKED):
+        try:
+            widget.setEnabled(state)
+        except RuntimeError:
+            # the widget has been deleted
+            LOCKED.remove(widget)
+
+
 def _begin(callback):
+    _lock(False)
     _generation[0] += 1
     _active[0] = True
     cancel_requested[0] = False
@@ -156,6 +168,7 @@ def finish():
     current = _generation[0]
     _cancel_callback[0] = None
     _active[0] = False
+    _lock(True)
 
     def complete(box):
         if box.bar.maximum() == 0:
