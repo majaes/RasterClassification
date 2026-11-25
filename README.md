@@ -89,6 +89,71 @@ still to be confirmed. Other systems (macOS, Linux) have not been tested.
 * [Remotior Sensus](https://github.com/semiautomaticgit/remotior_sensus) (bundled, unmodified, version 0.8.0) by Luca
   Congedo: GPL v3 or later.
 
+## What is new in Raster Classification
+
+Created and maintained by [ANABA MANGA](https://anbmng.com) (copyright (C) 2026):
+
+* the single panel with four tabs (*Color composition*, *SV Classification*, *Download products*, *Settings*), with
+  the same look in each tab and foldable sections;
+* the predefined and custom colour compositions, the NDVI, NDWI, NDBI and NBR indices calculated in the background,
+  and the automatic detection of the satellite;
+* the workflow of the classes: create the class, draw its ROI as polygons or circles, a right click adds each ROI to
+  the class, colours of the ROI by class, delete a class with its ROI;
+* the switchable classification preview, the locking of all the options while a processing runs, the progress bars
+  with *Cancel*;
+* the download tab reorganised, the new source Earth Search (AWS, no account), the sources of your own (STAC), the
+  check of the links, the repaired Landsat HLS and MODIS searches;
+* the English and French interface, changed without restarting QGIS;
+* the new design: icons, flat buttons, a code base reduced to what the panel uses.
+
+## Credits and licence
+
+Raster Classification contains code of the Semi-Automatic Classification Plugin and of the Remotior Sensus library by
+Luca Congedo, both under the GPL; their copyright notices stay in the source files, as the licence requires.
+Raster Classification is free software released under the GNU General Public License, version 3 or (at your option)
+any later version, see [LICENSE](LICENSE).
+
+## Development and test environment
+
+| Component | QGIS 3.44 LTR | QGIS 4.0 |
+|---|---|---|
+| QGIS | 3.44.15 | 4.0.1 |
+| Qt | 5.15 | 6.8 |
+| Python | 3.12 | 3.12 |
+| GDAL / PROJ / GEOS | 3.13 / 9.8 / 3.15 | 3.12 / 9.7 / 3.14 |
+| OS | Windows 11 | Windows 11 |
+
+On QGIS 4.0.1 the plugin was used in the interface (loading Sentinel-2 bands, colour compositions, NDVI on a full
+tile). On QGIS 3.44.15 the modules load and the panels are built; a complete run of the plugin in the interface is
+still to be confirmed. Other systems (macOS, Linux) have not been tested.
+
+## Installation
+
+* **From QGIS**: Plugins > Manage and Install Plugins, search for *Raster Classification* (once published in the
+  official plugin repository).
+* **From a ZIP**: download `RasterClassification-1.0.0.zip` from the [releases](releases) folder, then Plugins >
+  Manage and Install Plugins > Install from ZIP. Restart QGIS after the first installation.
+
+## Usage
+
+1. Open the panel from the *Raster Classification* menu.
+2. In **Color composition**, click *Open file* and choose the bands of your image (for example `B02`, `B03`, `B04`,
+   `B08` of a Sentinel-2 tile). The satellite is detected and the natural colour composition is displayed.
+3. Choose another composition or an index in the list of predefined compositions.
+4. In **SV Classification**, create a training file. Enter a class number and a name, then click *Save* to create
+   the class. Draw its ROI: with *Polygon*, left click adds a vertex and right click closes the polygon; with
+   *Circle*, left click sets the centre, move the cursor and right click sets the radius. The right click adds the
+   ROI to the class at once. Check the signatures with *Spectral plot*.
+5. Click *Preview* to test the classification on a small area, then *RUN* to classify the whole image.
+
+## Data and licences
+
+* Sentinel-2 and Landsat images: use the licence of your data provider (Copernicus, USGS).
+* The *Download products* tab uses the services of Copernicus and NASA Earthdata with your own accounts; no password
+  is stored by the plugin.
+* [Remotior Sensus](https://github.com/semiautomaticgit/remotior_sensus) (bundled, unmodified, version 0.8.0) by Luca
+  Congedo: GPL v3 or later.
+
 ## Credits and licence
 
 **Raster Classification is developed and maintained by [ANABA MANGA](https://anbmng.com)** (copyright (C) 2026): the
