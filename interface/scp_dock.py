@@ -2412,8 +2412,12 @@ def _roi_message(text, level=None):
 # and a name, the ROIs drawn afterwards are added to it
 def create_class():
     if cfg.scp_training is None or cfg.scp_training.signature_catalog is None:
-        cfg.mx.msg_war_5()
-        return False
+        # no training input yet: ask where to create it, then go on
+        _roi_message('No training file yet: choose where to create it.')
+        create_training_input()
+        if (cfg.scp_training is None
+                or cfg.scp_training.signature_catalog is None):
+            return False
     ui = cfg.dock_class_simpl_dlg.ui
     class_id = int(ui.ROI_Macroclass_ID_spin.value())
     name = str(ui.ROI_Macroclass_line.text()).strip()
