@@ -368,6 +368,8 @@ class DockClassSimplifiedDialog(QDockWidget):
         the creation and each time the language changes). """
         ui = self.ui
         try:
+            # title of the window of the panel
+            self.setWindowTitle('Raster Classification')
             tabs = ui.bandset_roi_tabs
             names = ('Band set definition', 'ROI && Classification',
                      'Download products', 'Settings')
