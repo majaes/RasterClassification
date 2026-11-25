@@ -114,7 +114,7 @@ sentinel2 = 'Sentinel-2'
 # NASA CMR Search
 # https://cmr.earthdata.nasa.gov/search/site/search_api_docs.html
 landsat_hls = 'Landsat_HLS'
-landsat_hls_collection = 'C2021957657-CLOUD'
+landsat_hls_collection = 'C2021957657-LPCLOUD'
 sentinel2_hls = 'Sentinel-2_HLS'
 sentinel2_hls_collection = 'C2021957295-LPCLOUD'
 landsat = 'Landsat'
@@ -122,6 +122,11 @@ sensor_oli = 'oli_tirs'
 sensor_etm = 'etm'
 sensor_tm = 'tm'
 sensor_mss = 'mss'
+# Sentinel-2 Level-2A cloud optimized GeoTIFF from Earth Search (Element 84,
+# AWS Open Data), free and without account
+# https://earth-search.aws.element84.com/v1
+sentinel2_aws = 'Sentinel-2_AWS'
+sentinel2_aws_collection = 'sentinel-2-l2a'
 # Collections from Microsoft Planetary Computer
 landsat_mpc = 'Landsat_MPC'
 landsat_mpc_collection = 'landsat-c2-l2'
@@ -138,6 +143,9 @@ cop_dem_glo_30_mpc_collection = 'cop-dem-glo-30'
 product_description = {
     sentinel2: 'Copernicus Sentinel-2 '
                'https://dataspace.copernicus.eu/explore-data/data-collections/sentinel-data/sentinel-2',  # noqa: E501
+    sentinel2_aws: 'Sentinel-2 Level-2A cloud optimized GeoTIFF from '
+                   'Earth Search (AWS Open Data, no account) '
+                   'https://earth-search.aws.element84.com/v1',
     landsat_mpc: 'Landsat Collection from Microsoft Planetary Computer '
                  'https://planetarycomputer.microsoft.com/dataset/group/landsat',  # noqa: E501
     sentinel2_mpc: 'Sentinel-2 Level-2A from Microsoft Planetary Computer '

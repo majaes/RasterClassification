@@ -108,6 +108,15 @@ def search(
                 copernicus_user=copernicus_user,
                 copernicus_password=copernicus_password
             )
+        elif product == cfg.sentinel2_aws:
+            result = query_sentinel2_aws(
+                date_from=date_from, date_to=date_to,
+                max_cloud_cover=max_cloud_cover, result_number=result_number,
+                name_filter=name_filter, coordinate_list=coordinate_list,
+                progress_message=progress_message, proxy_host=proxy_host,
+                proxy_port=proxy_port, proxy_user=proxy_user,
+                proxy_password=proxy_password
+            )
         elif product == cfg.sentinel2_mpc:
             result = query_sentinel2_mpc(
                 date_from=date_from, date_to=date_to,
@@ -975,6 +984,75 @@ def download(
                 min_progress += progress_step
                 max_progress += progress_step
             output_raster_lists.append(output_raster_dic)
+        elif product_table['product'][i] == cfg.sentinel2_aws:
+            # Earth Search: open cloud optimized GeoTIFF, no account
+            ref_url = product_table['ref_url'][i]
+            response, stac_data = download_tools.request_stac(
+                url=ref_url, proxy_host=proxy_host,
+                proxy_port=proxy_port, proxy_user=proxy_user,
+                proxy_password=proxy_password
+            )
+            if response:
+                stac_data = json.loads(stac_data)
+                product_name = product_table['product_id'][i]
+                acquisition_date = product_table['acquisition_date'][i]
+                base_output_dir = '%s/%s_%s' % (
+                    output_path, product_name.replace('.', '_'),
+                    str(acquisition_date))
+                output_directory_list.append(base_output_dir)
+                output_raster_dic = {cfg.satSentinel2: []}
+                band_assets = {
+                    '01': 'coastal', '02': 'blue', '03': 'green',
+                    '04': 'red', '05': 'rededge1', '06': 'rededge2',
+                    '07': 'rededge3', '08': 'nir', '8A': 'nir08',
+                    '09': 'nir09', '11': 'swir16', '12': 'swir22'
+                }
+                for band in band_list:
+                    if 'scl' in str(band).lower():
+                        asset_name = 'scl'
+                    else:
+                        asset_name = band_assets.get(str(band))
+                    if asset_name in stac_data['assets']:
+                        url = stac_data['assets'][asset_name]['href']
+                        if exporter:
+                            output_file_list.append(url)
+                        else:
+                            output_file = '%s/%s_%s%s' % (
+                                base_output_dir,
+                                product_name.replace('.', '_'),
+                                str(band).zfill(2), cfg.tif_suffix)
+                            cfg.multiprocess.multi_download_file(
+                                url_list=[url],
+                                output_path_list=[output_file],
+                                proxy_host=proxy_host,
+                                proxy_port=proxy_port,
+                                proxy_user=proxy_user,
+                                proxy_password=proxy_password,
+                                progress=progress_message,
+                                message='downloading band %s' % band,
+                                min_progress=min_progress,
+                                max_progress=max_progress, timeout=2,
+                                ignore_errors=ignore_errors
+                            )
+                            if files_directories.is_file(output_file):
+                                output_file_list.append(output_file)
+                                output_raster_dic[cfg.satSentinel2].append(
+                                    output_file)
+                            else:
+                                cfg.messages.error(
+                                    'failed download %s_B%s'
+                                    % (product_name, band)
+                                )
+                                cfg.logger.log.error(
+                                    'failed download %s_B%s'
+                                    % (product_name, band)
+                                )
+                    min_progress += progress_step
+                    max_progress += progress_step
+                output_raster_lists.append(output_raster_dic)
+            else:
+                if not ignore_errors:
+                    return_check = False
         elif (product_table['product'][i] == cfg.sentinel2_mpc
               or product_table['product'][i] == cfg.landsat_mpc
               or product_table['product'][i] == cfg.modis_09q1_mpc
@@ -1309,7 +1387,7 @@ def _check_sentinel_2_bands(
         top_url = 'https://storage.googleapis.com/gcp-public-data-sentinel-2'
         copernicus = False
     else:
-        top_url = 'https://catalogue.dataspace.copernicus.eu/odata/v1'
+        top_url = 'https://download.dataspace.copernicus.eu/odata/v1'
         copernicus = True
     band_url = ''
     output_file = ''
@@ -1739,7 +1817,9 @@ def query_landsat_mpc(
             coordinate_list[0], coordinate_list[3], coordinate_list[2],
             coordinate_list[1]
         )
-    params['query'] = json.dumps(query_dict)
+    # an empty query is refused (HTTP 400) by the STAC servers
+    if query_dict:
+        params['query'] = json.dumps(query_dict)
     # search
     response, stac_data = download_tools.request_stac(
         url=base_url, params=params, proxy_host=proxy_host,
@@ -1869,7 +1949,9 @@ def query_modis_09q1_mpc(
             coordinate_list[0], coordinate_list[3], coordinate_list[2],
             coordinate_list[1]
         )
-    params['query'] = json.dumps(query_dict)
+    # an empty query is refused (HTTP 400) by the STAC servers
+    if query_dict:
+        params['query'] = json.dumps(query_dict)
     # search
     response, stac_data = download_tools.request_stac(
         url=base_url, params=params, proxy_host=proxy_host,
@@ -1998,7 +2080,9 @@ def query_modis_11a2_mpc(
             coordinate_list[0], coordinate_list[3], coordinate_list[2],
             coordinate_list[1]
         )
-    params['query'] = json.dumps(query_dict)
+    # an empty query is refused (HTTP 400) by the STAC servers
+    if query_dict:
+        params['query'] = json.dumps(query_dict)
     # search
     response, stac_data = download_tools.request_stac(
         url=base_url, params=params, proxy_host=proxy_host,
@@ -2125,7 +2209,9 @@ def query_cop_dem_glo_30_mpc(
             coordinate_list[0], coordinate_list[3], coordinate_list[2],
             coordinate_list[1]
         )
-    params['query'] = json.dumps(query_dict)
+    # an empty query is refused (HTTP 400) by the STAC servers
+    if query_dict:
+        params['query'] = json.dumps(query_dict)
     # search
     response, stac_data = download_tools.request_stac(
         url=base_url, params=params, proxy_host=proxy_host,
@@ -2257,7 +2343,9 @@ def query_aster_l1t_mpc(
             coordinate_list[0], coordinate_list[3], coordinate_list[2],
             coordinate_list[1]
         )
-    params['query'] = json.dumps(query_dict)
+    # an empty query is refused (HTTP 400) by the STAC servers
+    if query_dict:
+        params['query'] = json.dumps(query_dict)
     # search
     response, stac_data = download_tools.request_stac(
         url=base_url, params=params, proxy_host=proxy_host,
@@ -2384,7 +2472,9 @@ def query_sentinel2_mpc(
             coordinate_list[0], coordinate_list[3], coordinate_list[2],
             coordinate_list[1]
         )
-    params['query'] = json.dumps(query_dict)
+    # an empty query is refused (HTTP 400) by the STAC servers
+    if query_dict:
+        params['query'] = json.dumps(query_dict)
     # search
     response, stac_data = download_tools.request_stac(
         url=base_url, params=params, proxy_host=proxy_host,
@@ -2418,6 +2508,143 @@ def query_sentinel2_mpc(
             bbox = entry['bbox']
             for f in image_find_list:
                 if f.lower() in product_name.lower():
+                    product_table_list.append(
+                        tm.create_product_table(
+                            product=product,
+                            product_id=producer_image_id,
+                            acquisition_date=img_acquisition_date,
+                            cloud_cover=float(cloud_cover_percentage),
+                            zone_path=path, row=None,
+                            min_lat=float(bbox[1]), min_lon=float(bbox[0]),
+                            max_lat=float(bbox[3]), max_lon=float(bbox[2]),
+                            collection=collection, size=None,
+                            preview=preview, uid=producer_image_id,
+                            image=product_name, ref_url=ref_url
+                        )
+                    )
+        cfg.progress.update(end=True)
+        cfg.logger.log.info('end')
+        return OutputManager(
+            extra={
+                'product_table': tm.stack_product_table(
+                    product_list=product_table_list
+                )
+            }
+        )
+    else:
+        cfg.logger.log.error('error: search failed')
+        cfg.messages.error('error: search failed')
+        return OutputManager(check=False)
+
+
+def query_sentinel2_aws(
+        date_from, date_to, max_cloud_cover=100, result_number=50,
+        name_filter=None, coordinate_list=None, progress_message=True,
+        proxy_host=None, proxy_port=None, proxy_user=None, proxy_password=None
+) -> OutputManager:
+    """Perform the query of Sentinel-2 Level-2A from Earth Search.
+
+    This tool performs the query from Earth Search (Element 84, AWS Open Data)
+    https://earth-search.aws.element84.com/v1 . No account is required.
+
+    Args:
+        date_from: date defining the starting period of the query
+        date_to:
+        max_cloud_cover:
+        result_number:
+        name_filter:
+        coordinate_list:
+        progress_message:
+        proxy_host:
+        proxy_port:
+        proxy_user:
+        proxy_password:
+
+    Returns:
+        object OutputManger
+
+    """
+    cfg.logger.log.info('start')
+    if progress_message:
+        cfg.progress.update(process='search', message='starting', start=True)
+    product = cfg.sentinel2_aws
+    collection = cfg.sentinel2_aws_collection
+    base_url = 'https://earth-search.aws.element84.com/v1/search'
+    image_find_list = []
+    # filter the results based on a string
+    if name_filter:
+        name_filter_split = name_filter.replace(' ', '').split(',')
+        for f in name_filter_split:
+            image_find_list.append(f)
+    else:
+        image_find_list.append('')
+    max_result_number = result_number
+    if max_result_number > 1000:
+        max_result_number = 1000
+    params = {
+        'collections': collection,
+        'datetime': '%sT00:00:00Z/%sT23:59:59Z' % (date_from, date_to),
+        'limit': str(max_result_number)
+    }
+    query_dict = {'eo:cloud_cover': {'lt': max_cloud_cover}}
+    # coordinate list left, top, right, bottom
+    if coordinate_list is None:
+        cfg.logger.log.debug('coordinate_list is None')
+    else:
+        if abs(coordinate_list[0] - coordinate_list[2]) > 10 or abs(
+                coordinate_list[1] - coordinate_list[3]
+        ) > 10:
+            cfg.logger.log.warning('search area extent beyond limits')
+            cfg.messages.warning('search area extent beyond limits')
+        params['bbox'] = '%s,%s,%s,%s' % (
+            coordinate_list[0], coordinate_list[3], coordinate_list[2],
+            coordinate_list[1]
+        )
+    # an empty query is refused (HTTP 400) by the STAC servers
+    if query_dict:
+        params['query'] = json.dumps(query_dict)
+    # search
+    response, stac_data = download_tools.request_stac(
+        url=base_url, params=params, proxy_host=proxy_host,
+        proxy_port=proxy_port, proxy_user=proxy_user,
+        proxy_password=proxy_password
+    )
+    if response:
+        stac_data = json.loads(stac_data)
+        entries = stac_data['features']
+        product_table_list = []
+        e = 0
+        for entry in entries:
+            e += 1
+            step = int(80 * e / len(entries) + 20)
+            percentage = int(100 * e / len(entries))
+            cfg.progress.update(
+                message='search in progress', step=step,
+                percentage=percentage, ping=True
+            )
+            producer_image_id = entry['id']
+            ref_url = None
+            for link in entry['links']:
+                if link.get('rel') == 'self':
+                    ref_url = link['href']
+            properties = entry['properties']
+            product_name = str(properties.get(
+                's2:product_uri', producer_image_id
+            )).replace('.SAFE', '')
+            preview = entry['assets'].get('thumbnail', {}).get('href')
+            img_acquisition_date = datetime.datetime.strptime(
+                properties['datetime'][0:19], '%Y-%m-%dT%H:%M:%S'
+            ).strftime('%Y-%m-%d')
+            cloud_cover_percentage = properties['eo:cloud_cover']
+            path = '%s%s%s' % (
+                properties.get('mgrs:utm_zone', ''),
+                properties.get('mgrs:latitude_band', ''),
+                properties.get('mgrs:grid_square', '')
+            )
+            bbox = entry['bbox']
+            for f in image_find_list:
+                if f.lower() in product_name.lower() or f.lower() in (
+                        producer_image_id.lower()):
                     product_table_list.append(
                         tm.create_product_table(
                             product=product,

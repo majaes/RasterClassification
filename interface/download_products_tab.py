@@ -607,6 +607,7 @@ def display_images():
                   or sat == cfg.rs.configurations.sentinel2_hls):
                 display_nasa_images(image_id)
             elif (sat == cfg.rs.configurations.landsat_mpc
+                  or sat == cfg.rs.configurations.sentinel2_aws
                   or sat == cfg.rs.configurations.sentinel2_mpc
                   or sat == cfg.rs.configurations.modis_09q1_mpc
                   or sat == cfg.rs.configurations.modis_11a2_mpc
@@ -644,6 +645,7 @@ def table_click():
               or sat == cfg.rs.configurations.sentinel2_hls):
             display_nasa_images(row, True)
         elif (sat == cfg.rs.configurations.landsat_mpc
+              or sat == cfg.rs.configurations.sentinel2_aws
               or sat == cfg.rs.configurations.sentinel2_mpc
               or sat == cfg.rs.configurations.modis_09q1_mpc
               or sat == cfg.rs.configurations.modis_11a2_mpc
@@ -1263,6 +1265,7 @@ def download_mpc_thumbnail(
     check = False
     if (
             sat == cfg.rs.configurations.landsat_mpc
+            or sat == cfg.rs.configurations.sentinel2_aws
             or sat == cfg.rs.configurations.sentinel2_mpc
             or sat == cfg.rs.configurations.modis_09q1_mpc
             or sat == cfg.rs.configurations.modis_11a2_mpc
