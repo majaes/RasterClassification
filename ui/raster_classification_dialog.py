@@ -258,25 +258,27 @@ class DockClassSimplifiedDialog(QDockWidget):
         box_file = CollapsibleBox('Training file', frame, collapsible=False)
         ui.box_file = box_file
         grid_file = QGridLayout(box_file.body)
-        for column, widget in enumerate((
+        for index, widget in enumerate((
                 ui.button_new_input, ui.trainingFile_toolButton,
                 ui.import_library_toolButton,
                 ui.export_signature_list_toolButton)):
-            grid_file.addWidget(widget, 0, column)
+            grid_file.addWidget(widget, index // 2, index % 2)
+        grid_file.addWidget(ui.trainingFile_lineEdit, 2, 0)
+        grid_file.addWidget(ui.button_reset_input, 2, 1)
+        for column in range(2):
             grid_file.setColumnStretch(column, 1)
-        grid_file.addWidget(ui.trainingFile_lineEdit, 1, 0, 1, 3)
-        grid_file.addWidget(ui.button_reset_input, 1, 3)
         root.addWidget(box_file)
         # 2. class: number, name, create, delete
         box_class = CollapsibleBox('Class', frame, collapsible=False)
         ui.box_class = box_class
-        row_class = QHBoxLayout(box_class.body)
-        row_class.addWidget(ui.label_44)
-        row_class.addWidget(ui.ROI_Macroclass_ID_spin)
-        row_class.addWidget(ui.label_45)
-        row_class.addWidget(ui.ROI_Macroclass_line, 1)
-        row_class.addWidget(ui.button_Save_ROI)
-        row_class.addWidget(ui.delete_class_Button)
+        row_class = QGridLayout(box_class.body)
+        row_class.addWidget(ui.label_44, 0, 0)
+        row_class.addWidget(ui.ROI_Macroclass_ID_spin, 0, 1)
+        row_class.addWidget(ui.label_45, 0, 2)
+        row_class.addWidget(ui.ROI_Macroclass_line, 0, 3)
+        row_class.addWidget(ui.button_Save_ROI, 1, 0, 1, 2)
+        row_class.addWidget(ui.delete_class_Button, 1, 2, 1, 2)
+        row_class.setColumnStretch(3, 1)
         root.addWidget(box_class)
         # 3. ROI: drawing tools, undo and redo, delete, spectral plot
         box_roi = CollapsibleBox('ROI', frame, collapsible=False)
@@ -284,11 +286,11 @@ class DockClassSimplifiedDialog(QDockWidget):
         grid_roi = QGridLayout(box_roi.body)
         grid_roi.addWidget(ui.polygonROI_Button, 0, 0)
         grid_roi.addWidget(ui.pointerButton, 0, 1)
-        grid_roi.addWidget(ui.undo_save_Button, 0, 2)
-        grid_roi.addWidget(ui.redo_save_Button, 0, 3)
-        grid_roi.addWidget(ui.delete_Signature_Button, 1, 0, 1, 2)
-        grid_roi.addWidget(ui.signature_spectral_plot_toolButton, 1, 2, 1, 2)
-        for column in range(4):
+        grid_roi.addWidget(ui.undo_save_Button, 1, 0)
+        grid_roi.addWidget(ui.redo_save_Button, 1, 1)
+        grid_roi.addWidget(ui.delete_Signature_Button, 2, 0)
+        grid_roi.addWidget(ui.signature_spectral_plot_toolButton, 2, 1)
+        for column in range(2):
             grid_roi.setColumnStretch(column, 1)
         root.addWidget(box_roi)
         # 4. the list takes the free space
@@ -346,6 +348,10 @@ class DockClassSimplifiedDialog(QDockWidget):
             ui.button_Save_ROI.setToolTip(tr(
                 'Create the class (number and name) that receives the '
                 'ROIs'))
+            wrapped = getattr(ui, 'download_wrapped', None)
+            if wrapped:
+                from . import download_layout
+                download_layout.wrap_texts(wrapped)
             boxes = getattr(ui, 'download_boxes', None)
             if boxes:
                 for box, text in zip(boxes, ('Search parameters',
@@ -464,7 +470,15 @@ class DockClassSimplifiedDialog(QDockWidget):
             ui.classification_progress = dock_progress.create_bar(
                 ui.frame_3
             )
-            ui.gridLayout_6.addWidget(ui.classification_progress, 2, 0, 1, 4)
+            grid_processing = ui.gridLayout_6
+            for widget in (ui.label_46, ui.alg_combo, ui.previewButton,
+                           ui.button_classification):
+                grid_processing.removeWidget(widget)
+            grid_processing.addWidget(ui.label_46, 1, 0)
+            grid_processing.addWidget(ui.alg_combo, 1, 1, 1, 3)
+            grid_processing.addWidget(ui.previewButton, 2, 0, 1, 2)
+            grid_processing.addWidget(ui.button_classification, 2, 2, 1, 2)
+            grid_processing.addWidget(ui.classification_progress, 3, 0, 1, 4)
         except Exception as err:
             str(err)
 

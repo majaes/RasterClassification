@@ -36,6 +36,14 @@ def _detach(widget):
             break
 
 
+def wrap_texts(widgets, width=30):
+    """ Check boxes cannot wrap their text: line breaks are inserted. """
+    import textwrap
+    for widget in widgets:
+        text = ' '.join(widget.text().split())
+        widget.setText(textwrap.fill(text, width))
+
+
 def build(ui):
     """ Build the new page from the widgets of the main window ui; return
     (scroll area, list of group boxes with their title text). """
@@ -80,34 +88,45 @@ def build(ui):
     grid = QGridLayout(box_search.body)
     grid.setHorizontalSpacing(6)
     grid.addWidget(w['label_114'], 0, 0)
-    grid.addWidget(w['landsat_satellite_combo'], 0, 1, 1, 4)
+    grid.addWidget(w['landsat_satellite_combo'], 0, 1, 1, 3)
     grid.addWidget(w['label_107'], 1, 0)
     grid.addWidget(w['UX_lineEdit_3'], 1, 1)
     grid.addWidget(w['UY_lineEdit_3'], 1, 2)
     grid.addWidget(w['selectUL_toolButton_3'], 1, 3)
-    grid.addWidget(w['show_area_radioButton_2'], 1, 4)
     grid.addWidget(w['label_105'], 2, 0)
     grid.addWidget(w['LX_lineEdit_3'], 2, 1)
     grid.addWidget(w['LY_lineEdit_3'], 2, 2)
+    grid.addWidget(w['show_area_radioButton_2'], 2, 3)
     grid.addWidget(w['label_111'], 3, 0)
     grid.addWidget(w['dateEdit_from'], 3, 1)
     grid.addWidget(w['label_112'], 3, 2, alignment=Qt.AlignmentFlag.AlignRight)
-    grid.addWidget(w['dateEdit_to'], 3, 3, 1, 2)
+    grid.addWidget(w['dateEdit_to'], 3, 3)
     grid.addWidget(w['label_110'], 4, 0)
     grid.addWidget(w['cloud_cover_spinBox'], 4, 1)
     grid.addWidget(w['label_194'], 4, 2, alignment=Qt.AlignmentFlag.AlignRight)
-    grid.addWidget(w['result_number_spinBox_2'], 4, 3, 1, 2)
+    grid.addWidget(w['result_number_spinBox_2'], 4, 3)
     grid.addWidget(w['label_113'], 5, 0)
     grid.addWidget(w['imageID_lineEdit'], 5, 1, 1, 2)
     find = QHBoxLayout()
     find.addWidget(w['label_35'])
     find.addWidget(w['find_images_toolButton'])
-    grid.addLayout(find, 5, 3, 1, 2)
+    grid.addLayout(find, 5, 3)
+    for name in ('label_114', 'label_107', 'label_105', 'label_111',
+                 'label_110', 'label_113', 'label_194', 'label_112',
+                 'label_35'):
+        w[name].setWordWrap(True)
+    for column in (1, 2, 3):
+        grid.setColumnStretch(column, 1)
+    for name in ('dateEdit_from', 'dateEdit_to', 'cloud_cover_spinBox',
+                 'result_number_spinBox_2', 'UX_lineEdit_3', 'UY_lineEdit_3',
+                 'LX_lineEdit_3', 'LY_lineEdit_3', 'imageID_lineEdit',
+                 'landsat_satellite_combo'):
+        w[name].setMinimumWidth(40)
+        w[name].setSizePolicy(QSizePolicy.Policy.Ignored,
+                              QSizePolicy.Policy.Fixed)
     # the OpenStreetMap button and its attribution are not part of the panel
     for name in ('toolButton_OSM', 'label_205', 'label_206'):
         w[name].setVisible(False)
-    grid.setColumnStretch(1, 1)
-    grid.setColumnStretch(2, 1)
     root.addWidget(box_search)
 
     # ---- 2. products found
@@ -118,7 +137,7 @@ def build(ui):
     vbox.addWidget(w['download_images_tableWidget'], 1)
     tools = QHBoxLayout()
     w['image_preview_label'].setMinimumSize(0, 0)
-    w['image_preview_label'].setFixedSize(110, 110)
+    w['image_preview_label'].setFixedSize(84, 84)
     tools.addWidget(w['image_preview_label'])
     for name in ('toolButton_display', 'remove_image_toolButton',
                  'clear_table_toolButton', 'import_table_pushButton',
@@ -131,29 +150,34 @@ def build(ui):
     # ---- 3. bands and download
     box_download = CollapsibleBox(parent=page)
     grid_d = QGridLayout(box_download.body)
-    grid_d.addWidget(w['label_3'], 0, 0)
+    grid_d.addWidget(w['label_3'], 0, 0, 1, 4)
     bands = ('1', '2', '3', '4', '5', '6', '7', '8', '8A', '9', '10', '11',
              '12')
     for index, band in enumerate(bands):
         grid_d.addWidget(w['checkBoxs_band_%s' % band],
-                         index // 7, 1 + index % 7)
-    grid_d.addWidget(w['ancillary_data_checkBox'], 2, 1, 1, 4)
-    grid_d.addWidget(w['check_toolButton_2'], 2, 5)
+                         1 + index // 4, index % 4)
+    grid_d.addWidget(w['ancillary_data_checkBox'], 5, 0, 1, 3)
+    grid_d.addWidget(w['check_toolButton_2'], 5, 3)
     options = QGridLayout()
-    options.addWidget(w['download_if_preview_in_legend_checkBox'], 0, 0)
-    options.addWidget(w['preprocess_checkBox'], 0, 1)
-    options.addWidget(w['load_in_QGIS_checkBox'], 1, 0)
-    options.addWidget(w['virtual_download_checkBox'], 1, 1)
-    options.addWidget(w['create_bandset_checkBox_2'], 2, 0, 1, 2)
-    grid_d.addLayout(options, 3, 0, 1, 8)
+    wrapped = []
+    for row, name in enumerate((
+            'download_if_preview_in_legend_checkBox', 'preprocess_checkBox',
+            'load_in_QGIS_checkBox', 'virtual_download_checkBox',
+            'create_bandset_checkBox_2')):
+        options.addWidget(w[name], row, 0)
+        wrapped.append(w[name])
+    grid_d.addLayout(options, 6, 0, 1, 4)
     buttons = QHBoxLayout()
     buttons.addStretch(1)
     buttons.addWidget(w['export_links_Button'])
     buttons.addWidget(w['download_images_Button'])
-    grid_d.addLayout(buttons, 4, 0, 1, 8)
+    grid_d.addLayout(buttons, 7, 0, 1, 4)
     root.addWidget(box_download)
 
     scroll = QScrollArea()
+    # the long texts of the options are shown on several lines
+    scroll.wrapped = wrapped
+    wrap_texts(wrapped)
     scroll.setWidgetResizable(True)
     scroll.setFrameShape(QFrame.Shape.NoFrame)
     scroll.setWidget(page)

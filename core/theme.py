@@ -14,7 +14,7 @@ STYLE = """
 QPushButton, QToolButton {
     border: 1px solid palette(mid);
     border-radius: 6px;
-    padding: 4px 10px;
+    padding: 3px 6px;
     background-color: palette(button);
 }
 QPushButton:hover, QToolButton:hover {

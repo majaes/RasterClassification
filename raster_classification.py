@@ -1223,6 +1223,7 @@ def connect_gui():
         scroll, boxes = download_layout.build(cfg.dialog.ui)
         dock_ui.bandset_roi_tabs.addTab(scroll, 'Download products')
         dock_ui.download_boxes = boxes
+        dock_ui.download_wrapped = scroll.wrapped
         cfg.download_dock_page = scroll
         settings = SettingsPage(semiautomatic_class_version())
         settings.on_language_changed = apply_language

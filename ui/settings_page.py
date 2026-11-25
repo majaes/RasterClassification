@@ -80,6 +80,7 @@ class SettingsPage(QScrollArea):
         self.box_language = CollapsibleBox(parent=self.widget())
         layout = QHBoxLayout(self.box_language.body)
         self.label_language = QLabel()
+        self.label_language.setWordWrap(True)
         layout.addWidget(self.label_language, 1)
         self.group_language = QButtonGroup(self)
         self.buttons_language = {}
@@ -303,6 +304,7 @@ class SettingsPage(QScrollArea):
                 'STAC API address (URL of the catalog)', 'Collection',
                 'Assets to download (comma separated)')):
             label.setText(tr(text))
+            label.setWordWrap(True)
         self.button_add.setText(tr('Add'))
         self.box_accounts.setTitle(tr('Accounts'))
         self.box_credits.setTitle(tr('Credits'))
