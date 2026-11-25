@@ -23,7 +23,7 @@
 
 from PyQt6.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplication,
                           QTranslator)
-from PyQt6.QtWidgets import QDialog, QDockWidget
+from PyQt6.QtWidgets import QDialog, QDockWidget, QTabWidget
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
 
@@ -209,6 +209,28 @@ class DockClassSimplifiedDialog(QDockWidget):
             QCoreApplication.installTranslator(self.translator)
         self.ui = Ui_DockClassSimplified()
         self.ui.setupUi(self)
+        self._build_tabs()
+
+    def _build_tabs(self):
+        """ Band set definition and ROI & Signature list in tabs. """
+        try:
+            ui = self.ui
+            grid = ui.gridLayout_14
+            for frame in (ui.frame_bandset, ui.frame_2):
+                grid.removeWidget(frame)
+            # the tab names replace the dark section titles
+            ui.label_59.setVisible(False)
+            ui.label_48.setVisible(False)
+            tabs = QTabWidget(ui.dockWidgetContents)
+            tabs.setObjectName('bandset_roi_tabs')
+            tabs.addTab(ui.frame_bandset, 'Band set definition')
+            tabs.addTab(ui.frame_2, 'ROI && Signature list')
+            tabs.setDocumentMode(False)
+            grid.addWidget(tabs, 2, 0, 1, 1)
+            grid.setRowStretch(2, 1)
+            ui.bandset_roi_tabs = tabs
+        except Exception as err:
+            str(err)
 
 
 # create the dialog
