@@ -27,7 +27,7 @@ This tool allows for band set definition.
 import numpy
 from qgis.PyQt.QtWidgets import (
     QWidget, QGridLayout, QFrame, QAbstractItemView, QTableWidget,
-    QTableWidgetItem, QListWidgetItem, QApplication
+    QTableWidgetItem, QListWidgetItem, QApplication, QHeaderView
 )
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
@@ -319,7 +319,12 @@ def add_band_set_tab(position=None, create_bandset_in_catalog=True):
         QApplication.translate('semiautomaticclassificationplugin', 'Date')
     )
     table_w.verticalHeader().setDefaultSectionSize(24)
-    table_w.horizontalHeader().setStretchLastSection(True)
+    # the name column takes the free width, the wavelength column stays
+    # visible beside it (no horizontal scrolling)
+    header = table_w.horizontalHeader()
+    header.setStretchLastSection(False)
+    header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+    header.setSectionResizeMode(1, QHeaderView.ResizeMode.Fixed)
     grid_layout.addWidget(table_w, 0, 0, 1, 1)
     # connect to edited cell
     try:
@@ -394,7 +399,7 @@ def add_band_set_tab_simplified():
         str(err)
     table_w.cellChanged.connect(edited_bandset)
     cfg.util_qt.set_column_width_list(
-        table_w, [[0, 350], [1, 150]]
+        table_w, [[1, 125]]
     )
     cfg.logger.log.debug('add bandset simplified')
 

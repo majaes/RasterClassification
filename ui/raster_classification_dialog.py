@@ -262,7 +262,6 @@ class DockClassSimplifiedDialog(QDockWidget):
         ui.horizontalLayout = row
         composition.addLayout(row, 0, 0, 1, 2)
         ui.gridLayout_2 = composition
-        root.addLayout(composition)
         # satellite (wavelengths of the bands)
         satellite = QHBoxLayout()
         ui.label_150.setText('Satellite')
@@ -272,6 +271,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         satellite.addWidget(ui.label_150, 0)
         satellite.addWidget(ui.wavelength_sat_combo, 1)
         root.addLayout(satellite)
+        root.addLayout(composition)
         old.addLayout(root, 1, 0, 1, 3)
         ui.bandset_root_layout = root
 
