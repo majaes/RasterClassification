@@ -104,18 +104,16 @@ EXTRA = {
         '<b>Raster Classification</b> %s &copy; 2026 '
         '<a href="https://anbmng.com">ANABA MANGA</a>, développé et maintenu '
         'par l\'auteur (licence publique générale GNU v3 ou ultérieure).',
-    'Built on the <a href="https://github.com/semiautomaticgit/'
+    'Includes code of the <a href="https://github.com/semiautomaticgit/'
     'SemiAutomaticClassificationPlugin">Semi-Automatic Classification '
-    'Plugin</a> and on the <a href="https://github.com/semiautomaticgit/'
-    'remotior_sensus">Remotior Sensus</a> library by Luca Congedo, '
-    '&copy; 2012-2026, GPL v3 or later: his copyright notices are kept, as '
-    'the licence requires.':
-        'Construit sur le <a href="https://github.com/semiautomaticgit/'
+    'Plugin</a> and of the <a href="https://github.com/semiautomaticgit/'
+    'remotior_sensus">Remotior Sensus</a> library by Luca Congedo (GPL v3 or '
+    'later).':
+        'Reprend du code du <a href="https://github.com/semiautomaticgit/'
         'SemiAutomaticClassificationPlugin">Semi-Automatic Classification '
-        'Plugin</a> et sur la bibliothèque <a href="https://github.com/'
+        'Plugin</a> et de la bibliothèque <a href="https://github.com/'
         'semiautomaticgit/remotior_sensus">Remotior Sensus</a> de Luca '
-        'Congedo, &copy; 2012-2026, GPL v3 ou ultérieure : ses mentions de '
-        'copyright sont conservées, comme l\'exige la licence.',
+        'Congedo (GPL v3 ou ultérieure).',
     'Search and download: <a href="https://dataspace.copernicus.eu">'
     'Copernicus Data Space Ecosystem</a>, <a href="https://planetary'
     'computer.microsoft.com">Microsoft Planetary Computer</a>, <a '

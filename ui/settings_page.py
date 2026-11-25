@@ -36,12 +36,11 @@ AUTHOR_CREDIT = (
     'by the author (GNU General Public License v3 or later).'
 )
 DERIVED_CREDIT = (
-    'Built on the <a href="https://github.com/semiautomaticgit/'
+    'Includes code of the <a href="https://github.com/semiautomaticgit/'
     'SemiAutomaticClassificationPlugin">Semi-Automatic Classification '
-    'Plugin</a> and on the <a href="https://github.com/semiautomaticgit/'
-    'remotior_sensus">Remotior Sensus</a> library by Luca Congedo, '
-    '&copy; 2012-2026, GPL v3 or later: his copyright notices are kept, as '
-    'the licence requires.'
+    'Plugin</a> and of the <a href="https://github.com/semiautomaticgit/'
+    'remotior_sensus">Remotior Sensus</a> library by Luca Congedo (GPL v3 or '
+    'later).'
 )
 DATA_CREDIT = (
     'Search and download: <a href="https://dataspace.copernicus.eu">'
