@@ -63,7 +63,7 @@ from qgis.gui import QgsRubberBand
 from .__init__ import version as semiautomatic_class_version
 # import SemiAutomaticClassificationPlugin
 from .core import config as cfg
-from .core import language, custom_sources
+from .core import language, custom_sources, dock_progress
 try:
     from .core import util_qgis
 except Exception as error:
