@@ -43,6 +43,7 @@ from qgis.gui import QgsVertexMarker, QgsHighlight
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 from ..core.language import tr
+from ..core import dock_progress
 
 try:
     from remotior_sensus.core.spectral_signatures import (
@@ -2068,6 +2069,12 @@ def create_class():
 
 # add the ROI just drawn to the class chosen in the panel
 def add_roi_to_class():
+    if dock_progress.is_active():
+        clear_scp_dock_rubber()
+        cfg.temporary_roi = None
+        _roi_message('Wait for the running processing to finish.',
+                     Qgis.MessageLevel.Warning)
+        return False
     ui = cfg.dock_class_simpl_dlg.ui
     ok = cfg.scp_training is not None
     class_id = int(ui.ROI_Macroclass_ID_spin.value())

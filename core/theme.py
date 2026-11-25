@@ -32,6 +32,12 @@ QPushButton:disabled, QToolButton:disabled {
     color: palette(mid);
     background-color: transparent;
 }
+QPushButton[locked="true"], QToolButton[locked="true"],
+QComboBox[locked="true"], QLineEdit[locked="true"],
+QAbstractSpinBox[locked="true"], QCheckBox[locked="true"],
+QRadioButton[locked="true"] {
+    color: palette(mid);
+}
 QToolButton#collapsibleHeader {
     border: none;
     background-color: transparent;

@@ -1236,6 +1236,8 @@ def connect_gui():
         settings.set_account_widgets(cfg.dialog.ui)
         dock_ui.bandset_roi_tabs.addTab(settings, 'Settings')
         dock_ui.settings_page = settings
+        # locked while a processing runs; the navigation stays possible
+        dock_progress.PANELS.append(dock_ui.bandset_roi_tabs)
         cfg.dock_class_simpl_dlg.retranslate_custom()
         cfg.dock_class_simpl_dlg.apply_theme()
     except Exception as err:

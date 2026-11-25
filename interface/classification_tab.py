@@ -32,6 +32,7 @@ from qgis.PyQt.QtGui import QIcon, QPixmap, QCursor
 from qgis.PyQt.QtWidgets import QApplication
 from qgis.core import Qgis
 from ..core.language import tr
+from ..core import dock_progress
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 
@@ -681,6 +682,13 @@ def run_classifier(
 
 # create classification preview
 def create_preview(preview_point, classification_confidence=None):
+    if dock_progress.is_active():
+        cfg.iface.messageBar().pushMessage(
+            'Raster Classification',
+            tr('Wait for the running processing to finish.'),
+            level=Qgis.MessageLevel.Warning, duration=4
+        )
+        return False
     point = cfg.utils.check_point_in_image(point=preview_point)
     if point is False:
         cfg.mx.msg_war_3()

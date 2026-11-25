@@ -12,11 +12,13 @@ and a moving bar while data are imported, with a Cancel button, and hide
 themselves when finished.
 """
 
-from qgis.PyQt.QtCore import QTimer
+from qgis.PyQt.QtCore import QTimer, QObject, QEvent
 
 from .language import tr
 from qgis.PyQt.QtWidgets import (
-    QProgressBar, QSizePolicy, QWidget, QHBoxLayout, QPushButton
+    QProgressBar, QSizePolicy, QWidget, QHBoxLayout, QPushButton,
+    QToolButton, QComboBox, QLineEdit, QAbstractSpinBox, QCheckBox,
+    QRadioButton, QTabBar
 )
 
 # the progress boxes of the panel (progress bar and Cancel button)
@@ -96,7 +98,72 @@ def is_cancelled():
     return cancel_requested[0]
 
 
-def _lock(state):
+# tab widgets of the panel: all their options are locked while a processing
+# runs, the navigation (tabs, scrolling, folding the sections) stays possible
+PANELS = []
+_CONTROLS = (QPushButton, QToolButton, QComboBox, QLineEdit, QAbstractSpinBox,
+             QCheckBox, QRadioButton)
+_BLOCKED = (
+    QEvent.Type.MouseButtonPress, QEvent.Type.MouseButtonRelease,
+    QEvent.Type.MouseButtonDblClick, QEvent.Type.KeyPress,
+    QEvent.Type.KeyRelease, QEvent.Type.Wheel
+)
+
+
+class _Blocker(QObject):
+    """ Swallows the clicks, the keys and the wheel on the locked options; the
+    enabled state of the widgets is not changed. """
+
+    def eventFilter(self, obj, event):
+        return bool(_active[0] and event.type() in _BLOCKED)
+
+
+_blocker = _Blocker()
+_filtered = []
+
+
+def _controls():
+    protected = set()
+    for box in list(BOXES):
+        try:
+            protected.update(box.findChildren(QWidget))
+            protected.add(box)
+        except RuntimeError:
+            BOXES.remove(box)
+    found = []
+    for panel in list(PANELS):
+        try:
+            widgets = panel.findChildren(QWidget)
+        except RuntimeError:
+            PANELS.remove(panel)
+            continue
+        for widget in widgets:
+            if not isinstance(widget, _CONTROLS) or widget in protected:
+                continue
+            if widget.objectName() == 'collapsibleHeader':
+                continue
+            if isinstance(widget.parent(), QTabBar):
+                continue
+            found.append(widget)
+    return found
+
+
+def _lock_panel(state):
+    for widget in _controls():
+        try:
+            if state and widget not in _filtered:
+                widget.installEventFilter(_blocker)
+                _filtered.append(widget)
+            widget.setProperty('locked', bool(state))
+            style = widget.style()
+            style.unpolish(widget)
+            style.polish(widget)
+            widget.update()
+        except RuntimeError:
+            pass
+
+
+def _lock_listed(state):
     for widget in list(LOCKED):
         try:
             widget.setEnabled(state)
@@ -106,7 +173,8 @@ def _lock(state):
 
 
 def _begin(callback):
-    _lock(False)
+    _lock_listed(False)
+    _lock_panel(True)
     _generation[0] += 1
     _active[0] = True
     cancel_requested[0] = False
@@ -168,7 +236,8 @@ def finish():
     current = _generation[0]
     _cancel_callback[0] = None
     _active[0] = False
-    _lock(True)
+    _lock_listed(True)
+    _lock_panel(False)
 
     def complete(box):
         if box.bar.maximum() == 0:
