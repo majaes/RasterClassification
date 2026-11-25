@@ -26,7 +26,7 @@ from qgis.PyQt.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplicati
 from qgis.PyQt.QtWidgets import (
     QDialog, QDockWidget, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout,
     QGridLayout, QLabel, QPushButton, QSpacerItem, QSizePolicy,
-    QGroupBox, QFrame
+    QGroupBox, QFrame, QScrollArea
 )
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
@@ -239,7 +239,8 @@ class DockClassSimplifiedDialog(QDockWidget):
         root.setSpacing(6)
         ui.frame_bandset.setFrameShape(QFrame.Shape.NoFrame)
         # group 1: the bands
-        box_bands = CollapsibleBox('Band set', ui.frame_bandset, stretch=True)
+        box_bands = CollapsibleBox('Band set', ui.frame_bandset, stretch=True,
+                                 collapsible=False)
         ui.box_bandset = box_bands
         inner = QVBoxLayout(box_bands.body)
         top = QHBoxLayout()
@@ -263,7 +264,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         # group 2: satellite and composition (the plugin adds the list and
         # the R, G, B lists)
         box_sat = CollapsibleBox('Satellite and composition',
-                                 ui.frame_bandset)
+                                 ui.frame_bandset, collapsible=False)
         ui.box_satellite = box_sat
         composition = QGridLayout()
         row = QHBoxLayout()
@@ -316,7 +317,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         root.setSpacing(6)
         # 1. training file
         ui.frame_2.setFrameShape(QFrame.Shape.NoFrame)
-        box_file = CollapsibleBox('Training file', frame)
+        box_file = CollapsibleBox('Training file', frame, collapsible=False)
         ui.box_file = box_file
         grid_file = QGridLayout(box_file.body)
         for column, widget in enumerate((
@@ -329,7 +330,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         grid_file.addWidget(ui.button_reset_input, 1, 3)
         root.addWidget(box_file)
         # 2. class: number, name, create, delete
-        box_class = CollapsibleBox('Class', frame)
+        box_class = CollapsibleBox('Class', frame, collapsible=False)
         ui.box_class = box_class
         row_class = QHBoxLayout(box_class.body)
         row_class.addWidget(ui.label_44)
@@ -340,7 +341,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         row_class.addWidget(ui.delete_class_Button)
         root.addWidget(box_class)
         # 3. ROI: drawing tools, undo and redo, delete, spectral plot
-        box_roi = CollapsibleBox('ROI', frame)
+        box_roi = CollapsibleBox('ROI', frame, collapsible=False)
         ui.box_roi = box_roi
         grid_roi = QGridLayout(box_roi.body)
         grid_roi.addWidget(ui.polygonROI_Button, 0, 0)
@@ -355,7 +356,8 @@ class DockClassSimplifiedDialog(QDockWidget):
         # 4. the list takes the free space
         ui.sig_widget.setSizePolicy(
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        box_list = CollapsibleBox('Classes and ROIs', frame, stretch=True)
+        box_list = CollapsibleBox('Classes and ROIs', frame, stretch=True,
+                                collapsible=False)
         ui.box_list = box_list
         layout_list = QVBoxLayout(box_list.body)
         layout_list.addWidget(ui.sig_widget)
@@ -413,6 +415,16 @@ class DockClassSimplifiedDialog(QDockWidget):
         except Exception as err:
             str(err)
 
+    @staticmethod
+    def _scroll_page(widget):
+        """ The pages of the panel are all in a scroll area, so that they
+        have the same look (and the panel can be small). """
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setWidget(widget)
+        return scroll
+
     def _build_tabs(self):
         """ Two tabs: the band set (color composition) and the
         classification workflow (ROI & signatures, then classification). """
@@ -431,7 +443,8 @@ class DockClassSimplifiedDialog(QDockWidget):
             page_layout.setContentsMargins(0, 0, 0, 0)
             page_layout.addWidget(ui.frame_2, 1)
             box_processing = CollapsibleBox('Processing',
-                                            classification_page)
+                                            classification_page,
+                                            collapsible=False)
             ui.box_processing = box_processing
             layout_processing = QVBoxLayout(box_processing.body)
             layout_processing.addWidget(ui.frame_3)
@@ -440,8 +453,10 @@ class DockClassSimplifiedDialog(QDockWidget):
             page_layout.addWidget(box_processing, 0)
             tabs = QTabWidget(ui.dockWidgetContents)
             tabs.setObjectName('bandset_roi_tabs')
-            tabs.addTab(ui.frame_bandset, 'Band set definition')
-            tabs.addTab(classification_page, 'ROI && Classification')
+            tabs.addTab(self._scroll_page(ui.frame_bandset),
+                        'Band set definition')
+            tabs.addTab(self._scroll_page(classification_page),
+                        'ROI && Classification')
             grid.addWidget(tabs, 2, 0, 1, 1)
             grid.setRowStretch(2, 1)
             ui.bandset_roi_tabs = tabs

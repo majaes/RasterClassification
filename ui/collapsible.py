@@ -10,7 +10,7 @@ look the same. """
 
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtWidgets import (
-    QWidget, QVBoxLayout, QToolButton, QFrame, QSizePolicy
+    QWidget, QVBoxLayout, QToolButton, QFrame, QSizePolicy, QLabel
 )
 
 _MAX = 16777215
@@ -18,9 +18,28 @@ _MAX = 16777215
 
 class CollapsibleBox(QWidget):
 
-    def __init__(self, title='', parent=None, expanded=True, stretch=False):
+    def __init__(self, title='', parent=None, expanded=True, stretch=False,
+                 collapsible=True):
         QWidget.__init__(self, parent)
         self._stretch = stretch
+        self._collapsible = collapsible
+        if not collapsible:
+            # a simple title, without arrow and without folding
+            self.header = QLabel(title, self)
+            self.header.setStyleSheet(
+                'QLabel { font-weight: bold; padding: 3px 2px; }')
+            self.body = QFrame(self)
+            self.body.setFrameShape(QFrame.Shape.StyledPanel)
+            self.body.setFrameShadow(QFrame.Shadow.Sunken)
+            layout = QVBoxLayout(self)
+            layout.setContentsMargins(0, 0, 0, 0)
+            layout.setSpacing(0)
+            layout.addWidget(self.header)
+            layout.addWidget(self.body)
+            if stretch:
+                self.setSizePolicy(QSizePolicy.Policy.Preferred,
+                                   QSizePolicy.Policy.Expanding)
+            return
         self.header = QToolButton(self)
         self.header.setText(title)
         self.header.setCheckable(True)
@@ -67,4 +86,5 @@ class CollapsibleBox(QWidget):
         return self.header.text()
 
     def setExpanded(self, expanded):
-        self.header.setChecked(expanded)
+        if self._collapsible:
+            self.header.setChecked(expanded)
