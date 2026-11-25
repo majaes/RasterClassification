@@ -18,7 +18,8 @@ import time
 from qgis.PyQt.QtWidgets import QComboBox
 from qgis.core import (
     Qgis, QgsRasterLayer, QgsStyle, QgsColorRampShader, QgsRasterShader,
-    QgsSingleBandPseudoColorRenderer, QgsProject
+    QgsSingleBandPseudoColorRenderer, QgsProject, QgsTask, QgsFeedback,
+    QgsApplication
 )
 from qgis.analysis import QgsRasterCalculator, QgsRasterCalculatorEntry
 
@@ -139,9 +140,12 @@ def apply_composite(roles, name='This composition', quiet=False):
             _message(_missing_message(name, missing))
         return False
     numbers = [find_band(bandset_x, r) for r in roles]
-    return bool(cfg.utils.set_rgb_color_composite(
+    result = bool(cfg.utils.set_rgb_color_composite(
         '%s-%s-%s' % tuple(numbers), number
     ))
+    if result:
+        hide_index_layers()
+    return result
 
 
 def apply_default():
@@ -154,6 +158,7 @@ def apply_default():
         combo.blockSignals(True)
         combo.setCurrentIndex(0)
         combo.setProperty('previous', 0)
+        combo.setProperty('composition', 0)
         combo.blockSignals(False)
 
 
@@ -191,24 +196,107 @@ def apply_index(label, roles, minimum, maximum, ramp_name):
         base.crs(), base.width(), base.height(), entries,
         QgsProject.instance().transformContext()
     )
-    if calc.processCalculation() != 0:
-        _message('Unable to calculate %s' % name)
-        return False
-    result = QgsRasterLayer(output, '%s %s' % (name, number))
-    if not result.isValid():
-        _message('Unable to open the %s result' % name)
-        return False
-    ramp = QgsStyle.defaultStyle().colorRamp(ramp_name)
-    shader = QgsColorRampShader(minimum, maximum, ramp)
-    shader.classifyColorRamp(7)
-    raster_shader = QgsRasterShader()
-    raster_shader.setRasterShaderFunction(shader)
-    result.setRenderer(QgsSingleBandPseudoColorRenderer(
-        result.dataProvider(), 1, raster_shader
-    ))
-    QgsProject.instance().addMapLayer(result)
-    _message('%s calculated: %s' % (name, output), Qgis.MessageLevel.Info)
+    # the calculation runs in the background: QGIS stays usable
+    task = IndexTask(calc, layers, output, name, number, minimum, maximum,
+                     ramp_name)
+    TASKS.append(task)
+    QgsApplication.taskManager().addTask(task)
+    _message(
+        'Calculating %s in the background (progress in the Tasks panel, you '
+        'can keep working). The result is added to the map when finished.'
+        % name, Qgis.MessageLevel.Info
+    )
     return True
+
+
+# running tasks (kept alive until they finish)
+TASKS = []
+# ids of the index layers added to the map
+INDEX_LAYER_IDS = []
+
+
+def hide_index_layers():
+    """ Hide the index layers, so that the composition is visible. """
+    root = QgsProject.instance().layerTreeRoot()
+    for layer_id in list(INDEX_LAYER_IDS):
+        node = root.findLayer(layer_id)
+        if node is None:
+            INDEX_LAYER_IDS.remove(layer_id)
+        else:
+            node.setItemVisibilityChecked(False)
+
+
+def _combo_back_to_composition():
+    for combo in COMBOS:
+        composition = combo.property('composition') or 0
+        combo.blockSignals(True)
+        combo.setCurrentIndex(composition)
+        combo.setProperty('previous', composition)
+        combo.blockSignals(False)
+
+
+class IndexTask(QgsTask):
+    """ Calculation of a spectral index in a background task. """
+
+    def __init__(self, calc, layers, output, name, number, minimum, maximum,
+                 ramp_name):
+        flag = getattr(QgsTask, 'Flag', QgsTask).CanCancel
+        QgsTask.__init__(self, 'Raster Classification: %s' % name, flag)
+        self.calc = calc
+        # the input layers must stay alive during the calculation
+        self.layers = layers
+        self.output = output
+        self.name = name
+        self.number = number
+        self.minimum = minimum
+        self.maximum = maximum
+        self.ramp_name = ramp_name
+        self.feedback = QgsFeedback()
+        self.feedback.progressChanged.connect(self.setProgress)
+
+    def run(self):
+        try:
+            return self.calc.processCalculation(self.feedback) == 0
+        except Exception as err:
+            self.error = str(err)
+            return False
+
+    def cancel(self):
+        self.feedback.cancel()
+        QgsTask.cancel(self)
+
+    def finished(self, result):
+        if self in TASKS:
+            TASKS.remove(self)
+        self.layers = None
+        if not result:
+            if os.path.isfile(self.output):
+                try:
+                    os.remove(self.output)
+                except OSError:
+                    pass
+            _message('%s calculation stopped.' % self.name)
+            _combo_back_to_composition()
+            return
+        layer = QgsRasterLayer(
+            self.output, '%s %s' % (self.name, self.number)
+        )
+        if not layer.isValid():
+            _message('Unable to open the %s result' % self.name)
+            _combo_back_to_composition()
+            return
+        ramp = QgsStyle.defaultStyle().colorRamp(self.ramp_name)
+        shader = QgsColorRampShader(self.minimum, self.maximum, ramp)
+        shader.classifyColorRamp(7)
+        raster_shader = QgsRasterShader()
+        raster_shader.setRasterShaderFunction(shader)
+        layer.setRenderer(QgsSingleBandPseudoColorRenderer(
+            layer.dataProvider(), 1, raster_shader
+        ))
+        QgsProject.instance().addMapLayer(layer)
+        INDEX_LAYER_IDS.append(layer.id())
+        _message('%s calculated: %s' % (self.name, self.output),
+                 Qgis.MessageLevel.Info)
 
 
 class PresetCombo(QComboBox):
@@ -240,13 +328,15 @@ def preset_selected(combo, previous):
     try:
         if index < n:
             ok = apply_composite(COMPOSITES[index][1], COMPOSITES[index][0])
+            if ok:
+                combo.setProperty('composition', index)
         else:
-            apply_index(*INDICES[index - n])
+            # the calculation starts in the background: the combo shows the
+            # index, and goes back to the composition if it fails
+            ok = apply_index(*INDICES[index - n])
     except Exception as err:
         cfg.logger.log.error(str(err))
         _message(str(err))
-    # the combo shows the displayed composition: go back if it failed, and
-    # after an index (which does not change the composition)
     if ok:
         combo.setProperty('previous', index)
     else:
@@ -262,6 +352,7 @@ def create_combo(parent):
     for label, *_rest in INDICES:
         combo.addItem(label)
     combo.setProperty('previous', 0)
+    combo.setProperty('composition', 0)
     combo.setToolTip(
         'Color composition of the band set (default: natural color), or '
         'calculation of a spectral index. Entries that need bands missing '
