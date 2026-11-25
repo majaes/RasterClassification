@@ -190,13 +190,25 @@ def edit_bandset_root():
     band_set_to_table(bandset_number)
 
 
+# raster files of the satellite images read by the plugin (GeoTIFF, JPEG 2000
+# of Sentinel-2, ERDAS, virtual rasters, HDF and NetCDF); the sidecar files
+# (.aux.xml, .xml, .ovr...) are not listed
+RASTER_EXTENSIONS = (
+    'tif', 'tiff', 'jp2', 'j2k', 'img', 'vrt', 'hdf', 'h5', 'he5', 'nc',
+    'bil', 'bsq', 'bip', 'sid', 'ecw', 'envi'
+)
+RASTER_FILTER = 'Raster images (%s);;All files (*.*)' % ' '.join(
+    '*.%s *.%s' % (e, e.upper()) for e in RASTER_EXTENSIONS
+)
+
+
 # add file to band set action
 # noinspection PyTypeChecker
 def add_file_to_band_set_action():
     files = cfg.util_qt.get_open_files(
         None, QApplication.translate('semiautomaticclassificationplugin',
                                      'Select input raster'),
-        '', 'Raster (*.*)'
+        '', RASTER_FILTER
     )
     add_file_to_band_set(files)
 
