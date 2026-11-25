@@ -145,9 +145,13 @@ def apply_composite(roles, name='This composition', quiet=False):
             _message(_missing_message(name, missing))
         return False
     numbers = [find_band(bandset_x, r) for r in roles]
-    result = bool(cfg.utils.set_rgb_color_composite(
-        '%s-%s-%s' % tuple(numbers), number
-    ))
+    cfg.composition_layer_name = tr(name) if name != 'This composition' else None
+    try:
+        result = bool(cfg.utils.set_rgb_color_composite(
+            '%s-%s-%s' % tuple(numbers), number
+        ))
+    finally:
+        cfg.composition_layer_name = None
     if result:
         hide_index_layers()
     return result
@@ -156,9 +160,13 @@ def apply_composite(roles, name='This composition', quiet=False):
 def apply_default():
     """ Display the natural color composite of a new band set; when the
     bands are not recognized, the first three bands are used. """
-    if not apply_composite(COMPOSITES[0][1], quiet=True):
+    if not apply_composite(COMPOSITES[0][1], COMPOSITES[0][0], quiet=True):
         number = cfg.project_registry[cfg.reg_active_bandset_number]
-        cfg.utils.set_rgb_color_composite('3-2-1', number)
+        cfg.composition_layer_name = tr(COMPOSITES[0][0])
+        try:
+            cfg.utils.set_rgb_color_composite('3-2-1', number)
+        finally:
+            cfg.composition_layer_name = None
     hide_custom_widgets()
     for combo in COMBOS:
         combo.blockSignals(True)
@@ -372,9 +380,13 @@ def apply_custom(widget):
     numbers = [c.currentData() for c in widget.combos]
     if None in numbers:
         return False
-    result = bool(cfg.utils.set_rgb_color_composite(
-        '%s-%s-%s' % tuple(numbers), number
-    ))
+    cfg.composition_layer_name = tr('Custom composition')
+    try:
+        result = bool(cfg.utils.set_rgb_color_composite(
+            '%s-%s-%s' % tuple(numbers), number
+        ))
+    finally:
+        cfg.composition_layer_name = None
     if result:
         hide_index_layers()
     return result

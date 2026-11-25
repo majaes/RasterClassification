@@ -30,6 +30,7 @@ CONTEXTS = {
 # texts written by hand (panel, messages, Settings tab)
 EXTRA = {
     'Color composition': 'Composition colorée',
+    'Custom composition': 'Composition personnalisée',
     'SV Classification': 'Classification SV',
     'Band set definition': 'Définition du jeu de bandes',
     'ROI & Classification': 'ROI et classification',

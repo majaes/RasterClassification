@@ -57,6 +57,8 @@ variable_bandset_name = 'bandset'
 # bandset virtual raster
 virtual_bandset_name = bandset_tab_name = None
 virtual_bandset_dict = {}
+# name given to the layer of the composition (the name of the composition)
+composition_layer_name = None
 # clip rubber poly
 clip_rubber_poly = download_rubber_poly = None
 # empty field name

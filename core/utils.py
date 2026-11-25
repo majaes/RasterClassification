@@ -397,8 +397,15 @@ def remove_rgb_color_composite(bandset_number=None):
         bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
     virtual_raster_name = f'{cfg.virtual_bandset_name} {bandset_number}'
     cfg.util_qgis.remove_layer_by_name(virtual_raster_name)
-    # forget the removed layer, otherwise the next composite finds nothing
-    cfg.virtual_bandset_dict.pop(bandset_number, None)
+    # the layer is named after its composition: it is removed by reference
+    layer = cfg.virtual_bandset_dict.pop(bandset_number, None)
+    if layer is not None:
+        try:
+            project = cfg.util_qgis.get_qgis_project()
+            if project.mapLayer(layer.id()) is not None:
+                project.removeMapLayer(layer.id())
+        except RuntimeError:
+            pass
 
 
 # create RGB color composite
@@ -409,7 +416,14 @@ def create_rgb_color_composite(color_composite, bandset_number=None):
                          f'{bandset_number}')
     virtual_raster_name = f'{cfg.virtual_bandset_name} {bandset_number}'
     if bandset_number in cfg.virtual_bandset_dict:
-        layer = cfg.util_qgis.select_layer_by_name(virtual_raster_name, True)
+        # the layer is named after its composition: it is found by reference
+        layer = cfg.virtual_bandset_dict[bandset_number]
+        try:
+            if cfg.util_qgis.get_qgis_project().mapLayer(
+                    layer.id()) is None:
+                layer = None
+        except RuntimeError:
+            layer = None
     else:
         bandset_x = cfg.bandset_catalog.get(bandset_number)
         if bandset_x is None:
@@ -465,6 +479,9 @@ def create_rgb_color_composite(color_composite, bandset_number=None):
         cfg.util_qgis.set_raster_color_composite(
             layer, int(composite[0]), int(composite[1]), int(composite[2])
         )
+        # the layer takes the name of the composition
+        if cfg.composition_layer_name:
+            layer.setName(cfg.composition_layer_name)
         return True
 
 
