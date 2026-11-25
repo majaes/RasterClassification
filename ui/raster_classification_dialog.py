@@ -26,11 +26,12 @@ from qgis.PyQt.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplicati
 from qgis.PyQt.QtWidgets import (
     QDialog, QDockWidget, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout,
     QGridLayout, QLabel, QPushButton, QSpacerItem, QSizePolicy,
-    QGroupBox
+    QGroupBox, QFrame
 )
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
 from ..core import dock_progress
+from .collapsible import CollapsibleBox
 from ..core.language import tr, use_qm_files
 
 from .ui_raster_classification import (
@@ -236,14 +237,18 @@ class DockClassSimplifiedDialog(QDockWidget):
                 layout.removeWidget(widget)
         root = QVBoxLayout()
         root.setSpacing(6)
-        # top: load the bands, reset
+        ui.frame_bandset.setFrameShape(QFrame.Shape.NoFrame)
+        # group 1: the bands
+        box_bands = CollapsibleBox('Band set', ui.frame_bandset, stretch=True)
+        ui.box_bandset = box_bands
+        inner = QVBoxLayout(box_bands.body)
         top = QHBoxLayout()
         top.addWidget(ui.toolButton_input_raster)
         top.addWidget(ui.add_loaded_bands_pushButton)
         top.addStretch(1)
-        root.addLayout(top)
-        # middle: the table of the bands (the plugin puts it in grid_bandset)
-        # and the buttons that act on the selected bands
+        inner.addLayout(top)
+        # the table of the bands (the plugin puts it in grid_bandset) and
+        # the buttons that act on the selected bands
         middle = QHBoxLayout()
         ui.grid_bandset = QGridLayout()
         middle.addLayout(ui.grid_bandset, 1)
@@ -254,8 +259,12 @@ class DockClassSimplifiedDialog(QDockWidget):
         side.addWidget(ui.clear_bandset_toolButton)
         side.addStretch(1)
         middle.addLayout(side, 0)
-        root.addLayout(middle, 1)
-        # composition (the plugin adds the list and the R, G, B lists)
+        inner.addLayout(middle, 1)
+        # group 2: satellite and composition (the plugin adds the list and
+        # the R, G, B lists)
+        box_sat = CollapsibleBox('Satellite and composition',
+                                 ui.frame_bandset)
+        ui.box_satellite = box_sat
         composition = QGridLayout()
         row = QHBoxLayout()
         label = QLabel('Composition', ui.frame_bandset)
@@ -265,7 +274,6 @@ class DockClassSimplifiedDialog(QDockWidget):
         ui.horizontalLayout = row
         composition.addLayout(row, 0, 0, 1, 2)
         ui.gridLayout_2 = composition
-        # satellite (wavelengths of the bands)
         satellite = QHBoxLayout()
         ui.label_150.setText('Satellite')
         ui.label_150.setToolTip(
@@ -273,8 +281,11 @@ class DockClassSimplifiedDialog(QDockWidget):
             'and can be changed here')
         satellite.addWidget(ui.label_150, 0)
         satellite.addWidget(ui.wavelength_sat_combo, 1)
-        root.addLayout(satellite)
-        root.addLayout(composition)
+        inner_sat = QVBoxLayout(box_sat.body)
+        inner_sat.addLayout(satellite)
+        inner_sat.addLayout(composition)
+        root.addWidget(box_bands, 1)
+        root.addWidget(box_sat)
         old.addLayout(root, 1, 0, 1, 3)
         ui.bandset_root_layout = root
 
@@ -304,9 +315,10 @@ class DockClassSimplifiedDialog(QDockWidget):
         root = QVBoxLayout()
         root.setSpacing(6)
         # 1. training file
-        box_file = QGroupBox('Training file', frame)
+        ui.frame_2.setFrameShape(QFrame.Shape.NoFrame)
+        box_file = CollapsibleBox('Training file', frame)
         ui.box_file = box_file
-        grid_file = QGridLayout(box_file)
+        grid_file = QGridLayout(box_file.body)
         for column, widget in enumerate((
                 ui.button_new_input, ui.trainingFile_toolButton,
                 ui.import_library_toolButton,
@@ -317,9 +329,9 @@ class DockClassSimplifiedDialog(QDockWidget):
         grid_file.addWidget(ui.button_reset_input, 1, 3)
         root.addWidget(box_file)
         # 2. class: number, name, create, delete
-        box_class = QGroupBox('Class', frame)
+        box_class = CollapsibleBox('Class', frame)
         ui.box_class = box_class
-        row_class = QHBoxLayout(box_class)
+        row_class = QHBoxLayout(box_class.body)
         row_class.addWidget(ui.label_44)
         row_class.addWidget(ui.ROI_Macroclass_ID_spin)
         row_class.addWidget(ui.label_45)
@@ -328,9 +340,9 @@ class DockClassSimplifiedDialog(QDockWidget):
         row_class.addWidget(ui.delete_class_Button)
         root.addWidget(box_class)
         # 3. ROI: drawing tools, undo and redo, delete, spectral plot
-        box_roi = QGroupBox('ROI', frame)
+        box_roi = CollapsibleBox('ROI', frame)
         ui.box_roi = box_roi
-        grid_roi = QGridLayout(box_roi)
+        grid_roi = QGridLayout(box_roi.body)
         grid_roi.addWidget(ui.polygonROI_Button, 0, 0)
         grid_roi.addWidget(ui.pointerButton, 0, 1)
         grid_roi.addWidget(ui.undo_save_Button, 0, 2)
@@ -343,7 +355,11 @@ class DockClassSimplifiedDialog(QDockWidget):
         # 4. the list takes the free space
         ui.sig_widget.setSizePolicy(
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        root.addWidget(ui.sig_widget, 1)
+        box_list = CollapsibleBox('Classes and ROIs', frame, stretch=True)
+        ui.box_list = box_list
+        layout_list = QVBoxLayout(box_list.body)
+        layout_list.addWidget(ui.sig_widget)
+        root.addWidget(box_list, 1)
         ui.gridLayout_12.addLayout(root, 1, 0, 1, 1)
         ui.gridLayout_12.setRowStretch(1, 1)
 
@@ -363,7 +379,10 @@ class DockClassSimplifiedDialog(QDockWidget):
             ui.box_file.setTitle(tr('Training file'))
             ui.box_class.setTitle(tr('Class'))
             ui.box_roi.setTitle(tr('ROI'))
-            ui.label_60.setText(tr('Processing'))
+            ui.box_processing.setTitle(tr('Processing'))
+            ui.box_bandset.setTitle(tr('Band set'))
+            ui.box_satellite.setTitle(tr('Satellite and composition'))
+            ui.box_list.setTitle(tr('Classes and ROIs'))
             ui.pointerButton.setText(tr('Circle'))
             ui.button_Save_ROI.setText(tr('Create'))
             ui.delete_class_Button.setText(tr('Delete Class'))
@@ -409,7 +428,14 @@ class DockClassSimplifiedDialog(QDockWidget):
             page_layout = QVBoxLayout(classification_page)
             page_layout.setContentsMargins(0, 0, 0, 0)
             page_layout.addWidget(ui.frame_2, 1)
-            page_layout.addWidget(ui.frame_3, 0)
+            box_processing = CollapsibleBox('Processing',
+                                            classification_page)
+            ui.box_processing = box_processing
+            layout_processing = QVBoxLayout(box_processing.body)
+            layout_processing.addWidget(ui.frame_3)
+            ui.frame_3.setFrameShape(QFrame.Shape.NoFrame)
+            ui.label_60.setVisible(False)
+            page_layout.addWidget(box_processing, 0)
             tabs = QTabWidget(ui.dockWidgetContents)
             tabs.setObjectName('bandset_roi_tabs')
             tabs.addTab(ui.frame_bandset, 'Band set definition')

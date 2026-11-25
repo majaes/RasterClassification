@@ -10,6 +10,7 @@ of the original page (the search and download code keeps working); they are
 only placed in new groups. The login page goes to the Settings tab. """
 
 from qgis.PyQt.QtCore import Qt
+from .collapsible import CollapsibleBox
 from qgis.PyQt.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QGroupBox, QScrollArea,
     QFrame, QSizePolicy
@@ -75,8 +76,8 @@ def build(ui):
     root.setContentsMargins(4, 4, 4, 4)
 
     # ---- 1. source and search area
-    box_search = QGroupBox(page)
-    grid = QGridLayout(box_search)
+    box_search = CollapsibleBox(parent=page)
+    grid = QGridLayout(box_search.body)
     grid.setHorizontalSpacing(6)
     grid.addWidget(w['label_114'], 0, 0)
     grid.addWidget(w['landsat_satellite_combo'], 0, 1, 1, 4)
@@ -110,8 +111,8 @@ def build(ui):
     root.addWidget(box_search)
 
     # ---- 2. products found
-    box_results = QGroupBox(page)
-    vbox = QVBoxLayout(box_results)
+    box_results = CollapsibleBox(parent=page, stretch=True)
+    vbox = QVBoxLayout(box_results.body)
     vbox.addWidget(w['products_filter_lineEdit'])
     w['download_images_tableWidget'].setMinimumHeight(170)
     vbox.addWidget(w['download_images_tableWidget'], 1)
@@ -128,8 +129,8 @@ def build(ui):
     root.addWidget(box_results, 1)
 
     # ---- 3. bands and download
-    box_download = QGroupBox(page)
-    grid_d = QGridLayout(box_download)
+    box_download = CollapsibleBox(parent=page)
+    grid_d = QGridLayout(box_download.body)
     grid_d.addWidget(w['label_3'], 0, 0)
     bands = ('1', '2', '3', '4', '5', '6', '7', '8', '8A', '9', '10', '11',
              '12')

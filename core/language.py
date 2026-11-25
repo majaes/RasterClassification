@@ -134,6 +134,9 @@ EXTRA = {
     'Add bands to the band set first (Open file or Add layer).':
         "Ajoutez d'abord des bandes au jeu de bandes (Ouvrir un fichier ou "
         "Ajouter une couche).",
+    'Band set': 'Jeu de bandes',
+    'Satellite and composition': 'Satellite et composition',
+    'Classes and ROIs': 'Classes et ROI',
     # Settings tab
     'Language': 'Langue',
     'Interface language of the plugin': "Langue de l'interface du plugin",

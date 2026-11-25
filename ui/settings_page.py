@@ -16,6 +16,7 @@ from qgis.PyQt.QtWidgets import (
 from qgis.PyQt.QtGui import QColor
 from qgis.core import QgsApplication, QgsTask
 
+from .collapsible import CollapsibleBox
 from ..core import language
 from ..core import custom_sources
 from ..core.language import tr
@@ -76,8 +77,8 @@ class SettingsPage(QScrollArea):
 
     # ---- language
     def _build_language(self, root):
-        self.box_language = QGroupBox(content_parent(self))
-        layout = QHBoxLayout(self.box_language)
+        self.box_language = CollapsibleBox(parent=self.widget())
+        layout = QHBoxLayout(self.box_language.body)
         self.label_language = QLabel()
         layout.addWidget(self.label_language, 1)
         self.group_language = QButtonGroup(self)
@@ -103,8 +104,8 @@ class SettingsPage(QScrollArea):
 
     # ---- sources
     def _build_sources(self, root):
-        self.box_sources = QGroupBox(content_parent(self))
-        layout = QVBoxLayout(self.box_sources)
+        self.box_sources = CollapsibleBox(parent=self.widget())
+        layout = QVBoxLayout(self.box_sources.body)
         self.table_sources = QTableWidget(0, 3)
         self.table_sources.setEditTriggers(
             QAbstractItemView.EditTrigger.NoEditTriggers)
@@ -129,8 +130,8 @@ class SettingsPage(QScrollArea):
         row.addStretch(1)
         layout.addLayout(row)
         # add a source
-        self.box_add = QGroupBox()
-        grid = QGridLayout(self.box_add)
+        self.box_add = CollapsibleBox(expanded=False)
+        grid = QGridLayout(self.box_add.body)
         self.edit_name = QLineEdit()
         self.edit_url = QLineEdit()
         self.edit_url.setPlaceholderText(
@@ -262,20 +263,22 @@ class SettingsPage(QScrollArea):
 
     # ---- accounts (the login page of the download tab is moved here)
     def _build_accounts(self, root):
-        self.box_accounts = QGroupBox(content_parent(self))
-        self.layout_accounts = QVBoxLayout(self.box_accounts)
-        self.box_accounts.setSizePolicy(
-            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
+        self.box_accounts = CollapsibleBox(parent=self.widget())
+        self.layout_accounts = QVBoxLayout(self.box_accounts.body)
         root.addWidget(self.box_accounts)
 
     def set_accounts_widget(self, widget):
+        # the login page keeps its natural height
+        widget.setSizePolicy(
+            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
         self.layout_accounts.addWidget(widget)
+        self.layout_accounts.addStretch(0)
         widget.setVisible(True)
 
     # ---- credits
     def _build_credits(self, root):
-        self.box_credits = QGroupBox(content_parent(self))
-        layout = QVBoxLayout(self.box_credits)
+        self.box_credits = CollapsibleBox(parent=self.widget())
+        layout = QVBoxLayout(self.box_credits.body)
         self.label_credits = QLabel()
         self.label_credits.setWordWrap(True)
         self.label_credits.setOpenExternalLinks(True)
