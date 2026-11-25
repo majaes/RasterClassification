@@ -21,7 +21,7 @@ draw a few training areas for each class and run the classification. The panel g
   infrared, urban, geology. The bands are found by themselves, and the entries whose bands are missing are greyed out
   with the missing bands in the tooltip.
 * **Spectral indices** saved as a new layer with a colour ramp: NDVI, NDWI, NDBI and NBR.
-* **ROI and spectral signatures**: draw training areas (polygon or pointer), name the classes, plot the spectral
+* **ROI and spectral signatures**: draw training areas (polygon or circle), name the classes, plot the spectral
   signatures.
 * **Classification** with several algorithms (maximum likelihood by default), with a *Preview* on a small area before
   running the whole image, plus tools for the pre- and post-processing of the images.
@@ -63,8 +63,10 @@ still to be confirmed. Other systems (macOS, Linux) have not been tested.
 2. In **Band set definition**, click *Open file* and choose the bands of your image (for example `B02`, `B03`, `B04`,
    `B08` of a Sentinel-2 tile). The satellite is detected and the natural colour composition is displayed.
 3. Choose another composition or an index in the list of predefined compositions.
-4. In **ROI & Classification**, create a training file, draw ROI for each class and give each class a number and a
-   name. Check the signatures with *Spectral plot*.
+4. In **ROI & Classification**, create a training file. Enter a class number and a name, then click *Save* to create
+   the class. Draw its ROI: with *Polygon*, left click adds a vertex and right click closes the polygon; with
+   *Circle*, left click sets the centre, move the cursor and right click sets the radius. The right click adds the
+   ROI to the class at once. Check the signatures with *Spectral plot*.
 5. Click *Preview* to test the classification on a small area, then *RUN* to classify the whole image.
 
 ## Data and licences
