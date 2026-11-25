@@ -23,7 +23,9 @@
 
 from PyQt6.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplication,
                           QTranslator)
-from PyQt6.QtWidgets import QDialog, QDockWidget, QTabWidget
+from PyQt6.QtWidgets import (
+    QDialog, QDockWidget, QTabWidget, QWidget, QVBoxLayout
+)
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
 
@@ -212,20 +214,26 @@ class DockClassSimplifiedDialog(QDockWidget):
         self._build_tabs()
 
     def _build_tabs(self):
-        """ Band set definition and ROI & Signature list in tabs. """
+        """ Two tabs: the band set (color composition) and the
+        classification workflow (ROI & signatures, then classification). """
         try:
             ui = self.ui
             grid = ui.gridLayout_14
-            for frame in (ui.frame_bandset, ui.frame_2):
+            for frame in (ui.frame_bandset, ui.frame_2, ui.frame_3):
                 grid.removeWidget(frame)
-            # the tab names replace the dark section titles
+            # the first tab name replaces the dark title of the band set
             ui.label_59.setVisible(False)
-            ui.label_48.setVisible(False)
+            # ROI & signatures and classification belong to the same
+            # processing: they share one tab, one above the other
+            classification_page = QWidget(ui.dockWidgetContents)
+            page_layout = QVBoxLayout(classification_page)
+            page_layout.setContentsMargins(0, 0, 0, 0)
+            page_layout.addWidget(ui.frame_2, 1)
+            page_layout.addWidget(ui.frame_3, 0)
             tabs = QTabWidget(ui.dockWidgetContents)
             tabs.setObjectName('bandset_roi_tabs')
             tabs.addTab(ui.frame_bandset, 'Band set definition')
-            tabs.addTab(ui.frame_2, 'ROI && Signature list')
-            tabs.setDocumentMode(False)
+            tabs.addTab(classification_page, 'ROI && Classification')
             grid.addWidget(tabs, 2, 0, 1, 1)
             grid.setRowStretch(2, 1)
             ui.bandset_roi_tabs = tabs
