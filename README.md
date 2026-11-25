@@ -26,7 +26,7 @@ draw a few training areas for each class and run the classification. The panel g
 * **Classification** with several algorithms (maximum likelihood by default), with a *Preview* on a small area before
   running the whole image, plus tools for the pre- and post-processing of the images.
 * **Works offline**: the processing library is bundled with the plugin.
-* One panel docked on the right of QGIS, with four tabs: *Band set definition*, *ROI & Classification*,
+* One panel docked on the right of QGIS, with four tabs: *Color composition*, *SV Classification*,
   *Download products* and *Settings*.
 * **Download** from Copernicus Data Space (Sentinel-2), Earth Search on AWS (Sentinel-2 L2A, no account), Microsoft
   Planetary Computer (Landsat, Sentinel-2, MODIS, ASTER, Copernicus DEM) and NASA HLS. Other STAC catalogues can be added
@@ -65,10 +65,10 @@ still to be confirmed. Other systems (macOS, Linux) have not been tested.
 ## Usage
 
 1. Open the panel from the *Raster Classification* menu.
-2. In **Band set definition**, click *Open file* and choose the bands of your image (for example `B02`, `B03`, `B04`,
+2. In **Color composition**, click *Open file* and choose the bands of your image (for example `B02`, `B03`, `B04`,
    `B08` of a Sentinel-2 tile). The satellite is detected and the natural colour composition is displayed.
 3. Choose another composition or an index in the list of predefined compositions.
-4. In **ROI & Classification**, create a training file. Enter a class number and a name, then click *Save* to create
+4. In **SV Classification**, create a training file. Enter a class number and a name, then click *Save* to create
    the class. Draw its ROI: with *Polygon*, left click adds a vertex and right click closes the polygon; with
    *Circle*, left click sets the centre, move the cursor and right click sets the radius. The right click adds the
    ROI to the class at once. Check the signatures with *Spectral plot*.

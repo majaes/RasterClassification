@@ -317,7 +317,7 @@ class DockClassSimplifiedDialog(QDockWidget):
             # title of the window of the panel
             self.setWindowTitle('Raster Classification')
             tabs = ui.bandset_roi_tabs
-            names = ('Band set definition', 'ROI && Classification',
+            names = ('Color composition', 'SV Classification',
                      'Download products', 'Settings')
             for index in range(min(tabs.count(), len(names))):
                 tabs.setTabText(index, tr(names[index]))
@@ -402,9 +402,9 @@ class DockClassSimplifiedDialog(QDockWidget):
             tabs = QTabWidget(ui.dockWidgetContents)
             tabs.setObjectName('bandset_roi_tabs')
             tabs.addTab(self._scroll_page(ui.frame_bandset),
-                        'Band set definition')
+                        'Color composition')
             tabs.addTab(self._scroll_page(classification_page),
-                        'ROI && Classification')
+                        'SV Classification')
             grid.addWidget(tabs, 2, 0, 1, 1)
             grid.setRowStretch(2, 1)
             ui.bandset_roi_tabs = tabs

@@ -48,7 +48,7 @@ with the files tracked by git. In QGIS: Plugins > Manage and Install Plugins > I
 ## Language
 
 English is the default; French is chosen in the *Settings* tab (stored in the QGIS setting
-`RasterClassification/language`, `en` or `fr`). The texts written by hand go through `core/language.py:tr()`, the
+`RasterClassification/ui_language`, `en` or `fr`). The texts written by hand go through `core/language.py:tr()`, the
 generated interfaces through the dictionary translator installed by `set_language()`.
 
 ## Code kept

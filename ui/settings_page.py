@@ -268,17 +268,74 @@ class SettingsPage(QScrollArea):
         self.layout_accounts = QVBoxLayout(self.box_accounts.body)
         root.addWidget(self.box_accounts)
 
-    def set_accounts_widget(self, widget):
-        # the login page keeps its natural height
-        widget.setSizePolicy(
-            QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Maximum)
-        self.layout_accounts.addWidget(widget)
-        self.layout_accounts.addStretch(0)
-        widget.setVisible(True)
+    ACCOUNTS = (
+        ('Copernicus Data Space Ecosystem',
+         'Needed to download Sentinel-2 products from Copernicus. Free '
+         'account: <a href="https://dataspace.copernicus.eu/">'
+         'dataspace.copernicus.eu</a>',
+         'user_copernicus_lineEdit', 'password_copernicus_lineEdit',
+         'remember_user_checkBox_5'),
+        ('NASA Earthdata (HLS)',
+         'Needed to download Harmonized Landsat Sentinel-2. Free account: '
+         '<a href="https://urs.earthdata.nasa.gov">urs.earthdata.nasa.gov'
+         '</a>',
+         'user_earthdata_lineEdit', 'password_earthdata_lineEdit',
+         'remember_user_checkBox_3'),
+    )
+
+    def set_account_widgets(self, ui):
+        """ Login fields of the sources that need an account, with a title,
+        a hint and the name of each field. """
+        from qgis.PyQt.QtWidgets import QFormLayout
+        self._accounts = []
+        for title_text, hint_text, user, password, remember in self.ACCOUNTS:
+            title = QLabel()
+            title.setStyleSheet('font-weight: bold;')
+            hint = QLabel()
+            hint.setWordWrap(True)
+            hint.setOpenExternalLinks(True)
+            hint.setTextFormat(Qt.TextFormat.RichText)
+            form = QFormLayout()
+            label_user = QLabel()
+            label_password = QLabel()
+            user_edit = getattr(ui, user)
+            password_edit = getattr(ui, password)
+            remember_box = getattr(ui, remember)
+            form.addRow(label_user, user_edit)
+            form.addRow(label_password, password_edit)
+            self.layout_accounts.addWidget(title)
+            self.layout_accounts.addWidget(hint)
+            self.layout_accounts.addLayout(form)
+            self.layout_accounts.addWidget(remember_box)
+            for widget in (user_edit, password_edit, remember_box):
+                widget.setVisible(True)
+            self._accounts.append((title, hint, label_user, label_password,
+                                   user_edit, password_edit, remember_box,
+                                   title_text, hint_text))
+        self.label_no_account = QLabel()
+        self.label_no_account.setWordWrap(True)
+        self.layout_accounts.addWidget(self.label_no_account)
+        self._retranslate_accounts()
+
+    def _retranslate_accounts(self):
+        if not getattr(self, '_accounts', None):
+            return
+        for (title, hint, label_user, label_password, user_edit,
+             password_edit, remember_box, title_text,
+             hint_text) in self._accounts:
+            title.setText(tr(title_text))
+            hint.setText(tr(hint_text))
+            label_user.setText(tr('User name'))
+            label_password.setText(tr('Password'))
+            user_edit.setPlaceholderText(tr('User name'))
+            password_edit.setPlaceholderText(tr('Password'))
+        self.label_no_account.setText(tr(
+            'Earth Search and Microsoft Planetary Computer need no account.'))
 
     # ---- credits
     def _build_credits(self, root):
-        self.box_credits = CollapsibleBox(parent=self.widget())
+        # the credits stay folded until they are opened
+        self.box_credits = CollapsibleBox(parent=self.widget(), expanded=False)
         layout = QVBoxLayout(self.box_credits.body)
         self.label_credits = QLabel()
         self.label_credits.setWordWrap(True)
@@ -307,6 +364,7 @@ class SettingsPage(QScrollArea):
             label.setWordWrap(True)
         self.button_add.setText(tr('Add'))
         self.box_accounts.setTitle(tr('Accounts'))
+        self._retranslate_accounts()
         self.box_credits.setTitle(tr('Credits'))
         parts = [AUTHOR_CREDIT % self.version, tr(DERIVED_CREDIT),
                  tr(DATA_CREDIT), tr(LICENSE_CREDIT)]

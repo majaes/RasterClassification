@@ -16,7 +16,9 @@ from qgis.PyQt.QtCore import QCoreApplication, QSettings, QTranslator
 from .fr_translations import FR
 from .fr_extra import FR_EXTRA, REPLACE_RULES
 
-SETTING_KEY = 'RasterClassification/language'
+# English is the default language; the choice made in the Settings tab is
+# stored under this key
+SETTING_KEY = 'RasterClassification/ui_language'
 LANGUAGES = ('en', 'fr')
 # Qt contexts of the plugin (generated interfaces and hand written texts)
 CONTEXTS = {
@@ -27,6 +29,8 @@ CONTEXTS = {
 
 # texts written by hand (panel, messages, Settings tab)
 EXTRA = {
+    'Color composition': 'Composition colorée',
+    'SV Classification': 'Classification SV',
     'Band set definition': 'Définition du jeu de bandes',
     'ROI & Classification': 'ROI et classification',
     'ROI && Classification': 'ROI et classification',
@@ -137,6 +141,14 @@ EXTRA = {
     'Band set': 'Jeu de bandes',
     'Satellite and composition': 'Satellite et composition',
     'Classes and ROIs': 'Classes et ROI',
+    'Needed to download Sentinel-2 products from Copernicus. Free account: <a href="https://dataspace.copernicus.eu/">dataspace.copernicus.eu</a>':
+        'Nécessaire pour télécharger les produits Sentinel-2 de Copernicus. Compte gratuit : <a href="https://dataspace.copernicus.eu/">dataspace.copernicus.eu</a>',
+    'Needed to download Harmonized Landsat Sentinel-2. Free account: <a href="https://urs.earthdata.nasa.gov">urs.earthdata.nasa.gov</a>':
+        'Nécessaire pour télécharger Harmonized Landsat Sentinel-2. Compte gratuit : <a href="https://urs.earthdata.nasa.gov">urs.earthdata.nasa.gov</a>',
+    'Earth Search and Microsoft Planetary Computer need no account.':
+        'Earth Search et Microsoft Planetary Computer ne demandent aucun compte.',
+    'User name': "Nom d'utilisateur",
+    'Password': 'Mot de passe',
     # Settings tab
     'Language': 'Langue',
     'Interface language of the plugin': "Langue de l'interface du plugin",

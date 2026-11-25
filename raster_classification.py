@@ -409,7 +409,7 @@ class RasterClassification:
             cfg.map_canvas = iface.mapCanvas()
             # language of the plugin: English (default) or French
             plugin_language = str(QSettings().value(
-                'RasterClassification/language', 'en'
+                language.SETTING_KEY, 'en'
             ))
             if plugin_language not in language.LANGUAGES:
                 plugin_language = 'en'
@@ -1019,19 +1019,25 @@ class RasterClassification:
 
 # apply the language to the whole panel
 def apply_language():
-    try:
-        dock = cfg.dock_class_simpl_dlg
-        dock.ui.retranslateUi(dock)
-        cfg.dialog.ui.retranslateUi(cfg.dialog)
-        dock.retranslate_custom()
-        dock.apply_theme()
-        cfg.composition_presets.retranslate()
-        dock_progress.retranslate()
-        cfg.bst.retranslate_table()
-        if cfg.scp_training is not None:
-            cfg.scp_training.roi_signature_table_tree()
-    except Exception as err:
-        cfg.logger.log.error('apply_language: %s' % str(err))
+    """ Apply the language to the whole panel; each step is independent, so
+    one failure does not stop the others. """
+    def step(function, *args):
+        try:
+            function(*args)
+        except Exception as err:
+            cfg.logger.log.error('apply_language %s: %s'
+                                 % (getattr(function, '__name__', ''), err))
+    dock = cfg.dock_class_simpl_dlg
+    step(dock.ui.retranslateUi, dock)
+    step(cfg.dialog.ui.retranslateUi, cfg.dialog)
+    step(dock.retranslate_custom)
+    step(dock.apply_theme)
+    step(cfg.composition_presets.retranslate)
+    step(dock_progress.retranslate)
+    step(cfg.bst.retranslate_table)
+    if cfg.scp_training is not None and (
+            cfg.scp_training.signature_catalog):
+        step(cfg.scp_training.roi_signature_table_tree)
 
 
 # get first installation
@@ -1227,12 +1233,7 @@ def connect_gui():
         cfg.download_dock_page = scroll
         settings = SettingsPage(semiautomatic_class_version())
         settings.on_language_changed = apply_language
-        login = cfg.dialog.ui.tab_login
-        login_tabs = cfg.dialog.ui.tabWidget_3
-        login_index = login_tabs.indexOf(login)
-        if login_index >= 0:
-            login_tabs.removeTab(login_index)
-        settings.set_accounts_widget(login)
+        settings.set_account_widgets(cfg.dialog.ui)
         dock_ui.bandset_roi_tabs.addTab(settings, 'Settings')
         dock_ui.settings_page = settings
         cfg.dock_class_simpl_dlg.retranslate_custom()
