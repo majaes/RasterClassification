@@ -477,6 +477,7 @@ def training_symbol(layer, class_colors=None, field=None):
         categories.append(QgsRendererCategory(None, default, ''))
         layer.setRenderer(QgsCategorizedSymbolRenderer(field, categories))
         refresh_layer_symbology(layer)
+        layer.triggerRepaint()
         return
     style = {
         'color': '0,0,0,230', 'color_border': '255,255,255,230',

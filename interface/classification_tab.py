@@ -745,6 +745,42 @@ def create_preview(preview_point, classification_confidence=None):
         return False
 
 
+# Preview button: first click switches the preview on, the next one off
+_previous_tool = [None]
+
+
+def preview_button_clicked(checked=None):
+    button = cfg.dock_class_simpl_dlg.ui.previewButton
+    if button.isChecked():
+        _previous_tool[0] = cfg.map_canvas.mapTool()
+        pointer_classification_preview_active()
+    else:
+        previous = _previous_tool[0]
+        _previous_tool[0] = None
+        if (previous is not None
+                and previous is not cfg.classification_preview_pointer):
+            cfg.map_canvas.setMapTool(previous)
+        else:
+            cfg.iface.actionPan().trigger()
+        cfg.iface.messageBar().pushMessage(
+            'Raster Classification', 'Preview switched off.',
+            level=Qgis.MessageLevel.Info, duration=3
+        )
+
+
+# release the Preview button when another map tool is activated
+def map_tool_changed(tool, _old_tool=None):
+    try:
+        if tool is not cfg.classification_preview_pointer:
+            button = cfg.dock_class_simpl_dlg.ui.previewButton
+            if button.isChecked():
+                button.blockSignals(True)
+                button.setChecked(False)
+                button.blockSignals(False)
+    except Exception as err:
+        cfg.logger.log.error(str(err))
+
+
 # activate pointer for classification preview
 def pointer_classification_preview_active():
     cfg.map_canvas.setMapTool(cfg.classification_preview_pointer)

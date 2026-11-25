@@ -1401,7 +1401,14 @@ def connect_gui():
             cfg.scp_dock.create_class
         )
         cfg.dock_class_simpl_dlg.ui.previewButton.clicked.connect(
-            cfg.classification.pointer_classification_preview_active
+            cfg.classification.preview_button_clicked
+        )
+        # the button is released when another map tool is chosen
+        cfg.map_canvas.mapToolSet.connect(
+            cfg.classification.map_tool_changed
+        )
+        cfg.dock_class_simpl_dlg.ui.delete_class_Button.clicked.connect(
+            cfg.scp_dock.delete_selected_classes
         )
         cfg.dock_class_simpl_dlg.ui.alg_combo.currentIndexChanged.connect(
             cfg.classification.reset_preview

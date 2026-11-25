@@ -25,7 +25,7 @@ from qgis.PyQt.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplicati
                           QTranslator)
 from qgis.PyQt.QtWidgets import (
     QDialog, QDockWidget, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout,
-    QGridLayout, QLabel
+    QGridLayout, QLabel, QPushButton, QSpacerItem, QSizePolicy
 )
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
@@ -305,6 +305,33 @@ class DockClassSimplifiedDialog(QDockWidget):
             ui.label_61.setVisible(False)
             # the Pointer button draws circles
             ui.pointerButton.setText('Circle')
+            # the button that creates the class is called Create
+            ui.button_Save_ROI.setText('Create')
+            # Delete Class takes the place of Spectral plot, which moves
+            # under Polygon and Circle
+            grid = ui.gridLayout_4
+            grid.removeWidget(ui.signature_spectral_plot_toolButton)
+            spacer = grid.itemAtPosition(4, 0)
+            if spacer is not None and spacer.spacerItem() is not None:
+                grid.removeItem(spacer)
+            delete_class = QPushButton('Delete Class', ui.frame_2)
+            delete_class.setStyleSheet(
+                ui.delete_Signature_Button.styleSheet())
+            delete_class.setIcon(ui.delete_Signature_Button.icon())
+            delete_class.setIconSize(ui.delete_Signature_Button.iconSize())
+            delete_class.setToolTip(
+                'Delete the selected class with all its ROIs')
+            grid.addWidget(delete_class, 2, 1, 1, 1)
+            ui.delete_class_Button = delete_class
+            grid.addWidget(ui.signature_spectral_plot_toolButton, 4, 0, 1, 1)
+            grid.addItem(QSpacerItem(
+                20, 40, QSizePolicy.Policy.Minimum,
+                QSizePolicy.Policy.Expanding), 5, 0, 1, 1)
+            # the Preview button switches the preview on and off
+            ui.previewButton.setCheckable(True)
+            ui.previewButton.setToolTip(
+                'Preview: click to switch on, then click on the map; '
+                'click again to switch off')
             ui.pointerButton.setToolTip(
                 'Circle ROI: left click = center, move, right click = '
                 'radius (adds the circle to the class)')

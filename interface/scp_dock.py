@@ -1497,6 +1497,68 @@ def remove_selected_signatures():
                 cfg.scp_training.save_signature_catalog()
 
 
+# delete the selected classes with all their ROIs (Delete Class button)
+# noinspection PyTypeChecker
+def delete_selected_classes():
+    if cfg.scp_training is None or cfg.scp_training.signature_catalog is None:
+        cfg.mx.msg_war_5()
+        return
+    tree = cfg.dock_class_simpl_dlg.ui.signature_list_treeWidget
+    class_ids = []
+    for row in tree.selectedItems():
+        # class item or ROI item: column 0 holds the class number
+        value = row.text(0)
+        try:
+            value = int(value)
+        except ValueError:
+            continue
+        if value not in class_ids:
+            class_ids.append(value)
+    if not class_ids:
+        _roi_message('Select the class to delete in the list.',
+                     Qgis.MessageLevel.Warning)
+        return
+    names = ', '.join(
+        '%s (%s)' % (i, cfg.scp_training.signature_catalog.macroclasses.get(
+            i, '')) for i in class_ids)
+    answer = cfg.util_qt.question_box(
+        QApplication.translate('semiautomaticclassificationplugin',
+                               'Delete class'),
+        QApplication.translate(
+            'semiautomaticclassificationplugin',
+            'Are you sure you want to delete the class %s and all its ROIs?'
+        ) % names
+    )
+    if answer is not True:
+        return
+    cfg.ui_utils.add_progress_bar()
+    # save previous catalog file
+    cfg.scp_training.save_temporary_signature_catalog()
+    signature_catalog = cfg.scp_training.signature_catalog_copy()
+    cfg.scp_training.set_signature_catalog(signature_catalog=signature_catalog)
+    catalog = cfg.scp_training.signature_catalog
+    try:
+        for class_id in class_ids:
+            table = catalog.table
+            if table is not None:
+                ids = table.signature_id[
+                    table['macroclass_id'] == class_id].tolist()
+                for signature_id in ids:
+                    catalog.remove_signature_by_id(signature_id=signature_id)
+            # a class without ROIs is removed from the lists too
+            catalog.macroclasses.pop(class_id, None)
+            catalog.macroclasses_color_string.pop(class_id, None)
+    except Exception as err:
+        cfg.logger.log.error(str(err))
+        cfg.mx.msg_err_6()
+    cfg.dock_class_simpl_dlg.ui.undo_save_Button.setEnabled(True)
+    cfg.dock_class_simpl_dlg.ui.redo_save_Button.setEnabled(False)
+    cfg.scp_training.roi_signature_table_tree()
+    if cfg.project_registry[cfg.reg_save_training_input_check] == 2:
+        cfg.scp_training.save_signature_catalog()
+    cfg.ui_utils.remove_progress_bar(sound=False)
+
+
 # zoom to clicked ROI
 def zoom_to_roi_polygons(expression):
     if cfg.scp_training is not None:
