@@ -38,12 +38,12 @@ global plugin_check
 
 try:
     # import the PyQt libraries
-    from PyQt6.QtCore import (
+    from qgis.PyQt.QtCore import (
         Qt, QFileInfo, QSettings, QSize, QTranslator, QCoreApplication,
         QDir, QDate
     )
-    from PyQt6.QtGui import QFont, QColor
-    from PyQt6.QtWidgets import QApplication, QHeaderView, QLineEdit, QComboBox
+    from qgis.PyQt.QtGui import QFont, QColor
+    from qgis.PyQt.QtWidgets import QApplication, QHeaderView, QLineEdit, QComboBox
     qt_check = True
     plugin_check = True
 except Exception as error:

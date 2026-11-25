@@ -24,9 +24,9 @@
 from os import path
 import ast
 
-from PyQt6.QtCore import Qt, QSettings
-from PyQt6.QtGui import QFont, QColor
-from PyQt6.QtWidgets import (
+from qgis.PyQt.QtCore import Qt, QSettings
+from qgis.PyQt.QtGui import QFont, QColor
+from qgis.PyQt.QtWidgets import (
     QApplication, QWidget, QColorDialog, QFileDialog,
     QTableWidgetItem, QTableWidgetSelectionRange, QMessageBox
 )

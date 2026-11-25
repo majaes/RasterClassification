@@ -21,7 +21,7 @@
 # If not, see <https://www.gnu.org/licenses/>.
 
 
-from PyQt6.QtWidgets import QMessageBox, QToolButton, QApplication
+from qgis.PyQt.QtWidgets import QMessageBox, QToolButton, QApplication
 # noinspection PyUnresolvedReferences
 from qgis.core import Qgis
 

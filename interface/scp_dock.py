@@ -27,10 +27,10 @@ import shutil
 import zipfile
 
 import numpy
-from PyQt6.QtCore import Qt, QPoint, QPointF, QMetaType
-from PyQt6.QtGui import (QColor, QFont, QCursor, QIcon, QPixmap, QPainter,
+from qgis.PyQt.QtCore import Qt, QPoint, QPointF, QMetaType
+from qgis.PyQt.QtGui import (QColor, QFont, QCursor, QIcon, QPixmap, QPainter,
                          QPolygonF, QAction)
-from PyQt6.QtWidgets import (
+from qgis.PyQt.QtWidgets import (
     QTreeWidget, QTreeWidgetItem, QAbstractItemView, QCompleter, QMenu,
     QApplication, QHeaderView
 )

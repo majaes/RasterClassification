@@ -23,7 +23,7 @@
 
 Allows for setting signature thresholds.
 """
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 
 try:
     from remotior_sensus.util import shared_tools

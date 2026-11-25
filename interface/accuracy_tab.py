@@ -23,7 +23,7 @@
 
 This tool allows for the calculation of classification accuracy.
 """
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 

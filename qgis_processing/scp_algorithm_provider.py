@@ -22,8 +22,8 @@
 
 from pathlib import Path
 
-from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QApplication
 # noinspection PyUnresolvedReferences
 from processing.core.ProcessingConfig import ProcessingConfig, Setting
 # noinspection PyUnresolvedReferences

@@ -24,8 +24,8 @@
 from itertools import combinations as iter_combinations
 import ast
 
-from PyQt6.QtGui import QColor
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtGui import QColor
+from qgis.PyQt.QtWidgets import QApplication
 
 try:
     from matplotlib.ticker import MaxNLocator

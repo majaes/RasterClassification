@@ -25,7 +25,7 @@ This tool allows for band set definition.
 """
 
 import numpy
-from PyQt6.QtWidgets import (
+from qgis.PyQt.QtWidgets import (
     QWidget, QGridLayout, QFrame, QAbstractItemView, QTableWidget,
     QTableWidgetItem, QListWidgetItem, QApplication
 )

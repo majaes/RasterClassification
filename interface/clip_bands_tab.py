@@ -24,8 +24,8 @@
 This tool allows for clipping bands.
 """
 
-from PyQt6.QtCore import QPointF
-from PyQt6.QtGui import QPolygonF, QColor, QPixmap, QCursor
+from qgis.PyQt.QtCore import QPointF
+from qgis.PyQt.QtGui import QPolygonF, QColor, QPixmap, QCursor
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsGeometry
 # noinspection PyUnresolvedReferences

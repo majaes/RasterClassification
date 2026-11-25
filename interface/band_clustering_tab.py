@@ -23,7 +23,7 @@
 
 This tool allows for band clustering calculation.
 """
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 from .scp_dock import import_library_file
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])

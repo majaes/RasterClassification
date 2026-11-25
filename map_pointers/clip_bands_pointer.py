@@ -20,7 +20,7 @@
 # along with SemiAutomaticClassificationPlugin. 
 # If not, see <https://www.gnu.org/licenses/>.
 
-from PyQt6.QtCore import Qt, pyqtSignal
+from qgis.PyQt.QtCore import Qt, pyqtSignal
 from qgis.gui import QgsMapTool
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])

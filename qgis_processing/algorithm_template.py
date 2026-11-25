@@ -24,7 +24,7 @@ import multiprocessing
 import sys
 from os import path
 
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 # noinspection PyUnresolvedReferences
 from processing.core.ProcessingConfig import ProcessingConfig
 # noinspection PyUnresolvedReferences

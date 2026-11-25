@@ -26,9 +26,9 @@ import smtplib
 import subprocess
 
 import qgis.core as qgis_core
-from PyQt6.QtCore import QSize
-from PyQt6.QtGui import QFont, QPixmap
-from PyQt6.QtWidgets import (
+from qgis.PyQt.QtCore import QSize
+from qgis.PyQt.QtGui import QFont, QPixmap
+from qgis.PyQt.QtWidgets import (
     QApplication, QWidget, QSizePolicy, QLabel, QSpacerItem,
     QProgressBar, QPushButton, QHBoxLayout, QVBoxLayout, QToolButton
 )

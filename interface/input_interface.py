@@ -24,11 +24,11 @@
 from inspect import stack
 from re import findall
 
-from PyQt6 import QtCore
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import (QIcon, QFont, QDesktopServices, QPixmap, QAction,
+from qgis.PyQt import QtCore
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtGui import (QIcon, QFont, QDesktopServices, QPixmap, QAction,
                          QKeySequence)
-from PyQt6.QtWidgets import (
+from qgis.PyQt.QtWidgets import (
     QApplication, QComboBox, QRadioButton, QLabel, QMenu, QTabBar,
     QDoubleSpinBox, QTreeWidgetItem, QSpinBox, QWidget, QHBoxLayout,
     QWidgetAction, QLineEdit

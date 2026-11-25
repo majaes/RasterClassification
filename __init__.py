@@ -43,7 +43,7 @@ def icon():
 
 # noinspection PyPep8Naming
 def qgisMinimumVersion():
-    return '3.99'
+    return '3.34'
 
 
 def author():

@@ -23,9 +23,9 @@
 
 import matplotlib.colors as mpl_colors
 import matplotlib.pyplot as mpl_plot
-from PyQt6.QtCore import QPointF
-from PyQt6.QtGui import QColor, QPolygonF
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtCore import QPointF
+from qgis.PyQt.QtGui import QColor, QPolygonF
+from qgis.PyQt.QtWidgets import QApplication
 from matplotlib.ticker import MaxNLocator
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsVectorLayer, QgsGeometry, QgsFeature

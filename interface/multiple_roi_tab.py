@@ -26,7 +26,7 @@ This tool allows for the creation of multiple ROIs.
 
 import numpy
 import ast
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 
 

@@ -1,6 +1,6 @@
 [general]
 name=Raster Classification
-qgisMinimumVersion=3.99
+qgisMinimumVersion=3.34
 qgisMaximumVersion=4.98
 supportsQt6=True
 description=Supervised classification of remote sensing images in QGIS, with tools to download, preprocess and postprocess Landsat and Sentinel-2 images.

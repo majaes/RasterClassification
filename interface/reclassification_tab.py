@@ -23,7 +23,7 @@
 
 This tool allows for raster reclassification.
 """
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 import numpy
 import ast
 

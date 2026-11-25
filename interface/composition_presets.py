@@ -15,7 +15,7 @@ import os
 import re
 import time
 
-from PyQt6.QtWidgets import QComboBox
+from qgis.PyQt.QtWidgets import QComboBox
 from qgis.core import (
     Qgis, QgsRasterLayer, QgsStyle, QgsColorRampShader, QgsRasterShader,
     QgsSingleBandPseudoColorRenderer, QgsProject

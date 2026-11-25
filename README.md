@@ -10,7 +10,7 @@ available for Landsat and Sentinel-2 images, and several algorithms are availabl
 
 ## Installation
 
-Raster Classification is available for QGIS 4.x (Qt 6). It is built on the Remotior Sensus library, installed
+Raster Classification is available for QGIS 3.34 or later, including QGIS 4 (Qt 5 and Qt 6). It is built on the Remotior Sensus library, installed
 automatically if missing, and requires GDAL (OGR), NumPy, SciPy and Matplotlib.
 
 Download the latest zip from [`releases/`](releases) and install it in QGIS with

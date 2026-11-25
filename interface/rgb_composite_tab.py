@@ -23,7 +23,7 @@
 
 This tool allows for managing RGB composites.
 """
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 from itertools import permutations
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])

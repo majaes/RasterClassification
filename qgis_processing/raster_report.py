@@ -23,7 +23,7 @@
 
 from pathlib import Path
 
-from PyQt6.QtGui import QIcon
+from qgis.PyQt.QtGui import QIcon
 # noinspection PyUnresolvedReferences
 from qgis.core import (
     QgsProcessingParameterFileDestination, QgsProcessingParameterRasterLayer,

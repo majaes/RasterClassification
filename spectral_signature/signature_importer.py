@@ -24,7 +24,7 @@
 import shutil
 import zipfile
 
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
 

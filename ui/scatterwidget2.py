@@ -22,7 +22,7 @@
 
 
 # Import PyQt libraries
-from PyQt6.QtWidgets import QWidget, QGridLayout
+from qgis.PyQt.QtWidgets import QWidget, QGridLayout
 
 # Import FigureCanvas
 try:

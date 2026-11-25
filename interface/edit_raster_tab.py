@@ -23,7 +23,7 @@
 
 This tool allows for direct editing of a raster.
 """
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 
 try:
     from remotior_sensus.tools.raster_edit import check_expression

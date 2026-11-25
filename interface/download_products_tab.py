@@ -28,9 +28,9 @@ import subprocess
 from re import sub
 from shlex import split
 
-from PyQt6.QtCore import QPointF
-from PyQt6.QtGui import QPolygonF, QColor, QPixmap, QCursor
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtCore import QPointF
+from qgis.PyQt.QtGui import QPolygonF, QColor, QPixmap, QCursor
+from qgis.PyQt.QtWidgets import QApplication
 # noinspection PyUnresolvedReferences
 from qgis.core import (
     QgsGeometry, QgsCoordinateReferenceSystem, QgsRectangle

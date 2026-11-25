@@ -21,9 +21,9 @@
 # If not, see <https://www.gnu.org/licenses/>.
 
 
-from PyQt6.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplication,
+from qgis.PyQt.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplication,
                           QTranslator)
-from PyQt6.QtWidgets import (
+from qgis.PyQt.QtWidgets import (
     QDialog, QDockWidget, QTabWidget, QWidget, QVBoxLayout
 )
 # noinspection PyUnresolvedReferences

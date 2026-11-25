@@ -28,8 +28,8 @@ from copy import deepcopy
 import ast
 
 # import the PyQt libraries
-from PyQt6.QtGui import QIcon, QPixmap, QCursor
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtGui import QIcon, QPixmap, QCursor
+from qgis.PyQt.QtWidgets import QApplication
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 

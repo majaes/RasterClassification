@@ -23,7 +23,7 @@
 
 This tool allows for calculations between raster bands.
 """
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtWidgets import QApplication
 
 
 try:

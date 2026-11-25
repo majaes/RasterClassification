@@ -37,10 +37,10 @@ try:
 except Exception as error:
     str(error)
 
-from PyQt6.QtCore import Qt, QUrl, QByteArray
-from PyQt6.QtGui import QColor, QDesktopServices
-from PyQt6.QtNetwork import QNetworkRequest
-from PyQt6.QtWidgets import QApplication
+from qgis.PyQt.QtCore import Qt, QUrl, QByteArray
+from qgis.PyQt.QtGui import QColor, QDesktopServices
+from qgis.PyQt.QtNetwork import QNetworkRequest
+from qgis.PyQt.QtWidgets import QApplication
 # noinspection PyUnresolvedReferences
 from qgis.core import (
     QgsNetworkAccessManager, QgsSymbol,
