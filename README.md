@@ -81,14 +81,6 @@ still to be confirmed. Other systems (macOS, Linux) have not been tested.
    ROI to the class at once. Check the signatures with *Spectral plot*.
 5. Click *Preview* to test the classification on a small area, then *RUN* to classify the whole image.
 
-## Data and licences
-
-* Sentinel-2 and Landsat images: use the licence of your data provider (Copernicus, USGS).
-* The *Download products* tab uses the services of Copernicus and NASA Earthdata with your own accounts; no password
-  is stored by the plugin.
-* [Remotior Sensus](https://github.com/semiautomaticgit/remotior_sensus) (bundled, unmodified, version 0.8.0) by Luca
-  Congedo: GPL v3 or later.
-
 ## What is new in Raster Classification
 
 Created and maintained by [ANABA MANGA](https://anbmng.com) (copyright (C) 2026):
