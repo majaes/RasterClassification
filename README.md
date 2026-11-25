@@ -18,6 +18,29 @@ bands to the map, in four tabs:
 3. **Download products**: search and download of the images from several sources.
 4. **Settings**: language, sources and accounts of the download, credits.
 
+## Screenshots
+
+**Color composition**: the bands of a Sentinel-2 image, the detected satellite and the natural colour composition.
+
+![Color composition](docs/screenshots/01-color-composition.png)
+
+**The panel** opens from *Extensions > Raster Classification*, and the plugin appears in the plugin manager.
+
+![Menu of the plugin](docs/screenshots/02-panel-menu.png)
+
+![Plugin manager](docs/screenshots/03-plugin-manager.png)
+
+**Spectral indices** (here the NDVI) are calculated in the background. While a processing runs, the options of the
+panel are locked (greyed) and only the navigation and *Cancel* stay available.
+
+![Options locked during a processing](docs/screenshots/04-options-locked-during-processing.png)
+
+![NDVI index](docs/screenshots/05-ndvi-index.png)
+
+**SV Classification**: classes, ROI drawn as polygons or circles and coloured by class, then preview and classification.
+
+![SV Classification](docs/screenshots/06-sv-classification-roi.png)
+
 ## Features
 
 * **Band set**: load the bands of an image with *Open file* or *Add layer*, reorder them, and see the colour composition
