@@ -315,18 +315,33 @@ def tr(text):
     return QCoreApplication.translate('RasterClassification', text)
 
 
+def uninstall():
+    """ Remove the translator of the plugin, including one installed by an
+    older copy of the plugin in the same QGIS session (the translator is kept
+    on the application object, so that a reinstalled plugin finds it). """
+    app = QCoreApplication.instance()
+    for translator in (getattr(app, '_raster_classification_translator', None),
+                       _state['translator']):
+        if translator is not None:
+            QCoreApplication.removeTranslator(translator)
+    if app is not None:
+        app._raster_classification_translator = None
+    _state['translator'] = None
+
+
 def set_language(code, remember=True):
     """ Switch the plugin to 'en' or 'fr'. """
     if code not in LANGUAGES:
         return
-    translator = _state['translator']
-    if translator is not None:
-        QCoreApplication.removeTranslator(translator)
-        _state['translator'] = None
+    uninstall()
     if code == 'fr':
         # a reference is kept: a translator that is collected stops working
-        _state['translator'] = DictTranslator()
-        QCoreApplication.installTranslator(_state['translator'])
+        translator = DictTranslator()
+        QCoreApplication.installTranslator(translator)
+        _state['translator'] = translator
+        app = QCoreApplication.instance()
+        if app is not None:
+            app._raster_classification_translator = translator
     _state['code'] = code
     if remember:
         QSettings().setValue(SETTING_KEY, code)

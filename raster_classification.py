@@ -972,6 +972,10 @@ class RasterClassification:
                 except Exception as err:
                     str(err)
             try:
+                language.uninstall()
+            except Exception as err:
+                str(err)
+            try:
                 cfg.logger.log.debug('unload')
                 cfg.rs.close()
             except Exception as err:
