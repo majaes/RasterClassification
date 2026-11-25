@@ -31,6 +31,8 @@ from PyQt6.QtWidgets import (
 )
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
+from qgis.core import Qgis
+from . import satellite_detection as sat_detect
 
 
 # add satellite list to combo
@@ -52,6 +54,9 @@ def satellite_wavelength():
 
 # set satellite wavelengths
 def set_satellite_wavelength(satellite_name=None, bandset_number=None):
+    if satellite_name is None:
+        # chosen by the user in the menu: never overwritten by the detection
+        sat_detect.manual = True
     cfg.logger.log.debug(
         'set_satellite_wavelength satellite_name: %s'
         % str(satellite_name)
@@ -74,6 +79,8 @@ def set_satellite_wavelength(satellite_name=None, bandset_number=None):
 
 # set satellite wavelengths
 def set_satellite_wavelength_simplified():
+    # chosen by the user in the menu: never overwritten by the detection
+    sat_detect.manual = True
     satellite_name = (
         cfg.dock_class_simpl_dlg.ui.wavelength_sat_combo.currentText()
     )
@@ -86,6 +93,41 @@ def set_satellite_wavelength_simplified():
     )
     # create table
     band_set_to_table(bandset_number)
+
+
+# detect the satellite from the band file names (can be changed manually)
+def auto_detect_satellite(bandset_number):
+    try:
+        if sat_detect.manual:
+            return
+        bandset_x = cfg.bandset_catalog.get_bandset_by_number(bandset_number)
+        if bandset_x is None or bandset_x.get_band_count() == 0:
+            return
+        key = sat_detect.detect_satellite(bandset_x.get_absolute_paths())
+        if key is None:
+            return
+        dock_combo = cfg.dock_class_simpl_dlg.ui.wavelength_sat_combo
+        main_combo = cfg.dialog.ui.wavelength_sat_combo
+        index = sat_detect.find_menu_item(dock_combo, key)
+        if index < 0:
+            return
+        for combo in (dock_combo, main_combo):
+            combo.blockSignals(True)
+            combo.setCurrentIndex(index)
+            combo.blockSignals(False)
+        sat_detect.detected = True
+        cfg.bandset_catalog.set_satellite_wavelength(
+            satellite_name=dock_combo.itemText(index),
+            bandset_number=bandset_number
+        )
+        cfg.iface.messageBar().pushMessage(
+            'Raster Classification',
+            'Satellite detected: %s. You can change it in the Wavelength '
+            'menu.' % dock_combo.itemText(index).split(' [')[0],
+            level=Qgis.MessageLevel.Info, duration=6
+        )
+    except Exception as err:
+        cfg.logger.log.error('auto_detect_satellite: %s' % str(err))
 
 
 def satellite_unit():
@@ -409,6 +451,13 @@ def clear_bandset(question=True, bandset_number=None):
                               + 1)
         cfg.logger.log.debug('clear_bandset: %s' % str(bandset_number))
         cfg.bandset_catalog.clear_bandset(bandset_number)
+        # a new band set starts again without satellite and manual choice
+        sat_detect.reset()
+        for combo in (cfg.dock_class_simpl_dlg.ui.wavelength_sat_combo,
+                      cfg.dialog.ui.wavelength_sat_combo):
+            combo.blockSignals(True)
+            combo.setCurrentIndex(0)
+            combo.blockSignals(False)
         # create table
         band_set_to_table(bandset_number)
 
@@ -1191,6 +1240,7 @@ def add_file_to_band_set(files):
                         path=file, bandset_number=bandset_number,
                         raster_band=1, root_directory=root_directory
                     )
+        auto_detect_satellite(bandset_number)
         # create table
         band_set_to_table(bandset_number)
 
