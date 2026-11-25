@@ -15,7 +15,7 @@ import os
 import re
 import time
 
-from qgis.PyQt.QtWidgets import QComboBox
+from qgis.PyQt.QtWidgets import QComboBox, QWidget, QHBoxLayout, QLabel
 from qgis.core import (
     Qgis, QgsRasterLayer, QgsStyle, QgsColorRampShader, QgsRasterShader,
     QgsSingleBandPseudoColorRenderer, QgsProject, QgsTask, QgsFeedback,
@@ -44,8 +44,11 @@ ROLE_LABELS = {
     'nir': 'NIR (B08)', 'swir1': 'SWIR1 (B11)', 'swir2': 'SWIR2 (B12)',
 }
 
+CUSTOM_LABEL = 'Other (choose the bands)'
+
 # every preset combo created (dock, toolbar)
 COMBOS = []
+CUSTOM_WIDGETS = []
 
 # color composites: (label, (red, green, blue)); the first is the default
 COMPOSITES = [
@@ -154,6 +157,7 @@ def apply_default():
     if not apply_composite(COMPOSITES[0][1], quiet=True):
         number = cfg.project_registry[cfg.reg_active_bandset_number]
         cfg.utils.set_rgb_color_composite('3-2-1', number)
+    hide_custom_widgets()
     for combo in COMBOS:
         combo.blockSignals(True)
         combo.setCurrentIndex(0)
@@ -299,6 +303,91 @@ class IndexTask(QgsTask):
                  Qgis.MessageLevel.Info)
 
 
+def _band_label(band):
+    """ Short label of a band: name and center wavelength. """
+    name = str(band['name'])
+    last = name.split('_')[-1]
+    short = last if len(last) <= 12 else name
+    wavelength = _wavelength_um(band['wavelength'])
+    if wavelength is not None and wavelength < 50:
+        return '%s (%g \u00b5m)' % (short, wavelength)
+    return short
+
+
+def create_custom_widget(parent):
+    """ Row with one list of bands for each of R, G and B. """
+    widget = QWidget(parent)
+    layout = QHBoxLayout(widget)
+    layout.setContentsMargins(0, 0, 0, 0)
+    widget.combos = []
+    for letter, tip in (('R', 'Red'), ('G', 'Green'), ('B', 'Blue')):
+        label = QLabel(letter, widget)
+        label.setToolTip('%s band' % tip)
+        combo = QComboBox(widget)
+        combo.setToolTip('Band displayed in %s' % tip.lower())
+        combo.setSizeAdjustPolicy(
+            QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon
+        )
+        combo.setMinimumContentsLength(8)
+        combo.activated.connect(lambda _i, w=widget: apply_custom(w))
+        layout.addWidget(label)
+        layout.addWidget(combo, 1)
+        widget.combos.append(combo)
+    widget.setVisible(False)
+    CUSTOM_WIDGETS.append(widget)
+    return widget
+
+
+def fill_custom_widget(widget, bandset_x):
+    """ List the bands of the band set; keep the choice when possible. """
+    previous = [c.currentData() for c in widget.combos]
+    numbers = sorted(int(b['band_number']) for b in bandset_x.bands)
+    defaults = []
+    for i, role in enumerate(('red', 'green', 'blue')):
+        value = previous[i] if previous[i] in numbers else None
+        if value is None:
+            value = find_band(bandset_x, role)
+        if value is None:
+            value = numbers[min(2 - i, len(numbers) - 1)]
+        defaults.append(value)
+    for combo, default in zip(widget.combos, defaults):
+        combo.blockSignals(True)
+        combo.clear()
+        for band in sorted(bandset_x.bands, key=lambda b: b['band_number']):
+            combo.addItem(_band_label(band), int(band['band_number']))
+        combo.setCurrentIndex(max(0, combo.findData(default)))
+        combo.blockSignals(False)
+
+
+def apply_custom(widget):
+    bandset_x, number = _active_bandset()
+    if bandset_x is None:
+        return False
+    numbers = [c.currentData() for c in widget.combos]
+    if None in numbers:
+        return False
+    result = bool(cfg.utils.set_rgb_color_composite(
+        '%s-%s-%s' % tuple(numbers), number
+    ))
+    if result:
+        hide_index_layers()
+    return result
+
+
+def show_custom(widget):
+    bandset_x, _n = _active_bandset()
+    if bandset_x is None:
+        return False
+    fill_custom_widget(widget, bandset_x)
+    widget.setVisible(True)
+    return apply_custom(widget)
+
+
+def hide_custom_widgets():
+    for widget in CUSTOM_WIDGETS:
+        widget.setVisible(False)
+
+
 class PresetCombo(QComboBox):
     """ Combo of the predefined compositions; the entries whose bands are
     not in the band set are greyed out, with the missing bands as tooltip. """
@@ -309,6 +398,10 @@ class PresetCombo(QComboBox):
             model = self.model()
             n = len(COMPOSITES)
             for i in range(self.count()):
+                if i >= n + len(INDICES):
+                    # custom composition: needs at least one band
+                    model.item(i).setEnabled(bandset_x is not None)
+                    continue
                 roles = COMPOSITES[i][1] if i < n else INDICES[i - n][1]
                 missing = missing_roles(bandset_x, roles)
                 item = model.item(i)
@@ -324,9 +417,16 @@ class PresetCombo(QComboBox):
 def preset_selected(combo, previous):
     index = combo.currentIndex()
     n = len(COMPOSITES)
+    custom_index = n + len(INDICES)
     ok = False
     try:
-        if index < n:
+        if index == custom_index:
+            widget = getattr(combo, 'custom_widget', None)
+            ok = widget is not None and show_custom(widget)
+            if ok:
+                combo.setProperty('composition', index)
+        elif index < n:
+            hide_custom_widgets()
             ok = apply_composite(COMPOSITES[index][1], COMPOSITES[index][0])
             if ok:
                 combo.setProperty('composition', index)
@@ -345,12 +445,14 @@ def preset_selected(combo, previous):
         combo.blockSignals(False)
 
 
-def create_combo(parent):
+def create_combo(parent, with_custom=False):
     combo = PresetCombo(parent)
     for label, _roles in COMPOSITES:
         combo.addItem(label)
     for label, *_rest in INDICES:
         combo.addItem(label)
+    if with_custom:
+        combo.addItem(CUSTOM_LABEL)
     combo.setProperty('previous', 0)
     combo.setProperty('composition', 0)
     combo.setToolTip(

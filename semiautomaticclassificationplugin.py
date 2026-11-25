@@ -1317,11 +1317,19 @@ def connect_gui():
         )
         # predefined compositions and spectral indices
         presets_combo = cfg.composition_presets.create_combo(
-            cfg.dock_class_simpl_dlg.ui.frame_bandset
+            cfg.dock_class_simpl_dlg.ui.frame_bandset, with_custom=True
         )
         cfg.dock_class_simpl_dlg.ui.horizontalLayout.addWidget(
             presets_combo, 1
         )
+        # custom composition: one list of bands for each of R, G and B
+        custom_widget = cfg.composition_presets.create_custom_widget(
+            cfg.dock_class_simpl_dlg.ui.frame_bandset
+        )
+        cfg.dock_class_simpl_dlg.ui.gridLayout_2.addWidget(
+            custom_widget, 4, 0, 1, 2
+        )
+        presets_combo.custom_widget = custom_widget
         download_i = cfg.dock_class_simpl_dlg.ui.download_images_toolButton_2
         download_i.clicked.connect(
             cfg.input_interface.select_download_products_tab
