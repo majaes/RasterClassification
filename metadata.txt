@@ -10,8 +10,8 @@ email=majaesabana@gmail.com
 about=<b>Raster Classification</b> is a QGIS plugin for the supervised classification of remote sensing images: it provides tools for the download, the preprocessing and the postprocessing of images, and several algorithms for land cover classification. Search and download is available for Landsat and Sentinel-2 images.<br><br>Created and maintained by ANABA MANGA (<a href="https://anbmng.com">anbmng.com</a>), copyright 2026. Raster Classification is derived from the Semi-Automatic Classification Plugin (SCP) by Luca Congedo (copyright 2012-2026, <a href="https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin">source</a>), and, like it, is distributed under the GNU General Public License version 3 or later. It is built on the Remotior Sensus library, which is installed automatically if missing.
 
 homepage=https://anbmng.com
-tracker=https://github.com/majaes/SemiAutomaticClassificationPlugin/issues
-repository=https://github.com/majaes/SemiAutomaticClassificationPlugin
+tracker=https://github.com/majaes/RasterClassification/issues
+repository=https://github.com/majaes/RasterClassification
 tags=raster, classification, land cover, remote sensing, landsat, sentinel, supervised classification, spectral signature, random forest, processing
 changelog=
 	1.0.0

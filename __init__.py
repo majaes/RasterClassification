@@ -73,11 +73,11 @@ def homepage():
 
 def tracker():
     return (
-        'https://github.com/majaes/SemiAutomaticClassificationPlugin'
+        'https://github.com/majaes/RasterClassification'
         '/issues')
 
 
 def repository():
     return (
-        'https://github.com/majaes/SemiAutomaticClassificationPlugin'
+        'https://github.com/majaes/RasterClassification'
     )
