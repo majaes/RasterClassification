@@ -80,7 +80,7 @@ class RasterToVector(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons'
-            '/semiautomaticclassificationplugin_class_to_vector_tool.svg' %
+            '/raster_classification_class_to_vector_tool.svg' %
             Path(__file__).parent.parent
         )
 

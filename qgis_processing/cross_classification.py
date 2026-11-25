@@ -121,7 +121,7 @@ class CrossClassification(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_cross_classification.svg' %
+            'raster_classification_cross_classification.svg' %
             Path(__file__).parent.parent
         )
 

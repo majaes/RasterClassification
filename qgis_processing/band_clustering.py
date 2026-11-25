@@ -117,7 +117,7 @@ class BandClustering(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_clustering.svg' %
+            'raster_classification_clustering.svg' %
             Path(__file__).parent.parent
         )
 

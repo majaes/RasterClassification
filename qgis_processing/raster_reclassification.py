@@ -92,7 +92,7 @@ class RasterReclassification(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons'
-            '/semiautomaticclassificationplugin_reclassification_tool.svg' %
+            '/raster_classification_reclassification_tool.svg' %
             Path(__file__).parent.parent
         )
 

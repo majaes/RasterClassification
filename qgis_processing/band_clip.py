@@ -112,7 +112,7 @@ class BandClip(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_clip_tool.svg' %
+            'raster_classification_clip_tool.svg' %
             Path(__file__).parent.parent
         )
 

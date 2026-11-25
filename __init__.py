@@ -1,4 +1,4 @@
-# SemiAutomaticClassificationPlugin
+# RasterClassification
 # The Semi-Automatic Classification Plugin for QGIS allows for the supervised 
 # classification of remote sensing images, providing tools for the download, 
 # the preprocessing and postprocessing of images.
@@ -7,17 +7,17 @@
 # Author: Luca Congedo
 # Email: ing.congedoluca@gmail.com
 #
-# This file is part of SemiAutomaticClassificationPlugin.
-# SemiAutomaticClassificationPlugin is free software: you can redistribute it 
+# This file is part of RasterClassification.
+# RasterClassification is free software: you can redistribute it 
 # and/or modify it under the terms of the GNU General Public License 
 # as published by the Free Software Foundation, 
 # either version 3 of the License, or (at your option) any later version.
-# SemiAutomaticClassificationPlugin is distributed in the hope that it will be 
+# RasterClassification is distributed in the hope that it will be 
 # useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 # of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU General Public License for more details.
 # You should have received a copy of the GNU General Public License
-# along with SemiAutomaticClassificationPlugin. 
+# along with RasterClassification. 
 # If not, see <https://www.gnu.org/licenses/>.
 
 
@@ -38,7 +38,7 @@ def version():
 
 
 def icon():
-    return 'semiautomaticclassificationplugin.png'
+    return 'raster_classification.png'
 
 
 # noinspection PyPep8Naming
@@ -60,10 +60,10 @@ def category():
 
 # noinspection PyPep8Naming
 def classFactory(iface):
-    from .semiautomaticclassificationplugin import (
-        SemiAutomaticClassificationPlugin
+    from .raster_classification import (
+        RasterClassification
     )
-    return SemiAutomaticClassificationPlugin(iface)
+    return RasterClassification(iface)
 
 
 def homepage():

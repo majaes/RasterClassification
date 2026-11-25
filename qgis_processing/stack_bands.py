@@ -75,7 +75,7 @@ class StackBands(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_stack_raster.svg' %
+            'raster_classification_stack_raster.svg' %
             Path(__file__).parent.parent
         )
 

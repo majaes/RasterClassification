@@ -103,7 +103,7 @@ class Accuracy(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_accuracy_tool.svg' %
+            'raster_classification_accuracy_tool.svg' %
             Path(__file__).parent.parent
         )
 

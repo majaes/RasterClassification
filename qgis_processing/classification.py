@@ -301,7 +301,7 @@ class Classification(AlgorithmTemplate):
     @staticmethod
     def icon():
         return QIcon(
-            '%s/ui/icons/semiautomaticclassificationplugin_classification.svg'
+            '%s/ui/icons/raster_classification_classification.svg'
             % Path(__file__).parent.parent
         )
 

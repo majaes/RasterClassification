@@ -117,7 +117,7 @@ class MaskingBands(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_cloud_masking_tool.svg' %
+            'raster_classification_cloud_masking_tool.svg' %
             Path(__file__).parent.parent
         )
 

@@ -290,128 +290,128 @@ def function_dictionaries(simplified=False):
     cfg.first_icons = {
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Band set'
-        ): 'semiautomaticclassificationplugin_bandset_tool.svg',
+        ): 'raster_classification_bandset_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Download products'
-        ): 'semiautomaticclassificationplugin_download_arrow.svg'
+        ): 'raster_classification_download_arrow.svg'
     }
     cfg.basic_tools_icons = {
         QApplication.translate(
             'semiautomaticclassificationplugin', 'RGB composite'
-        ): 'semiautomaticclassificationplugin_rgb_tool.svg',
+        ): 'raster_classification_rgb_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Multiple ROI creation'
-        ): 'semiautomaticclassificationplugin_roi_multiple.svg',
+        ): 'raster_classification_roi_multiple.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Import signatures'
-        ): 'semiautomaticclassificationplugin_import_spectral_library.svg',
+        ): 'raster_classification_import_spectral_library.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Export signatures'
-        ): 'semiautomaticclassificationplugin_export_spectral_library.svg',
+        ): 'raster_classification_export_spectral_library.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Signature threshold'
-        ): 'semiautomaticclassificationplugin_threshold_tool.svg'
+        ): 'raster_classification_threshold_tool.svg'
     }
     cfg.preprocessing_icons = {
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Clip raster bands'
-        ): 'semiautomaticclassificationplugin_clip_tool.svg',
+        ): 'raster_classification_clip_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Image conversion'
-        ): 'semiautomaticclassificationplugin_landsat8_tool.svg',
+        ): 'raster_classification_landsat8_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Masking bands'
-        ): 'semiautomaticclassificationplugin_cloud_masking_tool.svg',
+        ): 'raster_classification_cloud_masking_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Mosaic band sets'
-        ): 'semiautomaticclassificationplugin_mosaic_tool.svg',
+        ): 'raster_classification_mosaic_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Reproject raster bands'
-        ): 'semiautomaticclassificationplugin_reproject_raster_bands.svg',
+        ): 'raster_classification_reproject_raster_bands.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Split raster bands'
-        ): 'semiautomaticclassificationplugin_split_raster.svg',
+        ): 'raster_classification_split_raster.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Stack raster bands'
-        ): 'semiautomaticclassificationplugin_stack_raster.svg',
+        ): 'raster_classification_stack_raster.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Vector to raster'
-        ): 'semiautomaticclassificationplugin_vector_to_raster_tool.svg'
+        ): 'raster_classification_vector_to_raster_tool.svg'
     }
     cfg.band_processing_icons = {
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Classification'
         ):
-            'semiautomaticclassificationplugin_classification.svg',
+            'raster_classification_classification.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Clustering'
         ):
-            'semiautomaticclassificationplugin_clustering.svg',
+            'raster_classification_clustering.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'PCA'
         ):
-            'semiautomaticclassificationplugin_pca_tool.svg',
+            'raster_classification_pca_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Combination'
         ):
-            'semiautomaticclassificationplugin_band_combination_tool.svg',
+            'raster_classification_band_combination_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Dilation'
         ):
-            'semiautomaticclassificationplugin_classification_dilation.svg',
+            'raster_classification_classification_dilation.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Neighbor'
         ):
-            'semiautomaticclassificationplugin_neighbor_pixels.svg',
+            'raster_classification_neighbor_pixels.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Sieve'
         ):
-            'semiautomaticclassificationplugin_classification_sieve.svg',
+            'raster_classification_classification_sieve.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Erosion'
         ):
-            'semiautomaticclassificationplugin_classification_erosion.svg',
+            'raster_classification_classification_erosion.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Spectral distance'
         ):
-            'semiautomaticclassificationplugin_spectral_distance.svg'
+            'raster_classification_spectral_distance.svg'
     }
     cfg.postprocessing_icons = {
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Accuracy'
-        ): 'semiautomaticclassificationplugin_accuracy_tool.svg',
+        ): 'raster_classification_accuracy_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Classification report'
         ):
-            'semiautomaticclassificationplugin_report_tool.svg',
+            'raster_classification_report_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Cross classification'
         ):
-            'semiautomaticclassificationplugin_cross_classification.svg',
+            'raster_classification_cross_classification.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Classification to vector'
         ):
-            'semiautomaticclassificationplugin_class_to_vector_tool.svg',
+            'raster_classification_class_to_vector_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Edit raster'
         ):
-            'semiautomaticclassificationplugin_edit_raster.svg',
+            'raster_classification_edit_raster.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Raster zonal stats'
         ):
-            'semiautomaticclassificationplugin_zonal_stat_raster_tool.svg',
+            'raster_classification_zonal_stat_raster_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Reclassification'
         ):
-            'semiautomaticclassificationplugin_reclassification_tool.svg'
+            'raster_classification_reclassification_tool.svg'
     }
     cfg.calc_icons = {
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Band calc'
-        ): 'semiautomaticclassificationplugin_bandcalc_tool.svg',
+        ): 'raster_classification_bandcalc_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Script'
-        ): 'semiautomaticclassificationplugin_batch.svg'
+        ): 'raster_classification_batch.svg'
     }
     cfg.other_icons = {
         QApplication.translate(
@@ -458,7 +458,7 @@ def load_input_toolbar():
 # noinspection PyUnresolvedReferences,PyTypeChecker
 def load_working_toolbar():
     add_toolbar_action(
-        show_plugin, 'semiautomaticclassificationplugin.svg',
+        show_plugin, 'raster_classification.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin',
             'Raster Classification'
@@ -467,7 +467,7 @@ def load_working_toolbar():
     # button zoom to image
     add_toolbar_action(
         cfg.util_qgis.zoom_to_bandset,
-        'semiautomaticclassificationplugin_zoom_to_Image.svg',
+        'raster_classification_zoom_to_Image.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Zoom to input image extent'
             )
@@ -498,7 +498,7 @@ def load_working_toolbar():
     # local cumulative cut stretch button
     cfg.local_cumulative_stretch_toolButton = add_toolbar_action(
         cfg.util_qgis.set_raster_cumulative_stretch,
-        'semiautomaticclassificationplugin_bandset_cumulative_stretch_tool'
+        'raster_classification_bandset_cumulative_stretch_tool'
         '.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin',
@@ -508,7 +508,7 @@ def load_working_toolbar():
     # local standard deviation stretch button
     cfg.local_std_dev_stretch_toolButton = add_toolbar_action(
         cfg.util_qgis.set_raster_std_dev_stretch,
-        'semiautomaticclassificationplugin_bandset_std_dev_stretch_tool.svg',
+        'raster_classification_bandset_std_dev_stretch_tool.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin',
             'Local standard deviation stretch of band set'
@@ -516,7 +516,7 @@ def load_working_toolbar():
     )
     # button zoom to ROI
     cfg.zoom_to_temp_roi = add_toolbar_action(
-        zoom_to_temp_roi, 'semiautomaticclassificationplugin_zoom_to_ROI.svg',
+        zoom_to_temp_roi, 'raster_classification_zoom_to_ROI.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Zoom to temporary ROI'
             )
@@ -533,7 +533,7 @@ def load_working_toolbar():
     # manual ROI pointer
     cfg.polygonROI_Button = add_toolbar_action(
         cfg.scp_dock.pointer_manual_roi_active,
-        'semiautomaticclassificationplugin_manual_ROI.svg',
+        'raster_classification_manual_ROI.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Create a ROI polygon'
             )
@@ -541,7 +541,7 @@ def load_working_toolbar():
     # pointer button
     cfg.pointerButton = add_toolbar_action(
         cfg.scp_dock.pointer_region_growing_roi_active,
-        'semiautomaticclassificationplugin_roi_single.svg',
+        'raster_classification_roi_single.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Activate ROI pointer'
             )
@@ -549,7 +549,7 @@ def load_working_toolbar():
     # redo button
     cfg.redo_ROI_Button = add_toolbar_action(
         cfg.scp_dock.redo_roi,
-        'semiautomaticclassificationplugin_roi_redo.svg',
+        'raster_classification_roi_redo.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin',
             'Redo the ROI at the same point'
@@ -606,7 +606,7 @@ def load_working_toolbar():
     # button zoom to preview
     add_toolbar_action(
         zoom_to_preview,
-        'semiautomaticclassificationplugin_zoom_to_preview.svg',
+        'raster_classification_zoom_to_preview.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin',
             'Zoom to the classification preview'
@@ -625,14 +625,14 @@ def load_working_toolbar():
     # preview pointer button
     add_toolbar_action(
         cfg.classification.pointer_classification_preview_active,
-        'semiautomaticclassificationplugin_preview.svg',
+        'raster_classification_preview.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin',
             'Activate classification preview pointer'
             )
     )
     cfg.redoPreviewButton = add_toolbar_action(
-        redo_preview, 'semiautomaticclassificationplugin_preview_redo.svg',
+        redo_preview, 'raster_classification_preview_redo.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin',
             'Redo the classification preview at the same point'
@@ -667,14 +667,14 @@ def load_working_toolbar():
     )
     add_toolbar_action(
         cfg.utils.create_kml_from_map,
-        'semiautomaticclassificationplugin_kml_add.svg',
+        'raster_classification_kml_add.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Create KML'
             )
     )
     add_toolbar_action(
         cfg.utils.create_copernicus_browser_link_from_map,
-        'semiautomaticclassificationplugin_copernicus_browser_link.svg',
+        'raster_classification_copernicus_browser_link.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Open Copernicus Browser'
             )
@@ -1058,7 +1058,7 @@ def load_menu():
     basic_tools_menu = cfg.main_menu.addMenu(
         QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_roi_tool.svg'
+            f'raster_classification_roi_tool.svg'
         ), QApplication.translate(
             'semiautomaticclassificationplugin', 'Basic tools'
             )
@@ -1067,7 +1067,7 @@ def load_menu():
     preprocessing_menu = cfg.main_menu.addMenu(
         QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_class_tool.svg'
+            f'raster_classification_class_tool.svg'
         ), QApplication.translate(
             'semiautomaticclassificationplugin', 'Preprocessing'
             )
@@ -1076,7 +1076,7 @@ def load_menu():
     band_processing_menu = cfg.main_menu.addMenu(
         QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_band_processing.svg'
+            f'raster_classification_band_processing.svg'
         ), QApplication.translate(
             'semiautomaticclassificationplugin', 'Band processing'
             )
@@ -1085,7 +1085,7 @@ def load_menu():
     postprocessing_menu = cfg.main_menu.addMenu(
         QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_post_process.svg'
+            f'raster_classification_post_process.svg'
         ), QApplication.translate(
             'semiautomaticclassificationplugin', 'Postprocessing'
             )
@@ -1099,7 +1099,7 @@ def load_menu():
         # Spectral plot
         add_menu_item(
             cfg.main_menu, spectral_plot_tab,
-            'semiautomaticclassificationplugin_sign_tool.svg',
+            'raster_classification_sign_tool.svg',
             QApplication.translate(
                 'semiautomaticclassificationplugin', 'Spectral plot'
                 )
@@ -1107,7 +1107,7 @@ def load_menu():
         # Scatter plot
         add_menu_item(
             cfg.main_menu, scatter_plot_tab,
-            'semiautomaticclassificationplugin_scatter_tool.svg',
+            'raster_classification_scatter_tool.svg',
             QApplication.translate(
                 'semiautomaticclassificationplugin', 'Scatter plot'
                 )
@@ -1116,7 +1116,7 @@ def load_menu():
     settings_menu = cfg.main_menu.addMenu(
         QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_settings_tool.svg'
+            f'raster_classification_settings_tool.svg'
         ),
         QApplication.translate('semiautomaticclassificationplugin', 'Settings')
     )
@@ -1177,7 +1177,7 @@ def load_menu():
     # Show plugin
     add_menu_item(
         cfg.main_menu, show_plugin,
-        'semiautomaticclassificationplugin_docks.svg',
+        'raster_classification_docks.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin', 'Show plugin'
             )
@@ -1198,7 +1198,7 @@ def load_main_menu():
     basic_tools_menu = add_tree_item(
         tree,
         QIcon(f'{cfg.plugin_dir}/ui/icons/'
-              f'semiautomaticclassificationplugin_roi_tool.svg'
+              f'raster_classification_roi_tool.svg'
               ), QApplication.translate('semiautomaticclassificationplugin',
                                         'Basic tools')
     )
@@ -1206,7 +1206,7 @@ def load_main_menu():
     preprocessing_menu = add_tree_item(
         tree, QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_class_tool.svg'
+            f'raster_classification_class_tool.svg'
         ), QApplication.translate(
             'semiautomaticclassificationplugin', 'Preprocessing')
     )
@@ -1214,7 +1214,7 @@ def load_main_menu():
     band_processing_menu = add_tree_item(
         tree, QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_band_processing.svg'
+            f'raster_classification_band_processing.svg'
         ), QApplication.translate(
             'semiautomaticclassificationplugin', 'Band processing')
     )
@@ -1222,7 +1222,7 @@ def load_main_menu():
     postprocessing_menu = add_tree_item(
         tree, QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_post_process.svg'
+            f'raster_classification_post_process.svg'
         ), QApplication.translate(
             'semiautomaticclassificationplugin', 'Postprocessing')
     )
@@ -1235,7 +1235,7 @@ def load_main_menu():
     settings_menu = add_tree_item(
         tree, QIcon(
             f'{cfg.plugin_dir}/ui/icons/'
-            f'semiautomaticclassificationplugin_settings_tool.svg'
+            f'raster_classification_settings_tool.svg'
         ),
         QApplication.translate('semiautomaticclassificationplugin', 'Settings')
     )
@@ -1321,13 +1321,13 @@ def threads_setting_change(value):
 def set_dock_tabs():
     source = f'{cfg.plugin_dir}/ui/icons/'
     icons = [
-        '%s/semiautomaticclassificationplugin_bandset_tool' % source,
-        '%s/semiautomaticclassificationplugin_download_arrow' % source,
-        '%s/semiautomaticclassificationplugin_roi_tool' % source,
-        '%s/semiautomaticclassificationplugin_class_tool' % source,
-        '%s/semiautomaticclassificationplugin_band_processing' % source,
-        '%s/semiautomaticclassificationplugin_post_process' % source,
-        '%s/semiautomaticclassificationplugin_bandcalc_tool' % source]
+        '%s/raster_classification_bandset_tool' % source,
+        '%s/raster_classification_download_arrow' % source,
+        '%s/raster_classification_roi_tool' % source,
+        '%s/raster_classification_class_tool' % source,
+        '%s/raster_classification_band_processing' % source,
+        '%s/raster_classification_post_process' % source,
+        '%s/raster_classification_bandcalc_tool' % source]
     for i in range(3, 10):
         label = QLabel()
         label.setStyleSheet(_fromUtf8('color : black'))

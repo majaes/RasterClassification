@@ -1653,7 +1653,7 @@ def add_menu_item(menu, function, icon_name, name, tooltip=''):
     try:
         action = QAction(
             QIcon(
-                ':/plugins/semiautomaticclassificationplugin/icons/%s'
+                ':/plugins/raster_classification/icons/%s'
                 % icon_name
             ), name, cfg.iface.mainWindow()
         )
@@ -1675,85 +1675,85 @@ def context_menu(event):
     menu.setToolTipsVisible(True)
     add_menu_item(
         menu, zoom_to_menu,
-        'semiautomaticclassificationplugin_zoom_to_ROI.svg',
+        'raster_classification_zoom_to_ROI.svg',
         QApplication.translate('semiautomaticclassificationplugin', 'Zoom to')
     )
     add_menu_item(
         menu, select_all_menu,
-        'semiautomaticclassificationplugin_options.svg',
+        'raster_classification_options.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Check/uncheck')
     )
     add_menu_item(
         menu, clear_selection_menu,
-        'semiautomaticclassificationplugin_select_all.svg',
+        'raster_classification_select_all.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Clear selection')
     )
     add_menu_item(
-        menu, collapse_menu, 'semiautomaticclassificationplugin_docks.svg',
+        menu, collapse_menu, 'raster_classification_docks.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Collapse/expand all')
     )
     menu.addSeparator()
     add_menu_item(
         menu, change_macroclass_menu,
-        'semiautomaticclassificationplugin_enter.svg',
+        'raster_classification_enter.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Change MC ID')
     )
     add_menu_item(
-        menu, change_color_menu, 'semiautomaticclassificationplugin_enter.svg',
+        menu, change_color_menu, 'raster_classification_enter.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Change color')
     )
     menu.addSeparator()
     add_menu_item(
         menu, merge_signatures,
-        'semiautomaticclassificationplugin_merge_sign_tool.svg',
+        'raster_classification_merge_sign_tool.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Merge items')
     )
     add_menu_item(
         menu, calculate_signatures,
-        'semiautomaticclassificationplugin_add_sign_tool.svg',
+        'raster_classification_add_sign_tool.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Calculate signatures')
     )
     add_menu_item(
         menu, remove_selected_signatures,
-        'semiautomaticclassificationplugin_remove.svg',
+        'raster_classification_remove.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Delete items')
     )
     menu.addSeparator()
     add_menu_item(
         menu, add_signature_to_spectral_plot,
-        'semiautomaticclassificationplugin_sign_tool.svg',
+        'raster_classification_sign_tool.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Add to spectral plot')
     )
     add_menu_item(
         menu, add_roi_to_scatter_plot,
-        'semiautomaticclassificationplugin_scatter_tool.svg',
+        'raster_classification_scatter_tool.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Add to scatter plot')
     )
     add_menu_item(
         menu, properties_menu,
-        'semiautomaticclassificationplugin_accuracy_tool.svg',
+        'raster_classification_accuracy_tool.svg',
         QApplication.translate('semiautomaticclassificationplugin',
                                'Properties')
     )
     menu.addSeparator()
     add_menu_item(
         menu, cfg.input_interface.import_signatures_tab,
-        'semiautomaticclassificationplugin_import_spectral_library.svg',
+        'raster_classification_import_spectral_library.svg',
         QApplication.translate('semiautomaticclassificationplugin', 'Import')
     )
     add_menu_item(
         menu, cfg.input_interface.export_signatures_tab,
-        'semiautomaticclassificationplugin_export_spectral_library.svg',
+        'raster_classification_export_spectral_library.svg',
         QApplication.translate('semiautomaticclassificationplugin', 'Export')
     )
     if cfg.simplified:

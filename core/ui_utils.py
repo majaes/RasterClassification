@@ -76,8 +76,8 @@ class UiUtils:
         icon_label.setSizePolicy(size_policy)
         icon_label.setPixmap(
             QPixmap(
-                ':/plugins/semiautomaticclassificationplugin/icons/'
-                'semiautomaticclassificationplugin.svg'
+                ':/plugins/raster_classification/icons/'
+                'raster_classification.svg'
             )
         )
         UiUtils.msg_label_main = QLabel()
@@ -306,7 +306,7 @@ class UiUtils:
         cfg.dialog.setEnabled(state)
 
         if cfg.dialog is None:
-            cfg.dialog = SemiAutomaticClassificationPluginDialog()
+            cfg.dialog = RasterClassificationDialog()
 
     # send SMTP message
     @staticmethod

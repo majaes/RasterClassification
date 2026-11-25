@@ -95,7 +95,7 @@ class ImageConversion(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_landsat8_tool.svg' %
+            'raster_classification_landsat8_tool.svg' %
             Path(__file__).parent.parent
         )
 

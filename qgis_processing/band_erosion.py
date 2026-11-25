@@ -112,7 +112,7 @@ class BandErosion(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_classification_erosion.svg' %
+            'raster_classification_classification_erosion.svg' %
             Path(__file__).parent.parent
         )
 

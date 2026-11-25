@@ -92,8 +92,8 @@ def changed_tab(index):
     icon = QIcon()
     icon.addPixmap(
         QPixmap(
-            ':/plugins/semiautomaticclassificationplugin/icons/'
-            'semiautomaticclassificationplugin_options.svg'
+            ':/plugins/raster_classification/icons/'
+            'raster_classification_options.svg'
         ), QIcon.Mode.Normal, QIcon.State.Off
     )
     count = cfg.dialog.ui.toolBox_classification.count()

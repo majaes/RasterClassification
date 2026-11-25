@@ -31,17 +31,17 @@ from qgis.PyQt.QtWidgets import (
 from qgis.core import QgsApplication
 from ..core import dock_progress
 
-from .ui_semiautomaticclassificationplugin import (
-    Ui_SemiAutomaticClassificationPlugin
+from .ui_raster_classification import (
+    Ui_RasterClassification
 )
-from .ui_semiautomaticclassificationplugin_dock_class import Ui_DockClass
-from .ui_semiautomaticclassificationplugin_dock_class_simplified import (
+from .ui_raster_classification_dock_class import Ui_DockClass
+from .ui_raster_classification_dock_class_simplified import (
     Ui_DockClassSimplified)
-from .ui_semiautomaticclassificationplugin_scatter_plot import Ui_ScatterPlot
-from .ui_semiautomaticclassificationplugin_signature_plot import (
+from .ui_raster_classification_scatter_plot import Ui_ScatterPlot
+from .ui_raster_classification_signature_plot import (
     Ui_SpectralSignaturePlot
 )
-from .ui_semiautomaticclassificationplugin_widget import Ui_SCP_Widget
+from .ui_raster_classification_widget import Ui_SCP_Widget
 
 try:
     cfg = __import__(
@@ -52,7 +52,7 @@ except Exception as error:
 
 
 # create the dialog
-class SemiAutomaticClassificationPluginDialog(QDialog):
+class RasterClassificationDialog(QDialog):
     # noinspection PyArgumentList
     def __init__(self):
         QDialog.__init__(self)
@@ -64,20 +64,20 @@ class SemiAutomaticClassificationPluginDialog(QDialog):
         # initialize plugin directory
         self.plugin_dir = QFileInfo(
             QgsApplication.qgisUserDatabaseFilePath()
-        ).path() + '/python/plugins/SemiAutomaticClassificationPlugin'
+        ).path() + '/python/plugins/RasterClassification'
         # locale name
         self.locale_name = QSettings().value('locale/userLocale')[0:2]
         # path to locale
         locale_path = ''
         if QFileInfo(self.plugin_dir).exists():
-            locale_path = ('%s/i18n/semiautomaticclassificationplugin_%s.qm'
+            locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
         if QFileInfo(locale_path).exists():
             self.translator = QTranslator()
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)
         # Set up the user interface from Designer.
-        self.ui = Ui_SemiAutomaticClassificationPlugin()
+        self.ui = Ui_RasterClassification()
         self.ui.setupUi(self)
 
     def shape_clip_combo(self, shape):
@@ -168,7 +168,7 @@ class DockClassDialog(QDockWidget):
         try:
             self.plugin_dir = QFileInfo(
                 QgsApplication.qgisUserDatabaseFilePath()
-            ).path() + '/python/plugins/SemiAutomaticClassificationPlugin'
+            ).path() + '/python/plugins/RasterClassification'
         except Exception as err:
             str(err)
             return
@@ -177,7 +177,7 @@ class DockClassDialog(QDockWidget):
         # path to locale
         locale_path = ''
         if QFileInfo(self.plugin_dir).exists():
-            locale_path = ('%s/i18n/semiautomaticclassificationplugin_%s.qm'
+            locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
         if QFileInfo(locale_path).exists():
             self.translator = QTranslator()
@@ -196,7 +196,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         try:
             self.plugin_dir = QFileInfo(
                 QgsApplication.qgisUserDatabaseFilePath()
-            ).path() + '/python/plugins/SemiAutomaticClassificationPlugin'
+            ).path() + '/python/plugins/RasterClassification'
         except Exception as err:
             str(err)
             return
@@ -205,7 +205,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         # path to locale
         locale_path = ''
         if QFileInfo(self.plugin_dir).exists():
-            locale_path = ('%s/i18n/semiautomaticclassificationplugin_%s.qm'
+            locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
         if QFileInfo(locale_path).exists():
             self.translator = QTranslator()
@@ -329,13 +329,13 @@ class ScatterPlotDialog(QDialog):
         # initialize plugin directory
         self.plugin_dir = QFileInfo(
             QgsApplication.qgisUserDatabaseFilePath()
-        ).path() + '/python/plugins/SemiAutomaticClassificationPlugin'
+        ).path() + '/python/plugins/RasterClassification'
         # locale name
         self.locale_name = QSettings().value('locale/userLocale')[0:2]
         # path to locale
         locale_path = ''
         if QFileInfo(self.plugin_dir).exists():
-            locale_path = ('%s/i18n/semiautomaticclassificationplugin_%s.qm'
+            locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
         if QFileInfo(locale_path).exists():
             self.translator = QTranslator()
@@ -354,13 +354,13 @@ class SpectralSignatureDialog(QDialog):
         # initialize plugin directory
         self.plugin_dir = QFileInfo(
             QgsApplication.qgisUserDatabaseFilePath()
-        ).path() + '/python/plugins/SemiAutomaticClassificationPlugin'
+        ).path() + '/python/plugins/RasterClassification'
         # locale name
         self.locale_name = QSettings().value('locale/userLocale')[0:2]
         # path to locale
         locale_path = ''
         if QFileInfo(self.plugin_dir).exists():
-            locale_path = ('%s/i18n/semiautomaticclassificationplugin_%s.qm'
+            locale_path = ('%s/i18n/raster_classification_%s.qm'
                            % (self.plugin_dir, self.locale_name))
         if QFileInfo(locale_path).exists():
             self.translator = QTranslator()

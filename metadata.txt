@@ -20,4 +20,4 @@ changelog=
 	-separate settings and Processing provider, so it can be installed beside the original plugin.
 
 category=Raster
-icon=semiautomaticclassificationplugin.png
+icon=raster_classification.png

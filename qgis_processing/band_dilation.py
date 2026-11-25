@@ -112,7 +112,7 @@ class BandDilation(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_classification_dilation.svg' %
+            'raster_classification_classification_dilation.svg' %
             Path(__file__).parent.parent
         )
 

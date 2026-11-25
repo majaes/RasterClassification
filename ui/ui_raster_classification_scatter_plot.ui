@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</iconset>
+    <normaloff>:/plugins/raster_classification/icons/raster_classification.svg</normaloff>:/plugins/raster_classification/icons/raster_classification.svg</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -170,7 +170,7 @@
             </property>
             <property name="icon">
              <iconset resource="resources.qrc">
-              <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+              <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -283,7 +283,7 @@
               </property>
               <property name="icon">
                <iconset resource="resources.qrc">
-                <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_fit_plot.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_fit_plot.svg</iconset>
+                <normaloff>:/plugins/raster_classification/icons/raster_classification_fit_plot.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_fit_plot.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -306,7 +306,7 @@
               </property>
               <property name="icon">
                <iconset resource="resources.qrc">
-                <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_save_plot_image.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_save_plot_image.svg</iconset>
+                <normaloff>:/plugins/raster_classification/icons/raster_classification_save_plot_image.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_save_plot_image.svg</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -531,7 +531,7 @@
             </property>
             <property name="icon">
              <iconset resource="resources.qrc">
-              <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+              <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -554,7 +554,7 @@
             </property>
             <property name="icon">
              <iconset resource="resources.qrc">
-              <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_scatter_raster_temp_ROI.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_scatter_raster_temp_ROI.svg</iconset>
+              <normaloff>:/plugins/raster_classification/icons/raster_classification_scatter_raster_temp_ROI.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_scatter_raster_temp_ROI.svg</iconset>
             </property>
             <property name="iconSize">
              <size>

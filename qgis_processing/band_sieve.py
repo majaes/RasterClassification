@@ -102,7 +102,7 @@ class BandSieve(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_classification_sieve.svg' %
+            'raster_classification_classification_sieve.svg' %
             Path(__file__).parent.parent
         )
 

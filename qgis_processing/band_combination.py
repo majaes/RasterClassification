@@ -91,7 +91,7 @@ class BandCombination(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_band_combination_tool.svg' %
+            'raster_classification_band_combination_tool.svg' %
             Path(__file__).parent.parent
         )
 

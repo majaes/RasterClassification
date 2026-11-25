@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'ui/ui_semiautomaticclassificationplugin_scatter_plot.ui'
+# Form implementation generated from reading ui file 'ui/ui_raster_classification_scatter_plot.ui'
 #
 # Created by: PyQt6 UI code generator 6.9.0
 #
@@ -19,7 +19,7 @@ class Ui_ScatterPlot(object):
         sizePolicy.setHeightForWidth(ScatterPlot.sizePolicy().hasHeightForWidth())
         ScatterPlot.setSizePolicy(sizePolicy)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap(":/plugins/raster_classification/icons/raster_classification.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         ScatterPlot.setWindowIcon(icon)
         ScatterPlot.setLocale(QtCore.QLocale(QtCore.QLocale.Language.English, QtCore.QLocale.Country.UnitedStates))
         self.gridLayout_5 = QtWidgets.QGridLayout(ScatterPlot)
@@ -103,7 +103,7 @@ class Ui_ScatterPlot(object):
         self.scatter_ROI_Button = QtWidgets.QToolButton(parent=self.frame)
         self.scatter_ROI_Button.setStyleSheet("margin: 0px;padding: 0px;")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/plugins/raster_classification/icons/raster_classification_enter.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.scatter_ROI_Button.setIcon(icon1)
         self.scatter_ROI_Button.setIconSize(QtCore.QSize(22, 22))
         self.scatter_ROI_Button.setObjectName("scatter_ROI_Button")
@@ -146,7 +146,7 @@ class Ui_ScatterPlot(object):
         self.fitToAxes_pushButton_2.setStyleSheet("margin: 0px;padding: 0px;")
         self.fitToAxes_pushButton_2.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_fit_plot.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/plugins/raster_classification/icons/raster_classification_fit_plot.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.fitToAxes_pushButton_2.setIcon(icon2)
         self.fitToAxes_pushButton_2.setIconSize(QtCore.QSize(22, 22))
         self.fitToAxes_pushButton_2.setObjectName("fitToAxes_pushButton_2")
@@ -155,7 +155,7 @@ class Ui_ScatterPlot(object):
         self.save_plot_pushButton_2.setStyleSheet("margin: 0px;padding: 0px;")
         self.save_plot_pushButton_2.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_save_plot_image.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/plugins/raster_classification/icons/raster_classification_save_plot_image.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.save_plot_pushButton_2.setIcon(icon3)
         self.save_plot_pushButton_2.setIconSize(QtCore.QSize(22, 22))
         self.save_plot_pushButton_2.setObjectName("save_plot_pushButton_2")
@@ -261,7 +261,7 @@ class Ui_ScatterPlot(object):
         self.remove_Signature_Button = QtWidgets.QToolButton(parent=self.frame)
         self.remove_Signature_Button.setStyleSheet("margin: 0px;padding: 0px;")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/plugins/raster_classification/icons/raster_classification_remove.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.remove_Signature_Button.setIcon(icon4)
         self.remove_Signature_Button.setIconSize(QtCore.QSize(22, 22))
         self.remove_Signature_Button.setObjectName("remove_Signature_Button")
@@ -270,7 +270,7 @@ class Ui_ScatterPlot(object):
         self.plot_temp_ROI_pushButton.setStyleSheet("margin: 0px;padding: 0px;")
         self.plot_temp_ROI_pushButton.setText("")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_scatter_raster_temp_ROI.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon5.addPixmap(QtGui.QPixmap(":/plugins/raster_classification/icons/raster_classification_scatter_raster_temp_ROI.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.plot_temp_ROI_pushButton.setIcon(icon5)
         self.plot_temp_ROI_pushButton.setIconSize(QtCore.QSize(22, 22))
         self.plot_temp_ROI_pushButton.setObjectName("plot_temp_ROI_pushButton")

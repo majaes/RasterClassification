@@ -21,7 +21,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</iconset>
+    <normaloff>:/plugins/raster_classification/icons/raster_classification.svg</normaloff>:/plugins/raster_classification/icons/raster_classification.svg</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -159,7 +159,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="resources.qrc">
-                    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add_sign_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add_sign_tool.svg</iconset>
+                    <normaloff>:/plugins/raster_classification/icons/raster_classification_add_sign_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_add_sign_tool.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -179,7 +179,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="resources.qrc">
-                    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+                    <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -199,7 +199,7 @@
                   </property>
                   <property name="icon">
                    <iconset resource="resources.qrc">
-                    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_calculate_spectral_distances.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_calculate_spectral_distances.svg</iconset>
+                    <normaloff>:/plugins/raster_classification/icons/raster_classification_calculate_spectral_distances.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_calculate_spectral_distances.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -269,7 +269,7 @@
       <widget class="QWidget" name="tab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_sign_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_sign_tool.svg</iconset>
+         <normaloff>:/plugins/raster_classification/icons/raster_classification_sign_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_sign_tool.svg</iconset>
        </attribute>
        <attribute name="title">
         <string>Plot</string>
@@ -449,7 +449,7 @@
             </property>
             <property name="icon">
              <iconset resource="resources.qrc">
-              <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_save_plot_image.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_save_plot_image.svg</iconset>
+              <normaloff>:/plugins/raster_classification/icons/raster_classification_save_plot_image.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_save_plot_image.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -501,7 +501,7 @@
             </property>
             <property name="icon">
              <iconset resource="resources.qrc">
-              <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_fit_plot.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_fit_plot.svg</iconset>
+              <normaloff>:/plugins/raster_classification/icons/raster_classification_fit_plot.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_fit_plot.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -520,7 +520,7 @@
       <widget class="QWidget" name="tab_2">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_accuracy_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_accuracy_tool.svg</iconset>
+         <normaloff>:/plugins/raster_classification/icons/raster_classification_accuracy_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_accuracy_tool.svg</iconset>
        </attribute>
        <attribute name="title">
         <string>Signature details</string>
@@ -549,7 +549,7 @@ p, li { white-space: pre-wrap; }
       <widget class="QWidget" name="tab_3">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_calculate_spectral_distances.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_calculate_spectral_distances.svg</iconset>
+         <normaloff>:/plugins/raster_classification/icons/raster_classification_calculate_spectral_distances.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_calculate_spectral_distances.svg</iconset>
        </attribute>
        <attribute name="title">
         <string>Spectral distances</string>

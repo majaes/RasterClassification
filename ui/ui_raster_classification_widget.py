@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'ui/ui_semiautomaticclassificationplugin_widget.ui'
+# Form implementation generated from reading ui file 'ui/ui_raster_classification_widget.ui'
 #
 # Created by: PyQt6 UI code generator 6.9.0
 #
@@ -14,7 +14,7 @@ class Ui_SCP_Widget(object):
         SCP_Widget.setObjectName("SCP_Widget")
         SCP_Widget.resize(609, 355)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon.addPixmap(QtGui.QPixmap(":/plugins/raster_classification/icons/raster_classification.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         SCP_Widget.setWindowIcon(icon)
         self.gridLayout_2 = QtWidgets.QGridLayout(SCP_Widget)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -33,7 +33,7 @@ class Ui_SCP_Widget(object):
         self.select_all_toolButton = QtWidgets.QToolButton(parent=SCP_Widget)
         self.select_all_toolButton.setStyleSheet("margin: 0px;padding: 0px;")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_select_all.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/plugins/raster_classification/icons/raster_classification_select_all.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.select_all_toolButton.setIcon(icon1)
         self.select_all_toolButton.setIconSize(QtCore.QSize(22, 22))
         self.select_all_toolButton.setObjectName("select_all_toolButton")

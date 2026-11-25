@@ -4,16 +4,32 @@
 
 | Folder | Content |
 |---|---|
-| `semiautomaticclassificationplugin.py` | plugin entry point (`classFactory` is in `__init__.py`) |
+| `raster_classification.py` | plugin entry point (`classFactory` is in `__init__.py`) |
 | `core/` | configuration, messages, Qt and QGIS helpers |
 | `interface/` | one module per tool of the panel (band set, classification, ROI, download...), plus `composition_presets.py` (predefined compositions and indices) and `satellite_detection.py` |
-| `ui/` | Qt Designer files (`.ui`) and the generated Python; the panel tabs are built in `semiautomaticclassificationplugindialog.py` |
+| `ui/` | Qt Designer files (`.ui`) and the generated Python; the panel tabs are built in `raster_classification_dialog.py` |
 | `qgis_processing/` | algorithms of the QGIS Processing toolbox |
 | `spectral_signature/`, `map_pointers/` | signature plots and map tools |
 | `remotior_sensus/` | bundled processing library (unmodified, version 0.8.0) |
 | `i18n/` | translation files (the interface is in English by default) |
 | `dev/build_zip.py` | builds the installable zip |
 | `releases/` | the zip to install in QGIS |
+
+## Names
+
+The code uses the Raster Classification names (`raster_classification.py`, class `RasterClassification`,
+`raster_classification_dialog.py`, icons `raster_classification_*.svg`, Qt resource prefix
+`:/plugins/raster_classification/`). A few internal identifiers of the original plugin are kept on purpose:
+
+* the Qt translation context `semiautomaticclassificationplugin` (and the contexts of the generated `ui_*.py`
+  files): the translation files in `i18n/` are keyed by it, and the Qt tool that compiles them is not part of this
+  repository's workflow;
+* the file formats of the original plugin (`.scp`, `.scpx` training inputs and signature libraries), so that existing
+  files still open;
+* the `scp_*` attribute names of the configuration (`cfg.scp_dock`, `cfg.scp_training`...) and the matching
+  project variables.
+
+Renaming them is possible but would break old translations, files or projects.
 
 ## Qt 5 and Qt 6
 

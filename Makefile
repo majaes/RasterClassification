@@ -4,18 +4,18 @@
 # Makefile for a PyQGIS plugin
 
 # translation
-SOURCES = semiautomaticclassificationplugin.py ui/ui_semiautomaticclassificationplugin.py ui/ui_semiautomaticclassificationplugin_widget.py ui/ui_semiautomaticclassificationplugin_scatter_plot.py ui/ui_semiautomaticclassificationplugin_signature_plot.py ui/ui_semiautomaticclassificationplugin_dock_class.py ui/ui_semiautomaticclassificationplugin_dock_class_simplified.py __init__.py ui/semiautomaticclassificationplugindialog.py
-TRANSLATIONS = i18n/semiautomaticclassificationplugin_it.ts i18n/semiautomaticclassificationplugin_es.ts i18n/semiautomaticclassificationplugin_pt_BR.ts i18n/semiautomaticclassificationplugin_pt.ts i18n/semiautomaticclassificationplugin_el_GR.ts i18n/semiautomaticclassificationplugin_uk_UA.ts i18n/semiautomaticclassificationplugin_ar.ts i18n/semiautomaticclassificationplugin_zh_CN.ts i18n/semiautomaticclassificationplugin_fr.ts i18n/semiautomaticclassificationplugin_de.ts i18n/semiautomaticclassificationplugin_ja.ts i18n/semiautomaticclassificationplugin_pl.ts
+SOURCES = raster_classification.py ui/ui_raster_classification.py ui/ui_raster_classification_widget.py ui/ui_raster_classification_scatter_plot.py ui/ui_raster_classification_signature_plot.py ui/ui_raster_classification_dock_class.py ui/ui_raster_classification_dock_class_simplified.py __init__.py ui/raster_classification_dialog.py
+TRANSLATIONS = i18n/raster_classification_it.ts i18n/raster_classification_es.ts i18n/raster_classification_pt_BR.ts i18n/raster_classification_pt.ts i18n/raster_classification_el_GR.ts i18n/raster_classification_uk_UA.ts i18n/raster_classification_ar.ts i18n/raster_classification_zh_CN.ts i18n/raster_classification_fr.ts i18n/raster_classification_de.ts i18n/raster_classification_ja.ts i18n/raster_classification_pl.ts
 
 # global
 
-PLUGINNAME = SemiAutomaticClassificationPlugin
+PLUGINNAME = RasterClassification
 
-PY_FILES = semiautomaticclassificationplugin.py ui/semiautomaticclassificationplugindialog.py __init__.py
+PY_FILES = raster_classification.py ui/raster_classification_dialog.py __init__.py
 
-EXTRAS = semiautomaticclassificationplugin.png
+EXTRAS = raster_classification.png
 
-UI_FILES = ui/ui_semiautomaticclassificationplugin_scatter_plot.py ui/ui_semiautomaticclassificationplugin_signature_plot.py ui/ui_semiautomaticclassificationplugin_dock_class.py ui/ui_semiautomaticclassificationplugin_dock_class_simplified.py ui/ui_semiautomaticclassificationplugin.py ui/ui_semiautomaticclassificationplugin_widget.py
+UI_FILES = ui/ui_raster_classification_scatter_plot.py ui/ui_raster_classification_signature_plot.py ui/ui_raster_classification_dock_class.py ui/ui_raster_classification_dock_class_simplified.py ui/ui_raster_classification.py ui/ui_raster_classification_widget.py
 
 RESOURCE_FILES = ui/resources_rc.py
 
@@ -87,9 +87,9 @@ upload: zip
 # update .ts translation files
 transup:
 	#lupdate Makefile
-	lupdate -noobsolete *.py core/*.py interface/*.py spectral_signature/*.py ui/*.ui -ts i18n/semiautomaticclassificationplugin.ts
-	cp -vf $(HOME)/.local/share/QGIS/QGIS3/profiles/default/python/plugins/$(PLUGINNAME)/i18n/semiautomaticclassificationplugin.ts $(HOME)/.local/share/QGIS/QGIS3/profiles/default/python/plugins/$(PLUGINNAME)/i18n/models
-	lupdate -noobsolete *.py core/*.py interface/*.py spectral_signature/*.py ui/*.ui -ts i18n/semiautomaticclassificationplugin_pl.ts -ts $(TRANSLATIONS)
+	lupdate -noobsolete *.py core/*.py interface/*.py spectral_signature/*.py ui/*.ui -ts i18n/raster_classification.ts
+	cp -vf $(HOME)/.local/share/QGIS/QGIS3/profiles/default/python/plugins/$(PLUGINNAME)/i18n/raster_classification.ts $(HOME)/.local/share/QGIS/QGIS3/profiles/default/python/plugins/$(PLUGINNAME)/i18n/models
+	lupdate -noobsolete *.py core/*.py interface/*.py spectral_signature/*.py ui/*.ui -ts i18n/raster_classification_pl.ts -ts $(TRANSLATIONS)
 
 
 # transcompile

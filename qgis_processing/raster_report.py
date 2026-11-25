@@ -78,7 +78,7 @@ class RasterReport(AlgorithmTemplate):
     @staticmethod
     def icon():
         return QIcon(
-            '%s/ui/icons/semiautomaticclassificationplugin_report_tool.svg' %
+            '%s/ui/icons/raster_classification_report_tool.svg' %
             Path(__file__).parent.parent
         )
 

@@ -30,7 +30,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</iconset>
+    <normaloff>:/plugins/raster_classification/icons/raster_classification.svg</normaloff>:/plugins/raster_classification/icons/raster_classification.svg</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -197,7 +197,7 @@
       <widget class="QWidget" name="tool_tab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</iconset>
+         <normaloff>:/plugins/raster_classification/icons/raster_classification.svg</normaloff>:/plugins/raster_classification/icons/raster_classification.svg</iconset>
        </attribute>
        <attribute name="title">
         <string>Tool</string>
@@ -347,7 +347,7 @@
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_up.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_up.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_move_up.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_move_up.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -370,7 +370,7 @@
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add_bandset_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add_bandset_tool.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_add_bandset_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_add_bandset_tool.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -393,7 +393,7 @@
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_down.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_down.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_move_down.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_move_down.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -416,7 +416,7 @@
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -439,7 +439,7 @@
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_order_by_date.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_order_by_date.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_order_by_date.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_order_by_date.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -462,7 +462,7 @@
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_rgb_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_rgb_tool.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_rgb_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_rgb_tool.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -614,7 +614,7 @@
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -792,7 +792,7 @@ of band set</string>
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -942,7 +942,7 @@ of band set</string>
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -965,7 +965,7 @@ of band set</string>
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -1003,7 +1003,7 @@ of band set</string>
                           </property>
                           <property name="icon">
                            <iconset resource="resources.qrc">
-                            <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</iconset>
+                            <normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -1026,7 +1026,7 @@ of band set</string>
                           </property>
                           <property name="icon">
                            <iconset resource="resources.qrc">
-                            <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                            <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -1068,7 +1068,7 @@ of band set</string>
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_order_by_name.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_order_by_name.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_order_by_name.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_order_by_name.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -1088,7 +1088,7 @@ of band set</string>
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -1111,7 +1111,7 @@ of band set</string>
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_down.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_down.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_move_down.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_move_down.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -1134,7 +1134,7 @@ of band set</string>
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_add.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_add.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -1170,7 +1170,7 @@ of band set</string>
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_up.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_up.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_move_up.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_move_up.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -1260,7 +1260,7 @@ of band set</string>
                 </property>
                 <property name="icon">
                  <iconset resource="resources.qrc">
-                  <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                  <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -1291,7 +1291,7 @@ of band set</string>
                 </property>
                 <property name="icon">
                  <iconset resource="resources.qrc">
-                  <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                  <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -1471,7 +1471,7 @@ of band set</string>
                   </property>
                   <property name="icon">
                    <iconset resource="resources.qrc">
-                    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_select_all.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_select_all.svg</iconset>
+                    <normaloff>:/plugins/raster_classification/icons/raster_classification_select_all.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_select_all.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -1596,7 +1596,7 @@ min-height: 18px;
                 <widget class="QWidget" name="tab_search">
                  <attribute name="icon">
                   <iconset resource="resources.qrc">
-                   <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_download_search.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_download_search.svg</iconset>
+                   <normaloff>:/plugins/raster_classification/icons/raster_classification_download_search.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_download_search.svg</iconset>
                  </attribute>
                  <attribute name="title">
                   <string>Search</string>
@@ -1619,7 +1619,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_osm_add.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_osm_add.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_osm_add.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_osm_add.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -1707,7 +1707,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_pointer_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_pointer_tool.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_pointer_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_pointer_tool.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -1832,7 +1832,7 @@ min-height: 18px;
                           </property>
                           <property name="icon">
                            <iconset resource="resources.qrc">
-                            <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_search_images.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_search_images.svg</iconset>
+                            <normaloff>:/plugins/raster_classification/icons/raster_classification_search_images.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_search_images.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -2159,7 +2159,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -2182,7 +2182,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_download_image_preview.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_download_image_preview.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_download_image_preview.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_download_image_preview.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -2205,7 +2205,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -2228,7 +2228,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -2251,7 +2251,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -2447,7 +2447,7 @@ min-height: 18px;
                 <widget class="QWidget" name="tab_login">
                  <attribute name="icon">
                   <iconset resource="resources.qrc">
-                   <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_download_login.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_download_login.svg</iconset>
+                   <normaloff>:/plugins/raster_classification/icons/raster_classification_download_login.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_download_login.svg</iconset>
                  </attribute>
                  <attribute name="title">
                   <string>Login data</string>
@@ -2707,7 +2707,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_order_by_name.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_order_by_name.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_order_by_name.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_order_by_name.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2730,7 +2730,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_down.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_down.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_move_down.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_move_down.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2753,7 +2753,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_up.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_move_up.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_move_up.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_move_up.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2780,7 +2780,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_add.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_add.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2803,7 +2803,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2826,7 +2826,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2849,7 +2849,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2872,7 +2872,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -2996,7 +2996,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -3198,7 +3198,7 @@ min-height: 18px;
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -3418,7 +3418,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_add.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_add.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -3441,7 +3441,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -3464,7 +3464,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -3500,7 +3500,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -3595,7 +3595,7 @@ min-height: 18px;
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -3652,7 +3652,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -3866,7 +3866,7 @@ min-height: 18px;
                           </property>
                           <property name="icon">
                            <iconset resource="resources.qrc">
-                            <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                            <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -3930,7 +3930,7 @@ min-height: 18px;
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -4068,7 +4068,7 @@ min-height: 18px;
                           </property>
                           <property name="icon">
                            <iconset resource="resources.qrc">
-                            <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                            <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -4182,7 +4182,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_new_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_new_file.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_new_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_new_file.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -4205,7 +4205,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_dir.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_dir.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_open_dir.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_dir.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -4265,7 +4265,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_new_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_new_file.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_new_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_new_file.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -4344,7 +4344,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -4479,7 +4479,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -4528,7 +4528,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -4738,7 +4738,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_dir.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_dir.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_open_dir.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_dir.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -4846,7 +4846,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -5006,7 +5006,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -5101,7 +5101,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -5135,7 +5135,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -5230,7 +5230,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -5501,7 +5501,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -5629,7 +5629,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -5663,7 +5663,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -5878,7 +5878,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_pointer_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_pointer_tool.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_pointer_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_pointer_tool.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -6008,7 +6008,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -6122,7 +6122,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -6169,7 +6169,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -6287,7 +6287,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -6839,7 +6839,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -6873,7 +6873,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -6985,7 +6985,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -7094,7 +7094,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -7128,7 +7128,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -7244,7 +7244,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -7278,7 +7278,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -7559,7 +7559,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -7593,7 +7593,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -7800,7 +7800,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -7981,7 +7981,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -8015,7 +8015,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -8149,7 +8149,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -8183,7 +8183,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -8630,7 +8630,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -8732,7 +8732,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -8817,7 +8817,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -8970,7 +8970,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -9252,7 +9252,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -9299,7 +9299,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -9563,7 +9563,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -9710,7 +9710,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -10038,7 +10038,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -10091,7 +10091,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -10117,7 +10117,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -10148,7 +10148,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -10217,7 +10217,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                    </property>
                    <attribute name="icon">
                     <iconset resource="resources.qrc">
-                     <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_options.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_options.svg</iconset>
+                     <normaloff>:/plugins/raster_classification/icons/raster_classification_options.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_options.svg</iconset>
                    </attribute>
                    <attribute name="label">
                     <string>Maximum Likelihood</string>
@@ -10296,7 +10296,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_threshold_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_threshold_tool.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_threshold_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_threshold_tool.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -10532,7 +10532,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_threshold_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_threshold_tool.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_threshold_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_threshold_tool.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -11429,7 +11429,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_threshold_tool.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_threshold_tool.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_threshold_tool.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_threshold_tool.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -11985,7 +11985,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -12070,7 +12070,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -12117,7 +12117,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -12423,7 +12423,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -12483,7 +12483,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -12971,7 +12971,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -13089,7 +13089,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -13396,7 +13396,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -13419,7 +13419,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -13619,7 +13619,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -13653,7 +13653,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -13833,7 +13833,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -13900,7 +13900,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -13947,7 +13947,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -14192,7 +14192,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -14228,7 +14228,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -14350,7 +14350,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -14384,7 +14384,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -14533,7 +14533,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -14663,7 +14663,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -14716,7 +14716,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -14791,7 +14791,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -14835,7 +14835,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -14903,7 +14903,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -14974,7 +14974,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_add.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_add.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_add.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -14997,7 +14997,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_remove.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_remove.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -15046,7 +15046,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_import.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_import.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -15069,7 +15069,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -15217,7 +15217,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -15251,7 +15251,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -15431,7 +15431,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -15484,7 +15484,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -15597,7 +15597,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_undo_edit_raster.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_undo_edit_raster.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_undo_edit_raster.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_undo_edit_raster.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -15683,7 +15683,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -15717,7 +15717,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -15832,7 +15832,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           </property>
                           <property name="icon">
                            <iconset resource="resources.qrc">
-                            <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                            <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -15891,7 +15891,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                           </property>
                           <property name="icon">
                            <iconset resource="resources.qrc">
-                            <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                            <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -16153,7 +16153,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_batch.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_batch.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -16187,7 +16187,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -16377,7 +16377,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                       </property>
                       <property name="icon">
                        <iconset resource="resources.qrc">
-                        <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reload.svg</iconset>
+                        <normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reload.svg</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -16558,7 +16558,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
                         </property>
                         <property name="icon">
                          <iconset resource="resources.qrc">
-                          <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_file.svg</iconset>
+                          <normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_file.svg</iconset>
                         </property>
                         <property name="iconSize">
                          <size>
@@ -17107,7 +17107,7 @@ size</string>
                   </property>
                   <property name="icon">
                    <iconset resource="resources.qrc">
-                    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_run.svg</iconset>
+                    <normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_run.svg</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -17316,7 +17316,7 @@ background-color: rgb(27, 27, 27);</string>
                 </property>
                 <property name="icon">
                  <iconset resource="resources.qrc">
-                  <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                  <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -17390,7 +17390,7 @@ background-color: rgb(27, 27, 27);</string>
                 </property>
                 <property name="icon">
                  <iconset resource="resources.qrc">
-                  <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                  <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -17710,7 +17710,7 @@ background-color: rgb(27, 27, 27);</string>
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -17733,7 +17733,7 @@ background-color: rgb(27, 27, 27);</string>
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_dir.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_open_dir.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_open_dir.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_open_dir.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -18005,7 +18005,7 @@ background-color: rgb(27, 27, 27);</string>
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -18138,7 +18138,7 @@ background-color: rgb(27, 27, 27);</string>
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -18184,7 +18184,7 @@ background-color: rgb(27, 27, 27);</string>
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_reset.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_reset.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -18269,7 +18269,7 @@ background-color: rgb(27, 27, 27);</string>
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_enter.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_enter.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -18361,7 +18361,7 @@ background-color: rgb(27, 27, 27);</string>
                     </property>
                     <property name="icon">
                      <iconset resource="resources.qrc">
-                      <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_export.svg</iconset>
+                      <normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_export.svg</iconset>
                     </property>
                     <property name="iconSize">
                      <size>
@@ -18458,7 +18458,7 @@ background-color: rgb(27, 27, 27);</string>
                  <string/>
                 </property>
                 <property name="pixmap">
-                 <pixmap resource="resources.qrc">:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</pixmap>
+                 <pixmap resource="resources.qrc">:/plugins/raster_classification/icons/raster_classification.svg</pixmap>
                 </property>
                </widget>
               </item>
@@ -18580,7 +18580,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <widget class="QWidget" name="help_tab">
        <attribute name="icon">
         <iconset resource="resources.qrc">
-         <normaloff>:/plugins/semiautomaticclassificationplugin/icons/help.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/help.svg</iconset>
+         <normaloff>:/plugins/raster_classification/icons/help.svg</normaloff>:/plugins/raster_classification/icons/help.svg</iconset>
        </attribute>
        <attribute name="title">
         <string>Help</string>

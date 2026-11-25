@@ -129,7 +129,7 @@ class SCPAlgorithmProvider(QgsProcessingProvider):
     @staticmethod
     def icon():
         return QIcon(
-            '%s/ui/icons/semiautomaticclassificationplugin.svg' %
+            '%s/ui/icons/raster_classification.svg' %
             Path(__file__).parent.parent
         )
 

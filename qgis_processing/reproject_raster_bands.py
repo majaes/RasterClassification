@@ -163,7 +163,7 @@ class ReprojectRasterBands(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_reproject_raster_bands.svg' %
+            'raster_classification_reproject_raster_bands.svg' %
             Path(__file__).parent.parent
         )
 

@@ -100,8 +100,8 @@ except Exception as error:
     )
 try:
     # initialize Qt ui
-    from .ui.semiautomaticclassificationplugindialog import (
-        SemiAutomaticClassificationPluginDialog, SpectralSignatureDialog,
+    from .ui.raster_classification_dialog import (
+        RasterClassificationDialog, SpectralSignatureDialog,
         ScatterPlotDialog, DockClassDialog, DockClassSimplifiedDialog,
         WidgetDialog
     )
@@ -312,7 +312,7 @@ except Exception as error:
 
 
 # noinspection PyPep8Naming
-class SemiAutomaticClassificationPlugin:
+class RasterClassification:
 
     # noinspection PyArgumentList,PyTypeChecker
     def __init__(self, iface):
@@ -424,7 +424,7 @@ class SemiAutomaticClassificationPlugin:
             # locale
             locale_settings = QSettings().value('locale/userLocale')[0:2]
             # English is the default language; set the QGIS setting
-            # SemiAutomaticClassificationPlugin/language to 'auto' to follow
+            # RasterClassification/language to 'auto' to follow
             # the QGIS locale, or to a locale code (e.g. 'fr')
             plugin_language = str(QSettings().value(
                 'RasterClassification/language', 'en'
@@ -440,7 +440,7 @@ class SemiAutomaticClassificationPlugin:
             )
             if QFileInfo(cfg.plugin_dir).exists():
                 locale_path = (
-                        '%s/i18n/semiautomaticclassificationplugin_%s.qm'
+                        '%s/i18n/raster_classification_%s.qm'
                         % (cfg.plugin_dir, locale_settings)
                 )
             if locale_settings != 'en' and QFileInfo(locale_path).exists():
@@ -449,7 +449,7 @@ class SemiAutomaticClassificationPlugin:
                 QCoreApplication.installTranslator(transl)
             cfg.ui_utils = UiUtils()
             # create the dialog
-            cfg.dialog = SemiAutomaticClassificationPluginDialog()
+            cfg.dialog = RasterClassificationDialog()
             cfg.dialog.destroyed.connect(dialog_deleted)
             try:
                 # class dock dialog
@@ -2290,7 +2290,7 @@ def dialog_deleted():
 def reset_scp():
     cfg.logger.log.debug('reset_scp')
     if cfg.dialog is None:
-        cfg.dialog = SemiAutomaticClassificationPluginDialog()
+        cfg.dialog = RasterClassificationDialog()
         cfg.dialog.destroyed.connect(dialog_deleted)
     cfg.ui_utils.set_interface(False)
     # clear band set

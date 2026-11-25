@@ -187,7 +187,7 @@ class BandCalc(AlgorithmTemplate):
     @staticmethod
     def icon():
         return QIcon(
-            '%s/ui/icons/semiautomaticclassificationplugin_bandcalc_tool.svg' %
+            '%s/ui/icons/raster_classification_bandcalc_tool.svg' %
             Path(__file__).parent.parent
         )
 

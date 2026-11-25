@@ -69,7 +69,7 @@ class USGSSpectralLib:
         """
         base_dir = (
                 QFileInfo(QgsApplication.qgisUserDatabaseFilePath()).path()
-                + '/python/plugins/SemiAutomaticClassificationPlugin/'
+                + '/python/plugins/RasterClassification/'
                   'spectral_signature/usgs_spectral_library/'
         )
         self.usgs_c1p = base_dir + 'minerals.csv'

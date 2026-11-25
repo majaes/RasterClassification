@@ -124,7 +124,7 @@ class BandNeighbor(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_neighbor_pixels.svg' %
+            'raster_classification_neighbor_pixels.svg' %
             Path(__file__).parent.parent
         )
 

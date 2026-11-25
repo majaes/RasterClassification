@@ -79,7 +79,7 @@ class SplitBands(AlgorithmTemplate):
     def icon():
         return QIcon(
             '%s/ui/icons/'
-            'semiautomaticclassificationplugin_split_raster.svg' %
+            'raster_classification_split_raster.svg' %
             Path(__file__).parent.parent
         )
 

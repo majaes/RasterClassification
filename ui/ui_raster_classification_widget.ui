@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin.svg</iconset>
+    <normaloff>:/plugins/raster_classification/icons/raster_classification.svg</normaloff>:/plugins/raster_classification/icons/raster_classification.svg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -44,7 +44,7 @@
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
-           <normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_select_all.svg</normaloff>:/plugins/semiautomaticclassificationplugin/icons/semiautomaticclassificationplugin_select_all.svg</iconset>
+           <normaloff>:/plugins/raster_classification/icons/raster_classification_select_all.svg</normaloff>:/plugins/raster_classification/icons/raster_classification_select_all.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
