@@ -74,6 +74,7 @@ backup_name = '.backup'
 """ scp dock """
 scp_training = ctrl_click = temporary_roi = second_temporary_roi = None
 region_growing_pointer = manual_roi_pointer = roi_map_polygon = None
+circle_roi_pointer = None
 roi_center_vertex = scp_dock_rubber_roi = scp_layer_name = roi_time = None
 last_roi_point = None
 temp_roi_name = 'temp_roi'

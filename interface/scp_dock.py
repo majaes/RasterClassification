@@ -35,7 +35,9 @@ from qgis.PyQt.QtWidgets import (
     QApplication, QHeaderView
 )
 # noinspection PyUnresolvedReferences
-from qgis.core import QgsGeometry, QgsFeature, QgsField
+from qgis.core import (
+    QgsGeometry, QgsFeature, QgsField, QgsPointXY, Qgis
+)
 # noinspection PyUnresolvedReferences
 from qgis.gui import QgsVertexMarker, QgsHighlight
 
@@ -188,7 +190,8 @@ class TrainingVectorLayer:
         # reset classification preview classifier
         cfg.classifier_preview = None
         if cfg.simplified:
-            cfg.dock_class_simpl_dlg.ui.button_Save_ROI.setEnabled(False)
+            # Save creates a class: always available
+            cfg.dock_class_simpl_dlg.ui.button_Save_ROI.setEnabled(True)
             cfg.dock_class_simpl_dlg.ui.undo_save_Button.setEnabled(False)
             cfg.dock_class_simpl_dlg.ui.redo_save_Button.setEnabled(False)
         else:
@@ -1951,6 +1954,10 @@ def pointer_manual_roi_active():
     cursor = QCursor()
     cursor.setShape(Qt.CursorShape.CrossCursor)
     cfg.map_canvas.setCursor(cursor)
+    _roi_message(
+        'Polygon: left click adds a vertex, right click closes the polygon '
+        'and adds it to the class.'
+    )
 
 
 # Activate pointer for ROI creation
@@ -2382,13 +2389,179 @@ def right_click_manual(point):
     clear_scp_dock_rubber()
     add_roi_polygon_to_map(cfg.temporary_roi, 1)
     if cfg.simplified:
-        cfg.dock_class_simpl_dlg.ui.button_Save_ROI.setEnabled(True)
+        # the ROI is added to the class at once
+        add_roi_to_class()
     else:
         # calculate temporary spectral signature
         if (cfg.dock_class_dlg.ui.auto_calculate_ROI_signature_checkBox
                 .isChecked()):
             temporary_roi_spectral_signature()
         cfg.dock_class_dlg.ui.button_Save_ROI.setEnabled(True)
+    return None
+
+
+# message of the ROI tools
+def _roi_message(text, level=None):
+    cfg.iface.messageBar().pushMessage(
+        'Raster Classification', text,
+        level=Qgis.MessageLevel.Info if level is None else level, duration=8
+    )
+
+
+# create a class (Save button of the simplified panel): the class gets an ID
+# and a name, the ROIs drawn afterwards are added to it
+def create_class():
+    if cfg.scp_training is None or cfg.scp_training.signature_catalog is None:
+        cfg.mx.msg_war_5()
+        return False
+    ui = cfg.dock_class_simpl_dlg.ui
+    class_id = int(ui.ROI_Macroclass_ID_spin.value())
+    name = str(ui.ROI_Macroclass_line.text()).strip()
+    if not name:
+        _roi_message('Enter a name for the class.', Qgis.MessageLevel.Warning)
+        return False
+    cfg.project_registry[cfg.reg_roi_macroclass_id] = class_id
+    cfg.project_registry[cfg.reg_roi_macroclass_name] = name
+    catalog = cfg.scp_training.signature_catalog
+    catalog.macroclasses[class_id] = name
+    if class_id not in catalog.macroclasses_color_string:
+        catalog.macroclasses_color_string[class_id] = (
+            cfg.rs.shared_tools.random_color()
+        )
+    cfg.scp_training.roi_signature_table_tree()
+    if cfg.project_registry[cfg.reg_save_training_input_check] == 2:
+        cfg.scp_training.save_signature_catalog()
+    _roi_message(
+        'Class %s (%s) created: draw its ROIs with Polygon or Circle, the '
+        'right click adds each ROI to it. For another class, change the '
+        'number and the name, then Save.' % (class_id, name)
+    )
+    return True
+
+
+# add the ROI just drawn to the class chosen in the panel
+def add_roi_to_class():
+    ui = cfg.dock_class_simpl_dlg.ui
+    ok = cfg.scp_training is not None
+    class_id = int(ui.ROI_Macroclass_ID_spin.value())
+    catalog = None
+    if ok:
+        catalog = cfg.scp_training.signature_catalog
+        ok = catalog is not None and class_id in catalog.macroclasses
+    if not ok:
+        clear_scp_dock_rubber()
+        cfg.temporary_roi = None
+        _roi_message(
+            'Create the class first: enter its number and name, then click '
+            'Save. The ROI was not added.', Qgis.MessageLevel.Warning
+        )
+        return False
+    # use the registered name of the class
+    cfg.project_registry[cfg.reg_roi_macroclass_id] = class_id
+    cfg.project_registry[cfg.reg_roi_macroclass_name] = (
+        catalog.macroclasses[class_id]
+    )
+    save_roi_to_training()
+    return True
+
+
+_circle = {'center': None}
+
+
+# Activate pointer for circular ROI creation
+def pointer_circle_roi_active():
+    _circle['center'] = None
+    cfg.roi_points = []
+    cfg.qgis_vertex_item_list = []
+    cfg.map_canvas.setMapTool(cfg.circle_roi_pointer)
+    cursor = QCursor()
+    cursor.setShape(Qt.CursorShape.CrossCursor)
+    cfg.map_canvas.setCursor(cursor)
+    _roi_message(
+        'Circle: left click sets the center, move the cursor, right click '
+        'sets the radius and adds the circle to the class (Esc cancels).'
+    )
+
+
+def cancel_circle_roi():
+    _circle['center'] = None
+    clear_scp_dock_rubber()
+
+
+# circle: left click = center
+def left_click_circle(point):
+    qgis_crs = cfg.util_qgis.get_qgis_crs()
+    point = cfg.utils.check_point_in_image(point=point, output_crs=qgis_crs)
+    if point is False:
+        cfg.mx.msg_war_3()
+        return False
+    clear_scp_dock_rubber()
+    _circle['center'] = QgsPointXY(point)
+    vertex = QgsVertexMarker(cfg.map_canvas)
+    vertex.setCenter(point)
+    cfg.qgis_vertex_item_list.append(vertex)
+    return None
+
+
+def _circle_geometry(center, point):
+    radius = center.distance(QgsPointXY(point))
+    if radius <= 0:
+        return None
+    return QgsGeometry.fromPointXY(center).buffer(radius, 48)
+
+
+# circle: the cursor moves = radius
+def moved_circle(point):
+    center = _circle['center']
+    if center is None:
+        return
+    geometry = _circle_geometry(center, point)
+    if geometry is None:
+        return
+    ring = geometry.asPolygon()[0]
+    cfg.scp_dock_rubber_roi.setToGeometry(
+        QgsGeometry.fromPolylineXY(ring), cfg.util_qgis.get_qgis_crs()
+    )
+    cfg.scp_dock_rubber_roi.show()
+
+
+# circle: right click = radius, the circle is closed and added to the class
+def right_click_circle(point):
+    center = _circle['center']
+    if center is None:
+        _roi_message('Left click first to set the center of the circle.',
+                     Qgis.MessageLevel.Warning)
+        return None
+    geometry = _circle_geometry(center, point)
+    if geometry is None:
+        return None
+    qgis_crs = cfg.util_qgis.get_qgis_crs()
+    bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
+    bandset_x = cfg.bandset_catalog.get(bandset_number)
+    if bandset_x is None or bandset_x.get_band_count() == 0:
+        return False
+    name = '%s%s' % (cfg.temp_roi_name, cfg.utils.get_time())
+    memory_layer = cfg.util_qgis.add_vector_layer(
+        'MultiPolygon?crs=%s' % qgis_crs.toWkt(), name, 'memory'
+    )
+    memory_layer.setCrs(qgis_crs)
+    geometry.convertToMultiType()
+    data_provider = memory_layer.dataProvider()
+    memory_layer.startEditing()
+    data_provider.addAttributes(
+        [QgsField(cfg.empty_field_name, QMetaType.Type.Int)]
+    )
+    feature = QgsFeature()
+    feature.setGeometry(geometry)
+    feature.setAttributes([1])
+    data_provider.addFeatures([feature])
+    memory_layer.commitChanges()
+    memory_layer.updateExtents()
+    cfg.temporary_roi = memory_layer
+    _circle['center'] = None
+    clear_scp_dock_rubber()
+    add_roi_polygon_to_map(cfg.temporary_roi, 1)
+    add_roi_to_class()
     return None
 
 

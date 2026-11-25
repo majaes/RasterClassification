@@ -347,6 +347,7 @@ class RasterClassification:
             from .map_pointers.download_products_pointer import (
                 DownloadProductsPointer)
             from .map_pointers.manual_roi_pointer import ManualROIPointer
+            from .map_pointers.circle_roi_pointer import CircleROIPointer
             from .map_pointers.region_growing_pointer import (
                 RegionGrowingPointer)
             from .qgis_processing.scp_algorithm_provider import (
@@ -526,6 +527,7 @@ class RasterClassification:
                 cfg.region_growing_pointer = RegionGrowingPointer(
                     cfg.map_canvas)
                 cfg.manual_roi_pointer = ManualROIPointer(cfg.map_canvas)
+                cfg.circle_roi_pointer = CircleROIPointer(cfg.map_canvas)
                 cfg.mosaic_bandsets = mosaic_bandsets_tab
                 cfg.vector_to_raster = vector_to_raster_tab
                 cfg.clustering = band_clustering_tab
@@ -1206,6 +1208,13 @@ def connect_gui():
     cfg.region_growing_pointer.moved.connect(
         cfg.scp_dock.calculate_pixel_expression
     )
+    cfg.circle_roi_pointer.leftClicked.connect(
+        cfg.scp_dock.left_click_circle
+    )
+    cfg.circle_roi_pointer.rightClicked.connect(
+        cfg.scp_dock.right_click_circle
+    )
+    cfg.circle_roi_pointer.moved.connect(cfg.scp_dock.moved_circle)
     cfg.manual_roi_pointer.leftClicked.connect(
         cfg.scp_dock.left_click_manual
     )
@@ -1386,9 +1395,10 @@ def connect_gui():
         cfg.dock_class_simpl_dlg.ui.polygonROI_Button.clicked.connect(
             cfg.scp_dock.pointer_manual_roi_active)
         cfg.dock_class_simpl_dlg.ui.pointerButton.clicked.connect(
-            cfg.scp_dock.pointer_region_growing_roi_active)
+            cfg.scp_dock.pointer_circle_roi_active)
+        # Save creates the class; the ROIs are added to it by the right click
         cfg.dock_class_simpl_dlg.ui.button_Save_ROI.clicked.connect(
-            cfg.scp_dock.save_roi_to_training
+            cfg.scp_dock.create_class
         )
         cfg.dock_class_simpl_dlg.ui.previewButton.clicked.connect(
             cfg.classification.pointer_classification_preview_active

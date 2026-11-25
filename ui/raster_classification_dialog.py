@@ -303,6 +303,16 @@ class DockClassSimplifiedDialog(QDockWidget):
             # the RGB= list is replaced by the predefined compositions; it
             # stays in the panel (hidden) because the plugin still uses it
             ui.label_61.setVisible(False)
+            # the Pointer button draws circles
+            ui.pointerButton.setText('Circle')
+            ui.pointerButton.setToolTip(
+                'Circle ROI: left click = center, move, right click = '
+                'radius (adds the circle to the class)')
+            ui.polygonROI_Button.setToolTip(
+                'Polygon ROI: left click = vertex, right click = close '
+                '(adds the polygon to the class)')
+            ui.button_Save_ROI.setToolTip(
+                'Create the class (number and name) that receives the ROIs')
             ui.rgb_combo.setVisible(False)
             # progress bars under the Wavelength menu and the Algorithm row
             ui.bandset_progress = dock_progress.create_bar(ui.frame_bandset)
