@@ -28,6 +28,7 @@ from qgis.PyQt.QtWidgets import (
 )
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
+from ..core import dock_progress
 
 from .ui_semiautomaticclassificationplugin import (
     Ui_SemiAutomaticClassificationPlugin
@@ -237,6 +238,17 @@ class DockClassSimplifiedDialog(QDockWidget):
             grid.addWidget(tabs, 2, 0, 1, 1)
             grid.setRowStretch(2, 1)
             ui.bandset_roi_tabs = tabs
+            # the RGB= list is replaced by the predefined compositions; it
+            # stays in the panel (hidden) because the plugin still uses it
+            ui.label_61.setVisible(False)
+            ui.rgb_combo.setVisible(False)
+            # progress bars under the Wavelength menu and the Algorithm row
+            ui.bandset_progress = dock_progress.create_bar(ui.frame_bandset)
+            ui.gridLayout_5.addWidget(ui.bandset_progress, 3, 0, 1, 3)
+            ui.classification_progress = dock_progress.create_bar(
+                ui.frame_3
+            )
+            ui.gridLayout_6.addWidget(ui.classification_progress, 2, 0, 1, 4)
         except Exception as err:
             str(err)
 

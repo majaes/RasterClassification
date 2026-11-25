@@ -40,6 +40,7 @@ except Exception as error:
     str(error)
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
+from . import dock_progress
 
 
 class UiUtils:
@@ -101,6 +102,7 @@ class UiUtils:
         UiUtils.msg_label.setMaximumSize(QSize(600, 80))
         UiUtils.msg_label.setSizePolicy(size_policy)
         UiUtils.msg_label.setWordWrap(True)
+        dock_progress.start(self.cancel_action)
         UiUtils.progress_bar = QProgressBar()
         UiUtils.progress_bar.setMinimum(0)
         UiUtils.progress_bar.setMaximum(100)
@@ -152,6 +154,8 @@ class UiUtils:
             elapsed_time=None, previous_step=None, start=None, end=None,
             failed=None, ping=0
     ):
+        if step is not None and not failed:
+            dock_progress.update(step)
         progress_symbols = ['○', '◔', '◑', '◕', '⬤', '⚙']
         colon = [' ◵ ', ' ◷ ']
         if start:
@@ -260,6 +264,7 @@ class UiUtils:
     # noinspection PyTypeChecker
     def remove_progress_bar(self, smtp=None, sound=None, failed=None):
         UiUtils.remaining = ''
+        dock_progress.finish()
         try:
             cfg.iface.messageBar().popWidget(UiUtils.widget_bar)
         except Exception as err:

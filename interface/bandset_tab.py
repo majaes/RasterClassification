@@ -32,6 +32,7 @@ from qgis.PyQt.QtWidgets import (
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 from qgis.core import Qgis
+from ..core import dock_progress
 from . import satellite_detection as sat_detect
 
 
@@ -1188,8 +1189,54 @@ def change_bandset_tab(bandset_number=None):
     cfg.dialog.ui.root_dir_lineEdit.blockSignals(False)
 
 
+# create the band set from files; the loading can be cancelled
+def _create_bandset(files, bandset_number, unit, root_directory, wavelengths):
+    if wavelengths is not None or len(files) < 2:
+        cfg.bandset_catalog.create_bandset(
+            paths=files, bandset_number=bandset_number, insert=False,
+            unit=unit, root_directory=root_directory,
+            wavelengths=wavelengths
+        )
+        return
+    # first file, then the others one by one (with progress and Cancel)
+    cfg.bandset_catalog.create_bandset(
+        paths=files[:1], bandset_number=bandset_number, insert=False,
+        unit=unit, root_directory=root_directory, wavelengths=wavelengths
+    )
+    total = len(files)
+    for i, file in enumerate(files[1:], start=1):
+        dock_progress.update(100 * i / total)
+        QApplication.instance().processEvents()
+        if dock_progress.is_cancelled():
+            # back to the empty band set
+            cfg.bandset_catalog.clear_bandset(bandset_number)
+            return
+        cfg.bandset_catalog.add_band_to_bandset(
+            path=file, bandset_number=bandset_number, raster_band=1,
+            root_directory=root_directory
+        )
+
+
+def _loading_cancelled():
+    cfg.iface.messageBar().pushMessage(
+        'Raster Classification', 'Loading cancelled.',
+        level=Qgis.MessageLevel.Warning, duration=5
+    )
+
+
 # add files to band set
 def add_file_to_band_set(files):
+    if len(files) > 0:
+        # moving progress bar while the data are imported
+        dock_progress.busy('Loading bands ...')
+        QApplication.instance().processEvents()
+        try:
+            _add_file_to_band_set(files)
+        finally:
+            dock_progress.finish()
+
+
+def _add_file_to_band_set(files):
     if len(files) > 0:
         cfg.logger.log.debug('add_file_to_band_set files: %s' % str(files))
         cfg.rs.configurations.action = True
@@ -1216,31 +1263,36 @@ def add_file_to_band_set(files):
         cfg.logger.log.debug('bandset_x: %s' % str(bandset_x))
         if bandset_x is None:
             # create bandset
-            cfg.bandset_catalog.create_bandset(
-                paths=files, bandset_number=bandset_number, insert=False,
-                unit=unit, root_directory=root_directory,
-                wavelengths=wavelengths
+            _create_bandset(
+                files, bandset_number, unit, root_directory, wavelengths
             )
         else:
             bands = bandset_x.bands
             if bands is None or bands.shape[0] == 0:
                 try:
                     # create bandset
-                    cfg.bandset_catalog.create_bandset(
-                        paths=files, bandset_number=bandset_number,
-                        insert=False, unit=unit, root_directory=root_directory,
-                        wavelengths=wavelengths
+                    _create_bandset(
+                        files, bandset_number, unit, root_directory,
+                        wavelengths
                     )
                 except Exception as err:
                     cfg.mx.msg_err_5()
                     cfg.logger.log.error(str(err))
             else:
-                for file in files:
+                total = len(files)
+                for i, file in enumerate(files):
+                    dock_progress.update(100 * i / total)
+                    QApplication.instance().processEvents()
+                    if dock_progress.is_cancelled():
+                        break
                     cfg.bandset_catalog.add_band_to_bandset(
                         path=file, bandset_number=bandset_number,
                         raster_band=1, root_directory=root_directory
                     )
-        auto_detect_satellite(bandset_number)
+        if dock_progress.is_cancelled():
+            _loading_cancelled()
+        else:
+            auto_detect_satellite(bandset_number)
         # create table
         band_set_to_table(bandset_number)
 
