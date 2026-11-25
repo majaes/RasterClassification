@@ -275,9 +275,10 @@ class TrainingVectorLayer:
     def signature_catalog_copy(self):
         cfg.logger.log.debug('signature_catalog_copy')
         signature_catalog = deepcopy(self.signature_catalog)
-        # copy geometry file to temporary file
+        # copy geometry file to a temporary file on disk: the classification
+        # runs in other processes (spawn), which cannot read /vsimem
         geometry_temp_path = (
-            cfg.rs.configurations.temp.temporary_mem_path(
+            cfg.rs.configurations.temp.temporary_file_path(
                 name_suffix='.gpkg'
             )
         )
