@@ -25,6 +25,12 @@ _generation = [0]
 _cancel_callback = [None]
 # True when the user has clicked Cancel
 cancel_requested = [False]
+# True while a processing or a loading runs
+_active = [False]
+
+
+def is_active():
+    return _active[0]
 
 
 def create_bar(parent):
@@ -46,7 +52,9 @@ def create_bar(parent):
     layout.addWidget(button, 0)
     box.bar = bar
     box.button = button
-    box.setVisible(False)
+    # always visible: idle at 0 %, with Cancel greyed out
+    button.setEnabled(False)
+    box.setVisible(True)
     BOXES.append(box)
     return box
 
@@ -78,6 +86,7 @@ def is_cancelled():
 
 def _begin(callback):
     _generation[0] += 1
+    _active[0] = True
     cancel_requested[0] = False
     _cancel_callback[0] = callback
     _each(lambda box: box.button.setEnabled(True))
@@ -123,11 +132,20 @@ def update(value):
     _each(set_value)
 
 
+def _idle(box):
+    box.bar.setRange(0, 100)
+    box.bar.setFormat('%p%')
+    box.bar.setValue(0)
+    box.button.setEnabled(False)
+    box.setVisible(True)
+
+
 def finish():
     """ Complete the bars and hide them after a short delay. """
     _generation[0] += 1
     current = _generation[0]
     _cancel_callback[0] = None
+    _active[0] = False
 
     def complete(box):
         if box.bar.maximum() == 0:
@@ -140,5 +158,5 @@ def finish():
     def hide():
         # do nothing if another task has started in the meantime
         if current == _generation[0]:
-            _each(lambda box: box.setVisible(False))
+            _each(_idle)
     QTimer.singleShot(1200, hide)

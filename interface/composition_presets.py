@@ -24,6 +24,7 @@ from qgis.core import (
 from qgis.analysis import QgsRasterCalculator, QgsRasterCalculatorEntry
 
 from ..core import config as cfg
+from ..core import dock_progress
 
 # spectral roles: (center wavelength in micrometers, tolerance)
 ROLES = {
@@ -205,6 +206,9 @@ def apply_index(label, roles, minimum, maximum, ramp_name):
                      ramp_name)
     TASKS.append(task)
     QgsApplication.taskManager().addTask(task)
+    # the bar of the panel follows the calculation, with Cancel
+    dock_progress.start(task.cancel)
+    task.progressChanged.connect(dock_progress.update)
     _message(
         'Calculating %s in the background (progress in the Tasks panel, you '
         'can keep working). The result is added to the map when finished.'
@@ -273,6 +277,7 @@ class IndexTask(QgsTask):
         if self in TASKS:
             TASKS.remove(self)
         self.layers = None
+        dock_progress.finish()
         if not result:
             if os.path.isfile(self.output):
                 try:
@@ -397,6 +402,15 @@ class PresetCombo(QComboBox):
             bandset_x, _n = _active_bandset(quiet=True)
             model = self.model()
             n = len(COMPOSITES)
+            if is_busy():
+                # a processing is running: no other composition can be
+                # chosen until it is finished
+                for i in range(self.count()):
+                    item = model.item(i)
+                    item.setEnabled(False)
+                    item.setToolTip('Wait for the running processing')
+                QComboBox.showPopup(self)
+                return
             for i in range(self.count()):
                 if i >= n + len(INDICES):
                     # custom composition: needs at least one band
@@ -414,8 +428,20 @@ class PresetCombo(QComboBox):
         QComboBox.showPopup(self)
 
 
+def is_busy():
+    """ True while a processing (index calculation, band loading) runs. """
+    return bool(TASKS) or dock_progress.is_active()
+
+
 def preset_selected(combo, previous):
     index = combo.currentIndex()
+    if is_busy():
+        # not while another processing runs (wheel or keyboard)
+        combo.blockSignals(True)
+        combo.setCurrentIndex(previous)
+        combo.blockSignals(False)
+        _message('Wait for the running processing to finish.')
+        return
     n = len(COMPOSITES)
     custom_index = n + len(INDICES)
     ok = False

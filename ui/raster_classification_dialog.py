@@ -239,7 +239,6 @@ class DockClassSimplifiedDialog(QDockWidget):
         top.addWidget(ui.toolButton_input_raster)
         top.addWidget(ui.add_loaded_bands_pushButton)
         top.addStretch(1)
-        top.addWidget(ui.clear_bandset_toolButton)
         root.addLayout(top)
         # middle: the table of the bands (the plugin puts it in grid_bandset)
         # and the buttons that act on the selected bands
@@ -250,6 +249,7 @@ class DockClassSimplifiedDialog(QDockWidget):
         side.addWidget(ui.move_up_toolButton)
         side.addWidget(ui.move_down_toolButton)
         side.addWidget(ui.remove_toolButton)
+        side.addWidget(ui.clear_bandset_toolButton)
         side.addStretch(1)
         middle.addLayout(side, 0)
         root.addLayout(middle, 1)
