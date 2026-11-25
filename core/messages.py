@@ -55,7 +55,7 @@ def msg_bar(title, message):
 # message bar information
 def msg_bar_info(message):
     # noinspection PyTypeChecker
-    msg_bar(QApplication.translate(ui_name, 'SCP information'), message)
+    msg_bar(QApplication.translate(ui_name, 'Raster Classification information'), message)
 
 
 # Message bar error
@@ -89,19 +89,19 @@ def msg_bar_warning(message):
 
 
 def info(message):
-    msg_bar('SCP', message)
+    msg_bar('Raster Classification', message)
 
 
 def warning(message):
     if 'dependency error' in message:
         if cfg.first_install == 1:
-            _msg_bar_warning('SCP', message)
+            _msg_bar_warning('Raster Classification', message)
     else:
-        _msg_bar_warning('SCP', message)
+        _msg_bar_warning('Raster Classification', message)
 
 
 def error(message):
-    msg_bar_critical('SCP', message)
+    msg_bar_critical('Raster Classification', message)
 
 
 ''' Information '''

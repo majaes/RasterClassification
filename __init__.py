@@ -22,19 +22,19 @@
 
 
 def name():
-    return 'Semi-Automatic Classification Plugin'
+    return 'Raster Classification'
 
 
 def description():
     return (
-        'A plugin that integrates tools for easing the download, '
-        'the preprocessing, processing, and postprocessing of '
-        'remote sensing images.'
+        'Raster Classification: supervised classification of remote sensing '
+        'images, with tools for the download, preprocessing and '
+        'postprocessing of images.'
     )
 
 
 def version():
-    return 'Version 9.0.5'
+    return 'Version 1.0.0'
 
 
 def icon():
@@ -47,11 +47,11 @@ def qgisMinimumVersion():
 
 
 def author():
-    return 'Luca Congedo'
+    return 'ANABA MANGA'
 
 
 def email():
-    return 'ing.congedoluca@gmail.com'
+    return 'majaesabana@gmail.com'
 
 
 def category():
@@ -68,17 +68,16 @@ def classFactory(iface):
 
 def homepage():
     return (
-        'https://fromgistors.blogspot.com/p'
-        '/semi-automatic-classification-plugin.html')
+        'https://anbmng.com')
 
 
 def tracker():
     return (
-        'https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin'
+        'https://github.com/majaes/SemiAutomaticClassificationPlugin'
         '/issues')
 
 
 def repository():
     return (
-        'https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin'
+        'https://github.com/majaes/SemiAutomaticClassificationPlugin'
     )

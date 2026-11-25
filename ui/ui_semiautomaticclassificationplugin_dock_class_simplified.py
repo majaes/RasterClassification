@@ -436,7 +436,7 @@ class Ui_DockClassSimplified(object):
 
     def retranslateUi(self, DockClassSimplified):
         _translate = QtCore.QCoreApplication.translate
-        DockClassSimplified.setWindowTitle(_translate("DockClassSimplified", "SCP Dock"))
+        DockClassSimplified.setWindowTitle(_translate("DockClassSimplified", "Raster Classification Dock"))
         self.scp_pushButton.setToolTip(_translate("DockClassSimplified", "<html><head/><body><p>Open the main interface window</p></body></html>"))
         self.scp_pushButton.setText(_translate("DockClassSimplified", "Plot"))
         self.userguide_toolButton_2.setToolTip(_translate("DockClassSimplified", "User manual"))

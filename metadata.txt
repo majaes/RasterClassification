@@ -1,56 +1,23 @@
 [general]
-name=Semi-Automatic Classification Plugin
+name=Raster Classification
 qgisMinimumVersion=3.99
 qgisMaximumVersion=4.98
 supportsQt6=True
-description=The Semi-Automatic Classification Plugin (SCP) allows for the supervised classification of remote sensing images, providing tools for the download, the preprocessing and postprocessing of images.
-version=9.0.5
-about=Developed by Luca Congedo, the Semi-Automatic Classification Plugin (SCP) allows for the supervised classification of remote sensing images, providing tools for the download, the preprocessing and postprocessing of images. Search and download is available for Landsat, Sentinel-2 images. Several algorithms are available for the land cover classification. This plugin is built on Remotior Sensus library and requires the installation of additional dependencies. For more information please visit https://fromgistors.blogspot.com .
+description=Supervised classification of remote sensing images in QGIS, with tools to download, preprocess and postprocess Landsat and Sentinel-2 images.
+version=1.0.0
+author=ANABA MANGA
+email=majaesabana@gmail.com
+about=<b>Raster Classification</b> is a QGIS plugin for the supervised classification of remote sensing images: it provides tools for the download, the preprocessing and the postprocessing of images, and several algorithms for land cover classification. Search and download is available for Landsat and Sentinel-2 images.<br><br>Created and maintained by ANABA MANGA (<a href="https://anbmng.com">anbmng.com</a>), copyright 2026. Raster Classification is derived from the Semi-Automatic Classification Plugin (SCP) by Luca Congedo (copyright 2012-2026, <a href="https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin">source</a>), and, like it, is distributed under the GNU General Public License version 3 or later. It is built on the Remotior Sensus library, which is installed automatically if missing.
 
-author=Luca Congedo
-email=ing.congedoluca@gmail.com
-category=Raster
-
-icon=semiautomaticclassificationplugin.png
-
+homepage=https://anbmng.com
+tracker=https://github.com/majaes/SemiAutomaticClassificationPlugin/issues
+repository=https://github.com/majaes/SemiAutomaticClassificationPlugin
+tags=raster, classification, land cover, remote sensing, landsat, sentinel, supervised classification, spectral signature, random forest, processing
 changelog=
+	1.0.0
+	-First release of Raster Classification, derived from the Semi-Automatic Classification Plugin 9.0.5 by Luca Congedo (GPL v3).
+	-new name and identity; English is the default interface language.
+	-separate settings and Processing provider, so it can be installed beside the original plugin.
 
-	9.0.5
-	-removed storing password for copernicus and earthdata services.
-	-minor bug fixing.
-
-	9.0.4
-	-minor bug fixing.
-
-	9.0.3
-	-minor bug fixing.
-
-	9.0.2
-	-in tab Download products it is possible to search Sentinel-2 by tile name entering in "Advanced search".
-	-output of Random Forest using scikit framework now includes a .txt file listing feature importance.
-	-minor bug fixing.
-
-	9.0.1
-	-minor bug fixing
-
-	9.0.0
-	-new version for QGIS 4
-	-built on the new Remotior Sensus version 0.6
-	-new simplified interface designed for new users
-	-added automatic download of Remotior Sensus if library is not available or outdated
-	-in the Working toolbar added button to open a Copernicus Browser link at QGIS map coordinates
-	-in the Working toolbar added buttons to show or hide custom layers or groups by name also using keyboard shortcuts Z, X, and C
-	-in Download products added option to create band set
-	-various bug fixing
-
-
-experimental=False
-deprecated=False
-
-tags = Raster, Classification, Land Cover, Remote Sensing, Analysis, Landsat, Sentinel, Supervised classification, Spectral signature, Mask, Clip, Accuracy, Landscape, Copernicus, Random Forest, Processing, Remotior Sensus, Machine Learning, Deep Learning, Foundation
-
-homepage=https://fromgistors.blogspot.com/p/semi-automatic-classification-plugin.html
-tracker=https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin/issues
-repository=https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin
-
-hasProcessingProvider=yes
+category=Raster
+icon=semiautomaticclassificationplugin.png

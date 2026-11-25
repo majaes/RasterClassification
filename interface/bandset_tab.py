@@ -1068,9 +1068,11 @@ def band_set_to_table(bandset_number):
     if bandset_number == cfg.project_registry[cfg.reg_training_bandset_number]:
         if cfg.scp_training is not None:
             cfg.scp_training.update_bandset()
+    # remove the old composite first, then (simplified interface) display
+    # the new one: the reverse order removed the freshly created layer
+    cfg.utils.remove_rgb_color_composite(bandset_number)
     if cfg.simplified and bandset_number == 1:
         cfg.bst.band_set_to_table_simplified()
-    cfg.utils.remove_rgb_color_composite(bandset_number)
 
 
 # band set to table simplified

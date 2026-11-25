@@ -2777,7 +2777,7 @@ def open_signature_catalog_file(file_path=None, bandset_number=None):
 def export_signature_vector():
     output_path = cfg.util_qt.get_save_file_name(
         None, QApplication.translate('semiautomaticclassificationplugin',
-                                     'Export SCP training input'),
+                                     'Export training input'),
         '', 'SHP file (*.shp);;GPKG file (*.gpkg)'
     )
     if output_path is not False:
@@ -2814,7 +2814,7 @@ def export_signature_vector():
 def export_signature_file():
     output_path = cfg.util_qt.get_save_file_name(
         None, QApplication.translate('semiautomaticclassificationplugin',
-                                     'Export SCP training input'),
+                                     'Export training input'),
         '', 'Training file (*.scpx)'
     )
     if output_path is not False:

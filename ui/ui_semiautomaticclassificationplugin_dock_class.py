@@ -590,7 +590,7 @@ class Ui_DockClass(object):
 
     def retranslateUi(self, DockClass):
         _translate = QtCore.QCoreApplication.translate
-        DockClass.setWindowTitle(_translate("DockClass", "SCP Dock"))
+        DockClass.setWindowTitle(_translate("DockClass", "Raster Classification Dock"))
         self.postprocessing_toolButton_2.setToolTip(_translate("DockClass", "Postprocessing"))
         self.bandset_toolButton.setToolTip(_translate("DockClass", "Band set"))
         self.preprocessing_toolButton_2.setToolTip(_translate("DockClass", "Preprocessing"))

@@ -90,7 +90,7 @@ class UiUtils:
         UiUtils.msg_label_main.setFont(font)
         UiUtils.msg_label_main.setText(
             QApplication.translate('semiautomaticclassificationplugin',
-                                   'Semi-Automatic Classification Plugin')
+                                   'Raster Classification')
         )
         spacer_item = QSpacerItem(
             40, 20, QSizePolicy.Policy.Expanding,
@@ -274,7 +274,7 @@ class UiUtils:
             self.send_smtp_message(
                 subject=QApplication.translate(
                     'semiautomaticclassificationplugin',
-                    'Semi-Automatic Classification Plugin'
+                    'Raster Classification'
                 ),
                 message=QApplication.translate(
                     'semiautomaticclassificationplugin',

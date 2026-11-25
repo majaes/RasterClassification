@@ -448,8 +448,8 @@ def function_dictionaries(simplified=False):
 
 
 def load_input_toolbar():
-    cfg.working_toolbar = cfg.iface.addToolBar('SCP Working Toolbar')
-    cfg.working_toolbar.setObjectName('SCP Working Toolbar')
+    cfg.working_toolbar = cfg.iface.addToolBar('Raster Classification Toolbar')
+    cfg.working_toolbar.setObjectName('Raster Classification Toolbar')
     load_working_toolbar()
     set_dock_tabs()
 
@@ -461,7 +461,7 @@ def load_working_toolbar():
         show_plugin, 'semiautomaticclassificationplugin.svg',
         QApplication.translate(
             'semiautomaticclassificationplugin',
-            'Semi-Automatic Classification Plugin'
+            'Raster Classification'
             )
     )
     # button zoom to image
@@ -491,6 +491,10 @@ def load_working_toolbar():
             )
         )
     cfg.rgb_combo.currentIndexChanged.connect(rgb_combo_changed)
+    # predefined compositions and spectral indices
+    cfg.working_toolbar.addWidget(
+        cfg.composition_presets.create_combo(cfg.iface.mainWindow())
+    )
     # local cumulative cut stretch button
     cfg.local_cumulative_stretch_toolButton = add_toolbar_action(
         cfg.util_qgis.set_raster_cumulative_stretch,
@@ -1039,7 +1043,7 @@ def load_menu():
     cfg.main_menu = QMenu(cfg.iface.mainWindow())
     cfg.main_menu.setObjectName('semiautomaticclassificationplugin')
     cfg.main_menu.setTitle(
-        QApplication.translate('semiautomaticclassificationplugin', 'SCP')
+        QApplication.translate('semiautomaticclassificationplugin', 'Raster Classification')
         )
     menu_bar.insertMenu(
         cfg.iface.firstRightStandardMenu().menuAction(), cfg.main_menu
@@ -1530,17 +1534,6 @@ def filter_tree():
         tree.blockSignals(False)
     except Exception as err:
         str(err)
-
-
-# welcome text
-def welcome_text(input_url, input_url2=None):
-    html_text_f = open('%s/ui/welcome.html' % cfg.plugin_dir, 'r')
-    html_text = html_text_f.read()
-    cfg.dock_class_dlg.ui.main_textBrowser.clear()
-    cfg.dock_class_dlg.ui.main_textBrowser.setHtml(html_text)
-    html_text_f.close()
-    if cfg.qgis_registry[cfg.reg_download_news] == 2:
-        cfg.utils.download_html(input_url, input_url2)
 
 
 """ Classification preview """

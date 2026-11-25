@@ -1,0 +1,163 @@
+# Remotior Sensus , software to process remote sensing and GIS data.
+# Copyright (C) 2022-2026 Luca Congedo.
+# Author: Luca Congedo
+# Email: ing.congedoluca@gmail.com
+#
+# This file is part of Remotior Sensus.
+# Remotior Sensus is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by 
+# the Free Software Foundation, either version 3 of the License,
+# or (at your option) any later version.
+# Remotior Sensus is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty 
+# of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with Remotior Sensus. If not, see <https://www.gnu.org/licenses/>.
+
+import random
+import tempfile
+import inspect
+
+from remotior_sensus.core import configurations as cfg
+from remotior_sensus.util import files_directories, dates_times, shared_tools
+
+
+class Temporary(object):
+
+    def __init__(self, temp_dir=None):
+        self.dir = temp_dir
+
+    # create root temporary directory
+    @classmethod
+    def create_root_temporary_directory(cls, prefix=None, directory=None):
+        times = dates_times.get_date_string()
+        t_dir = tempfile.mkdtemp(
+            prefix='{}_{}'.format(prefix, times), dir=directory
+        )
+        return cls(t_dir)
+
+    # clear root temporary directory
+    def clear(self, keep_log=None):
+        log_path = None
+        # copy the log file
+        if keep_log:
+            if cfg.mpi_comm:
+                log_path = '%s/%s_%s' % (
+                    cfg.temporary_directory, cfg.mpi_rank,
+                    files_directories.get_base_name(cfg.logger.file_path)
+                )
+            else:
+                log_path = '%s/%s' % (
+                    cfg.temporary_directory,
+                    files_directories.get_base_name(cfg.logger.file_path)
+                )
+            files_directories.move_file(cfg.logger.file_path, log_path)
+        if cfg.mpi_comm and cfg.mpi_rank == 0:
+            if self.dir is not None:
+                remove_root_temporary_directory(self.dir)
+                self.dir = None
+        else:
+            if self.dir is not None:
+                remove_root_temporary_directory(self.dir)
+                self.dir = None
+        # copy the log back
+        if keep_log:
+            files_directories.move_file(log_path, cfg.logger.file_path)
+        return self.dir
+
+    # create temporary directory
+    def create_temporary_directory(self, rank=None):
+        times = dates_times.get_time_string()
+        directory = shared_tools.join_path(
+            self.dir, '{}{}'.format('t', times)
+        ).replace('\\', '/')
+        if rank and cfg.mpi_comm:
+            directory = mpi_bcast(directory)
+            if (cfg.mpi_rank == 0 and
+                    not files_directories.is_directory(directory)):
+                files_directories.create_directory(directory)
+        if not files_directories.is_directory(directory):
+            files_directories.create_directory(directory)
+        return directory
+
+    # create temporary mem path
+    @staticmethod
+    def temporary_mem_path(name_suffix=None, name_prefix=None,
+                           name=None):
+        times = dates_times.get_time_string()
+        if name is None:
+            r = str(random.randint(0, 10000))
+            name = 't{}_{}'.format(times, r)
+        if name_suffix is not None:
+            name = f'{name}{name_suffix}'
+        if name_prefix is not None:
+            name = f'{name_prefix}{name}'
+        path = f'/vsimem/{name}'
+        return path
+
+    # create temporary file path
+    def temporary_file_path(self, name_suffix=None, name_prefix=None,
+                            name=None, directory=None, rank=None,
+                            synch_ranks=None):
+        times = dates_times.get_time_string()
+        if name is None:
+            r = str(random.randint(0, 10000))
+            name = 't{}_{}'.format(times, r)
+        else:
+            directory = shared_tools.join_path(
+                self.dir, '{}{}'.format('t', times)
+            ).replace('\\', '/')
+            files_directories.create_directory(directory)
+        if name_suffix is not None:
+            name = '%s%s' % (name, name_suffix)
+        if name_prefix is not None:
+            name = '%s%s' % (name_prefix, name)
+        if directory is None:
+            directory = self.dir
+        path = shared_tools.join_path(directory, name).replace('\\', '/')
+        if synch_ranks and cfg.mpi_comm:
+            cfg.mpi_comm.Barrier()
+        if rank and cfg.mpi_comm:
+            path = mpi_bcast(path)
+        return path
+
+    # create temporary raster file path
+    def temporary_raster_path(
+            self, name=None, name_suffix=None, name_prefix=None,
+            extension='.tif', rank=None
+    ):
+        file_path = self.temporary_file_path(
+            name_suffix=name_suffix, name_prefix=name_prefix, name=name,
+            rank=rank
+        )
+        path = '%s%s' % (file_path, extension)
+        return path
+
+
+# remove root temporary directory
+def remove_root_temporary_directory(directory):
+    # close log handlers
+    try:
+        for h in cfg.logger.log.handlers:
+            h.close()
+    except Exception as err:
+        str(err)
+    try:
+        cfg.logger.log.handlers = []
+    except Exception as err:
+        str(err)
+    files_directories.remove_directory(directory)
+    return directory
+
+
+def mpi_bcast(value):
+    if cfg.mpi_comm:
+        cfg.mpi_bcast_id += 1
+        frame = inspect.stack()[1]
+        func_name = frame.function
+        line = frame.lineno
+        cfg.logger.log.debug(f'bcast {cfg.mpi_bcast_id} {func_name}[{line}]: '
+                             f'rank {cfg.mpi_rank}, {value}')
+        value = cfg.mpi_comm.bcast(value, root=0)
+    return value

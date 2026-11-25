@@ -38,6 +38,7 @@ rgb_composite = signature_threshold = calc_raster_variables = None
 first_install = signature_plot = spectral_signature_plotter = None
 scatter_plot = scatter_plotter = scp_processing_provider = None
 signature_importer = usgs_spectral_lib = multiple_roi = None
+composition_presets = None
 smtp_notification = smtp_server = smtp_user = smtp_pass = None
 smtp_recipients = main_menu = simplified = rs_version = None
 # welcome url
@@ -181,62 +182,62 @@ qgis_registry[reg_ram_value] = 512
 # registry key for CPU threads value setting
 reg_threads_value = 'SemiAutomaticClassification_Plugin/threads_value'
 qgis_registry[reg_threads_value] = 2
-reg_earthdata_user = 'SemiAutomaticClassificationPlugin/earthdata_user'
+reg_earthdata_user = 'RasterClassification/earthdata_user'
 qgis_registry[reg_earthdata_user] = ''
-#reg_earthdata_pass = 'SemiAutomaticClassificationPlugin/earthdata_pass'
+#reg_earthdata_pass = 'RasterClassification/earthdata_pass'
 #qgis_registry[reg_earthdata_pass] = ''
-reg_copernicus_user = 'SemiAutomaticClassificationPlugin/copernicus_user'
+reg_copernicus_user = 'RasterClassification/copernicus_user'
 qgis_registry[reg_copernicus_user] = ''
-#reg_copernicus_pass = 'SemiAutomaticClassificationPlugin/copernicus_pass'
+#reg_copernicus_pass = 'RasterClassification/copernicus_pass'
 #qgis_registry[reg_copernicus_pass] = ''
 # registry key for ROI color setting
-reg_roi_color = 'SemiAutomaticClassificationPlugin/roi_color'
+reg_roi_color = 'RasterClassification/roi_color'
 roi_color_default = '#ffaa00'
 qgis_registry[reg_roi_color] = roi_color_default
 # registry key for ROI transparency setting
-reg_roi_transparency = 'SemiAutomaticClassificationPlugin/roi_transparency'
+reg_roi_transparency = 'RasterClassification/roi_transparency'
 roi_transparency_default = 45
 qgis_registry[reg_roi_transparency] = roi_transparency_default
 # registry key for ROI transparency setting
-reg_max_train_buffer = 'SemiAutomaticClassificationPlugin/max_train_buffer'
+reg_max_train_buffer = 'RasterClassification/max_train_buffer'
 max_train_buffer_default = 5
 qgis_registry[reg_max_train_buffer] = max_train_buffer_default
 # gdal path setting
-reg_gdal_path = 'SemiAutomaticClassificationPlugin/gdal_path'
+reg_gdal_path = 'RasterClassification/gdal_path'
 qgis_registry[reg_gdal_path] = ''
-reg_download_news = 'SemiAutomaticClassificationPlugin/download_news'
-qgis_registry[reg_download_news] = 2
-reg_raster_compression = 'SemiAutomaticClassificationPlugin/raster_compression'
+reg_download_news = 'RasterClassification/download_news'
+qgis_registry[reg_download_news] = 0
+reg_raster_compression = 'RasterClassification/raster_compression'
 qgis_registry[reg_raster_compression] = 2
 # smtp server
-reg_smtp_check = 'SemiAutomaticClassificationPlugin/smtp_check'
+reg_smtp_check = 'RasterClassification/smtp_check'
 qgis_registry[reg_smtp_check] = 2
-reg_smtp_server = 'SemiAutomaticClassificationPlugin/smtp_server'
+reg_smtp_server = 'RasterClassification/smtp_server'
 qgis_registry[reg_smtp_server] = ''
-reg_smtp_emails = 'SemiAutomaticClassificationPlugin/smtp_emails'
+reg_smtp_emails = 'RasterClassification/smtp_emails'
 qgis_registry[reg_smtp_emails] = ''
-reg_smtp_user = 'SemiAutomaticClassificationPlugin/smtp_user'
+reg_smtp_user = 'RasterClassification/smtp_user'
 qgis_registry[reg_smtp_user] = ''
-#reg_smtp_pass = 'SemiAutomaticClassificationPlugin/smtp_pass'
+#reg_smtp_pass = 'RasterClassification/smtp_pass'
 #qgis_registry[reg_smtp_pass] = ''
 # raster variable name
-reg_raster_variable_name = 'SemiAutomaticClassificationPlugin/raster_var_name'
+reg_raster_variable_name = 'RasterClassification/raster_var_name'
 raster_variable_name_def = 'raster'
 qgis_registry[reg_raster_variable_name] = raster_variable_name_def
 # group name
-reg_group_name = 'SemiAutomaticClassificationPlugin/group_name'
+reg_group_name = 'RasterClassification/group_name'
 group_name_def = 'scp_class_temp_group'
 qgis_registry[reg_group_name] = group_name_def
 # band calc functions
-reg_custom_functions = 'SemiAutomaticClassificationPlugin/custom_functions'
+reg_custom_functions = 'RasterClassification/custom_functions'
 custom_functions_def = []
 qgis_registry[reg_custom_functions] = custom_functions_def
 # window size
-reg_window_size_w = 'SemiAutomaticClassificationPlugin/window_size_width'
+reg_window_size_w = 'RasterClassification/window_size_width'
 qgis_registry[reg_window_size_w] = 700
-reg_window_size_h = 'SemiAutomaticClassificationPlugin/window_size_height'
+reg_window_size_h = 'RasterClassification/window_size_height'
 qgis_registry[reg_window_size_h] = 500
-reg_splitter_sizes = 'SemiAutomaticClassificationPlugin/splitter_sizes'
+reg_splitter_sizes = 'RasterClassification/splitter_sizes'
 qgis_registry[reg_splitter_sizes] = [100, 100]
 
 """ band calc """

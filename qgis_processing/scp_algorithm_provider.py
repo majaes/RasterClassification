@@ -147,15 +147,15 @@ class SCPAlgorithmProvider(QgsProcessingProvider):
 
     @staticmethod
     def name():
-        return 'Semi-Automatic Classification Plugin'
+        return 'Raster Classification'
 
     @staticmethod
     def longName():
-        return 'Semi-Automatic Classification Plugin'
+        return 'Raster Classification'
 
     @staticmethod
     def id():
-        return 'scp_8'
+        return 'rasterclassification'
 
     @staticmethod
     def versionInfo():

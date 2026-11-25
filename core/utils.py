@@ -782,6 +782,8 @@ def remove_rgb_color_composite(bandset_number=None):
         bandset_number = cfg.project_registry[cfg.reg_active_bandset_number]
     virtual_raster_name = f'{cfg.virtual_bandset_name} {bandset_number}'
     cfg.util_qgis.remove_layer_by_name(virtual_raster_name)
+    # forget the removed layer, otherwise the next composite finds nothing
+    cfg.virtual_bandset_dict.pop(bandset_number, None)
 
 
 # create RGB color composite

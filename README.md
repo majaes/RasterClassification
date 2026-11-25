@@ -1,69 +1,31 @@
-# Semi-Automatic Classification Plugin
+# Raster Classification
 
-![SCP](semiautomaticclassificationplugin.png) The Semi-Automatic Classification
-Plugin (SCP) is a free open source plugin for QGIS that allows for the
-supervised classification of remote sensing images, providing tools for the
-download, the preprocessing and postprocessing of images.
+**Supervised classification of remote sensing images in QGIS, with tools to download, preprocess and postprocess Landsat and Sentinel-2 images.**
 
-The overall objective of SCP is to provide a set of intertwined tools for
-raster processing in order to make an automatic workflow and ease the land
-cover classification, which could be performed also by people whose main field
-is not remote sensing.
+*A plugin created and maintained by [ANABA MANGA](https://anbmng.com). Version 1.0.0.*
 
-Search and download is available for Landsat, Sentinel-2 images.
-Several algorithms are available for the land cover classification.
-This plugin is built on Remotior Sensus library and requires the installation 
-of additional dependencies. For more information please visit https://fromgistors.blogspot.com .
+Raster Classification provides a set of intertwined tools for raster processing in order to build an automatic workflow
+and ease land cover classification, also for people whose main field is not remote sensing. Search and download is
+available for Landsat and Sentinel-2 images, and several algorithms are available for the classification.
 
-## Plugin installation
+## Installation
 
-The SCP is available for QGIS version 4.x.
-The SCP is developed with Python 3 and requires the installation of 
-Remotior Sensus, GDAL (OGR), NumPy, SciPy and Matplotlib.
+Raster Classification is available for QGIS 4.x (Qt 6). It is built on the Remotior Sensus library, installed
+automatically if missing, and requires GDAL (OGR), NumPy, SciPy and Matplotlib.
 
-For the installation of QGIS and SCP on different operating systems please
-follow this [guide](https://semiautomaticclassificationmanual.readthedocs.io/en/latest/installation.html).
+Download the latest zip from [`releases/`](releases) and install it in QGIS with
+*Plugins > Manage and Install Plugins > Install from ZIP*. The interface is in English by default.
 
-## Using the plugin
+To build the zip yourself: `python dev/build_zip.py`.
 
-If you are new to SCP, please follow
-this [tutorial](https://semiautomaticclassificationmanual.readthedocs.io/en/latest/tutorial_1.html).
+## Credits and license
 
-## Web site
+Raster Classification is derived from the
+[Semi-Automatic Classification Plugin (SCP)](https://github.com/semiautomaticgit/SemiAutomaticClassificationPlugin)
+by Luca Congedo (copyright 2012-2026), distributed under the GNU General Public License version 3 or later.
+The changes (name, identity, interface, English default) are copyright 2026 ANABA MANGA and are released under the same
+license, as the GPL requires; the original copyright notices are kept in the source files.
 
-All the SCP information is available from
-the [SCP website](https://fromgistors.blogspot.com/p/semi-automatic-classification-plugin.html).
-
-## Documentation
-
-Check [the user manual](https://semiautomaticclassificationmanual.readthedocs.io)
-or the online [tutorials](https://fromgistors.blogspot.com/search/label/Tutorial)
-available.
-
-[Videos](https://www.youtube.com/user/fromgistors) are also available.
-
-## Contributing to the development
-
-If you find some issue that you are willing to fix, code contributions are
-welcome. Please read [the development notes](DEVELOPMENT.md) before
-contributing.
-
-## Authors
-
-* **Luca Congedo**
-
-## License
-
-This plugin is distributed under a GNU General Public License version 3.
-
-## How to cite
-
-Congedo, Luca, (2021). Semi-Automatic Classification Plugin: A Python tool for
-the download and processing of remote sensing images in QGIS. Journal of Open
-Source Software, 6(64), 3172, https://doi.org/10.21105/joss.03172
-
-[![DOI](https://joss.theoj.org/papers/10.21105/joss.03172/status.svg)](https://doi.org/10.21105/joss.03172)
-
-## Code on Zenodo
-
-[![DOI](https://zenodo.org/badge/18038317.svg)](https://zenodo.org/badge/latestdoi/18038317)
+If you use the underlying classification workflow in a publication, please cite:
+Congedo, Luca (2021). Semi-Automatic Classification Plugin: A Python tool for the download and processing of remote
+sensing images in QGIS. Journal of Open Source Software, 6(64), 3172, https://doi.org/10.21105/joss.03172

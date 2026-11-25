@@ -147,7 +147,7 @@ def get_layer_id_by_name(layer_name):
 # read project variable
 def read_project_variable(variable_name, value):
     value = get_qgis_project().readEntry(
-        'SemiAutomaticClassificationPlugin', variable_name, str(value)
+        'RasterClassification', variable_name, str(value)
     )[0]
     cfg.util_qt.process_events()
     try:
@@ -164,7 +164,7 @@ def read_project_variable(variable_name, value):
 # write project variable
 def write_project_variable(variable_name, value):
     get_qgis_project().writeEntry(
-        'SemiAutomaticClassificationPlugin',
+        'RasterClassification',
         variable_name, str(value)
     )
     cfg.util_qt.process_events()

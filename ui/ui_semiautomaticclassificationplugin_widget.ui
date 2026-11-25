@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Semi-Automatic Classification Plugin</string>
+   <string>Raster Classification</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">

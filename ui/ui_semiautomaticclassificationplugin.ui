@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Semi-Automatic Classification Plugin</string>
+   <string>Raster Classification</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
@@ -18506,7 +18506,7 @@ background-color: rgb(27, 27, 27);</string>
                  <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <property name="text">
-                 <string>Semi-Automatic Classification Plugin</string>
+                 <string>Raster Classification</string>
                 </property>
                 <property name="textFormat">
                  <enum>Qt::TextFormat::PlainText</enum>

@@ -68,35 +68,35 @@ try:
 except Exception as error:
     plugin_check = False
     qgis_utils.iface.messageBar().pushMessage(
-        'Semi-Automatic Classification Plugin', str(error), level=Qgis.Critical
+        'Raster Classification', str(error), level=Qgis.Critical
     )
 try:
     from .core import util_qt
 except Exception as error:
     plugin_check = False
     qgis_utils.iface.messageBar().pushMessage(
-        'Semi-Automatic Classification Plugin', str(error), level=Qgis.Critical
+        'Raster Classification', str(error), level=Qgis.Critical
     )
 try:
     from .core import utils
 except Exception as error:
     plugin_check = False
     qgis_utils.iface.messageBar().pushMessage(
-        'Semi-Automatic Classification Plugin', str(error), level=Qgis.Critical
+        'Raster Classification', str(error), level=Qgis.Critical
     )
 try:
     from .core import util_gdal
 except Exception as error:
     plugin_check = False
     qgis_utils.iface.messageBar().pushMessage(
-        'Semi-Automatic Classification Plugin', str(error), level=Qgis.Critical
+        'Raster Classification', str(error), level=Qgis.Critical
     )
 try:
     from .core import messages
 except Exception as error:
     plugin_check = False
     qgis_utils.iface.messageBar().pushMessage(
-        'Semi-Automatic Classification Plugin', str(error), level=Qgis.Critical
+        'Raster Classification', str(error), level=Qgis.Critical
     )
 try:
     # initialize Qt ui
@@ -108,7 +108,7 @@ try:
 except Exception as error:
     plugin_check = False
     qgis_utils.iface.messageBar().pushMessage(
-        'Semi-Automatic Classification Plugin', str(error), level=Qgis.Critical
+        'Raster Classification', str(error), level=Qgis.Critical
     )
 
 
@@ -117,11 +117,19 @@ rs_version = '0.8.0'
 lib_dir = rs_path = installed_version = remotior_sensus_2 = None
 
 
+# Remotior Sensus is bundled with the plugin (offline use): prefer it
+bundled_dir = path.dirname(path.abspath(__file__))
+if path.isfile(path.join(bundled_dir, 'remotior_sensus', '__init__.py')):
+    if bundled_dir in sys.path:
+        sys.path.remove(bundled_dir)
+    sys.path.insert(0, bundled_dir)
+
 # find remotior sensus path if existing
 for p in sys.path:
     candidate = path.join(p, 'remotior_sensus', '__init__.py')
     if path.isfile(candidate):
         rs_path = candidate
+        break
 
 
 def find_library_version(library_path):
@@ -148,7 +156,7 @@ def download_library(library_directory):
         import hashlib
 
         qgis_utils.iface.messageBar().pushMessage(
-            'Semi-Automatic Classification Plugin',
+            'Raster Classification',
             QApplication.translate(
                 'semiautomaticclassificationplugin',
                 'Downloading Remotior Sensus package'
@@ -224,7 +232,7 @@ def download_library(library_directory):
         str(errr)
         # noinspection PyTypeChecker
         qgis_utils.iface.messageBar().pushMessage(
-            'Semi-Automatic Classification Plugin', str(errr),
+            'Raster Classification', str(errr),
             level=Qgis.Warning, duration=10
         )
         return False
@@ -244,9 +252,7 @@ try:
 except Exception as error:
     str(error)
     try:
-        lib_dir = ('%s/python/plugins/%s' % (
-            QFileInfo(QgsApplication.qgisUserDatabaseFilePath()).path(),
-            str(__name__).split('.')[0]))
+        lib_dir = bundled_dir
         sys.path.insert(0, lib_dir)
 
         if 'remotior_sensus' in sys.modules:
@@ -272,11 +278,11 @@ except Exception as error:
                 cfg.rs_version = remotior_sensus.__version__
                 plugin_check = False
                 qgis_utils.iface.messageBar().pushMessage(
-                    'Semi-Automatic Classification Plugin',
+                    'Raster Classification',
                     QApplication.translate(
                         'semiautomaticclassificationplugin',
                         'Please, restart QGIS for executing the '
-                        'Semi-Automatic Classification Plugin'
+                        'Raster Classification'
                     ),
                     level=Qgis.Info, duration=20
                 )
@@ -284,14 +290,14 @@ except Exception as error:
                 str(error)
                 plugin_check = False
                 qgis_utils.iface.messageBar().pushMessage(
-                    'Semi-Automatic Classification Plugin',
+                    'Raster Classification',
                     'Unable to load Remotior Sensus',
                     level=Qgis.Critical
                 )
         else:
             plugin_check = False
             qgis_utils.iface.messageBar().pushMessage(
-                'Semi-Automatic Classification Plugin',
+                'Raster Classification',
                 'Unable to load Remotior Sensus',
                 level=Qgis.Critical
             )
@@ -312,9 +318,9 @@ class SemiAutomaticClassificationPlugin:
     def __init__(self, iface):
         if not qt_check:
             qgis_utils.iface.messageBar().pushMessage(
-                'Semi-Automatic Classification Plugin',
-                'The installed version of the Semi-Automatic Classification '
-                'Plugin requires Qt6. Please install a QGIS version with Qt6.',
+                'Raster Classification',
+                'The installed version of Raster Classification '
+                'requires Qt6. Please install a QGIS version with Qt6.',
                 level=Qgis.Critical
             )
         if plugin_check:
@@ -332,7 +338,8 @@ class SemiAutomaticClassificationPlugin:
                 raster_zonal_stats_tab, reproject_bandset_tab,
                 masking_bands_tab, download_products_tab, mosaic_bandsets_tab,
                 image_conversion_tab, script_tab, classification_tab,
-                rgb_composite_tab, signature_threshold_tab, multiple_roi_tab
+                rgb_composite_tab, signature_threshold_tab, multiple_roi_tab,
+                composition_presets
             )
             from .map_pointers.classification_preview_pointer import (
                 ClassificationPreview)
@@ -375,7 +382,7 @@ class SemiAutomaticClassificationPlugin:
                             multiprocessing.set_executable(python_path)
                         else:
                             qgis_utils.iface.messageBar().pushMessage(
-                                'Semi-Automatic Classification Plugin',
+                                'Raster Classification',
                                 QApplication.translate(
                                     'semiautomaticclassificationplugin',
                                     'Error. Python library not found'
@@ -401,7 +408,7 @@ class SemiAutomaticClassificationPlugin:
                             multiprocessing.set_executable(python_path)
                         else:
                             qgis_utils.iface.messageBar().pushMessage(
-                                'Semi-Automatic Classification Plugin',
+                                'Raster Classification',
                                 QApplication.translate(
                                     'semiautomaticclassificationplugin',
                                     'Error. Python library not found'
@@ -416,6 +423,14 @@ class SemiAutomaticClassificationPlugin:
             cfg.map_canvas = iface.mapCanvas()
             # locale
             locale_settings = QSettings().value('locale/userLocale')[0:2]
+            # English is the default language; set the QGIS setting
+            # SemiAutomaticClassificationPlugin/language to 'auto' to follow
+            # the QGIS locale, or to a locale code (e.g. 'fr')
+            plugin_language = str(QSettings().value(
+                'RasterClassification/language', 'en'
+            ))
+            if plugin_language != 'auto':
+                locale_settings = plugin_language[0:2]
             # locale
             locale_path = ''
             # plugin directory
@@ -428,7 +443,7 @@ class SemiAutomaticClassificationPlugin:
                         '%s/i18n/semiautomaticclassificationplugin_%s.qm'
                         % (cfg.plugin_dir, locale_settings)
                 )
-            if QFileInfo(locale_path).exists():
+            if locale_settings != 'en' and QFileInfo(locale_path).exists():
                 transl = QTranslator()
                 transl.load(locale_path)
                 QCoreApplication.installTranslator(transl)
@@ -451,11 +466,11 @@ class SemiAutomaticClassificationPlugin:
             except Exception as err:
                 str(err)
                 qgis_utils.iface.messageBar().pushMessage(
-                    'Semi-Automatic Classification Plugin',
+                    'Raster Classification',
                     QApplication.translate(
                         'semiautomaticclassificationplugin',
                         'Please, restart QGIS for executing the '
-                        'Semi-Automatic Classification Plugin'
+                        'Raster Classification'
                     ),
                     level=Qgis.Info
                 )
@@ -479,6 +494,7 @@ class SemiAutomaticClassificationPlugin:
                 cfg.class_vector = classification_to_vector_tab
                 cfg.cross_classification = cross_classification_tab
                 cfg.rgb_composite = rgb_composite_tab
+                cfg.composition_presets = composition_presets
                 cfg.signature_threshold = signature_threshold_tab
                 cfg.multiple_roi = multiple_roi_tab
                 cfg.band_calc = band_calc_tab
@@ -494,7 +510,7 @@ class SemiAutomaticClassificationPlugin:
                 str(err)
                 message = cfg.settings.test_all_dependencies()
                 qgis_utils.iface.messageBar().pushMessage(
-                    'Semi-Automatic Classification Plugin', message,
+                    'Raster Classification', message,
                     level=Qgis.Critical
                 )
                 interface_check = False
@@ -566,7 +582,7 @@ class SemiAutomaticClassificationPlugin:
                 except Exception as err:
                     str(err)
                     qgis_utils.iface.messageBar().pushMessage(
-                        'Semi-Automatic Classification Plugin',
+                        'Raster Classification',
                         QApplication.translate(
                             'semiautomaticclassificationplugin',
                             'Error starting Remotior Sensus'
@@ -587,7 +603,7 @@ class SemiAutomaticClassificationPlugin:
                     )
                     # info
                     sys_info = str(
-                        'SCP %s; QGIS v. %s; L: %s; OS: %s; python: %s; '
+                        'Raster Classification %s; QGIS v. %s; L: %s; OS: %s; python: %s; '
                         'remotior sensus: %s; environment: %s'
                         % (semiautomatic_class_version(), str(qgis_ver),
                            locale_settings, cfg.system_platform,
@@ -604,24 +620,23 @@ class SemiAutomaticClassificationPlugin:
             pass
         elif plugin_check is True and cfg.rs is not None:
             try:
+                # the dock opens docked on the right side of the QGIS window
                 if cfg.simplified:
-                    cfg.iface.addDockWidget(
-                        Qt.DockWidgetArea.LeftDockWidgetArea,
-                        cfg.dock_class_simpl_dlg
-                    )
+                    dock_widget = cfg.dock_class_simpl_dlg
                 else:
-                    cfg.iface.addDockWidget(
-                        Qt.DockWidgetArea.LeftDockWidgetArea,
-                        cfg.dock_class_dlg
-                    )
+                    dock_widget = cfg.dock_class_dlg
+                cfg.iface.addDockWidget(
+                    Qt.DockWidgetArea.RightDockWidgetArea, dock_widget
+                )
+                dock_widget.setFloating(False)
             except Exception as err:
                 str(err)
                 qgis_utils.iface.messageBar().pushMessage(
-                    'Semi-Automatic Classification Plugin',
+                    'Raster Classification',
                     QApplication.translate(
                         'semiautomaticclassificationplugin',
                         'Please restart QGIS for installing the '
-                        'Semi-Automatic Classification Plugin'
+                        'Raster Classification'
                     ),
                     level=Qgis.Info
                 )
@@ -657,7 +672,7 @@ class SemiAutomaticClassificationPlugin:
                 )
             if cfg.simplified:
                 cfg.dock_class_simpl_dlg.ui.plugin_version_label2.setText(
-                    'SCP %s' % semiautomatic_class_version()
+                    'Raster Classification %s' % semiautomatic_class_version()
                 )
                 algorithm_list = [
                     cfg.rs.configurations.maximum_likelihood,
@@ -694,7 +709,7 @@ class SemiAutomaticClassificationPlugin:
                 cfg.dialog.ui.class_radioButton.setEnabled(False)
             else:
                 cfg.dock_class_dlg.ui.plugin_version_label2.setText(
-                    'SCP %s' % semiautomatic_class_version()
+                    'Raster Classification %s' % semiautomatic_class_version()
                 )
             # row height
             cfg.dialog.ui.download_images_tableWidget.verticalHeader(
@@ -1004,21 +1019,6 @@ class SemiAutomaticClassificationPlugin:
             cfg.dialog.ui.help_textBrowser.setSearchPaths([cfg.temp_dir])
             registry = QgsApplication.instance().processingRegistry()
             registry.addProvider(cfg.scp_processing_provider)
-            # welcome message
-            if cfg.first_install == 1:
-                cfg.input_interface.welcome_text(
-                    'https://semiautomaticgit.github.io'
-                    '/SemiAutomaticClassificationPluginWelcome/changelog.html'
-                )
-            else:
-                date_string = cfg.utils.get_date()
-                cfg.input_interface.welcome_text(
-                    'https://semiautomaticgit.github.io'
-                    '/SemiAutomaticClassificationPluginWelcome/welcome_%s.html'
-                    % date_string,
-                    'https://semiautomaticgit.github.io'
-                    '/SemiAutomaticClassificationPluginWelcome/welcome.html'
-                )
             cfg.logger.log.debug('init GUI')
             connect_gui()
         else:
@@ -1112,11 +1112,11 @@ class SemiAutomaticClassificationPlugin:
                 str(err)
                 if plugin_check:
                     qgis_utils.iface.messageBar().pushMessage(
-                        'Semi-Automatic Classification Plugin',
+                        'Raster Classification',
                         QApplication.translate(
                             'semiautomaticclassificationplugin',
                             'Please, restart QGIS for executing the '
-                            'Semi-Automatic Classification Plugin'
+                            'Raster Classification'
                         ),
                         level=Qgis.Info
                     )
@@ -1135,11 +1135,11 @@ def get_first_installation():
         cfg.utils.find_available_ram()
         cfg.utils.find_available_processors()
         qgis_utils.iface.messageBar().pushMessage(
-            'Semi-Automatic Classification Plugin',
+            'Raster Classification',
             QApplication.translate(
                 'semiautomaticclassificationplugin',
                 'You are using the simplified interface. To change the '
-                'interface go to SCP > Settings and uncheck Simplified '
+                'interface go to Raster Classification > Settings and uncheck Simplified '
                 'interface'
             ),
             level=Qgis.Info, duration=600
@@ -1314,6 +1314,13 @@ def connect_gui():
         cfg.rgb_combo = cfg.dock_class_simpl_dlg.ui.rgb_combo
         cfg.rgb_combo.currentIndexChanged.connect(
             cfg.input_interface.rgb_combo_changed
+        )
+        # predefined compositions and spectral indices
+        presets_combo = cfg.composition_presets.create_combo(
+            cfg.dock_class_simpl_dlg.ui.frame_bandset
+        )
+        cfg.dock_class_simpl_dlg.ui.horizontalLayout.addWidget(
+            presets_combo, 1
         )
         download_i = cfg.dock_class_simpl_dlg.ui.download_images_toolButton_2
         download_i.clicked.connect(
