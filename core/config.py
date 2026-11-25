@@ -38,7 +38,7 @@ rgb_composite = signature_threshold = calc_raster_variables = None
 first_install = signature_plot = spectral_signature_plotter = None
 scatter_plot = scatter_plotter = scp_processing_provider = None
 signature_importer = usgs_spectral_lib = multiple_roi = None
-composition_presets = None
+composition_presets = composition_combo = None
 smtp_notification = smtp_server = smtp_user = smtp_pass = None
 smtp_recipients = main_menu = simplified = rs_version = None
 # welcome url

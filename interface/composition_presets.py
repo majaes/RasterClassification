@@ -15,7 +15,7 @@ import os
 import re
 import time
 
-from PyQt6.QtWidgets import QComboBox, QApplication
+from PyQt6.QtWidgets import QComboBox
 from qgis.core import (
     Qgis, QgsRasterLayer, QgsStyle, QgsColorRampShader, QgsRasterShader,
     QgsSingleBandPseudoColorRenderer, QgsProject
@@ -38,8 +38,15 @@ S2_NAMES = {
     'blue': ('B02',), 'green': ('B03',), 'red': ('B04',),
     'nir': ('B08', 'B8A'), 'swir1': ('B11',), 'swir2': ('B12',),
 }
+ROLE_LABELS = {
+    'blue': 'Blue (B02)', 'green': 'Green (B03)', 'red': 'Red (B04)',
+    'nir': 'NIR (B08)', 'swir1': 'SWIR1 (B11)', 'swir2': 'SWIR2 (B12)',
+}
 
-# color composites: (label, (red, green, blue))
+# every preset combo created (dock, toolbar)
+COMBOS = []
+
+# color composites: (label, (red, green, blue)); the first is the default
 COMPOSITES = [
     ('Natural color (true color)', ('red', 'green', 'blue')),
     ('Color infrared (vegetation in red)', ('nir', 'red', 'green')),
@@ -56,7 +63,6 @@ INDICES = [
     ('NDBI - built-up', ('swir1', 'nir'), -0.8, 0.5, 'Spectral'),
     ('NBR - burned areas', ('nir', 'swir2'), -0.5, 0.9, 'RdYlGn'),
 ]
-TITLE = 'Predefined compositions'
 
 
 def _wavelength_um(value):
@@ -100,49 +106,68 @@ def _message(text, level=Qgis.MessageLevel.Warning):
     )
 
 
-def _active_bandset():
+def _active_bandset(quiet=False):
     number = cfg.project_registry[cfg.reg_active_bandset_number]
     bandset_x = cfg.bandset_catalog.get_bandset_by_number(number)
     if bandset_x is None or bandset_x.get_band_count() == 0:
-        _message(QApplication.translate(
-            'semiautomaticclassificationplugin',
-            'Add bands to the band set first (Open file or Add layer).'
-        ))
+        if not quiet:
+            _message('Add bands to the band set first (Open file or '
+                     'Add layer).')
         return None, number
     return bandset_x, number
 
 
-def apply_composite(roles):
-    bandset_x, number = _active_bandset()
+def missing_roles(bandset_x, roles):
+    """ Labels of the roles without a matching band in the band set. """
+    if bandset_x is None:
+        return [ROLE_LABELS[r] for r in roles]
+    return [ROLE_LABELS[r] for r in roles if find_band(bandset_x, r) is None]
+
+
+def _missing_message(name, missing):
+    return '%s needs the band(s): %s. Add them to the band set.' % (
+        name, ', '.join(missing))
+
+
+def apply_composite(roles, name='This composition', quiet=False):
+    bandset_x, number = _active_bandset(quiet)
     if bandset_x is None:
         return False
-    numbers = [find_band(bandset_x, r) for r in roles]
-    missing = [r for r, n in zip(roles, numbers) if n is None]
+    missing = missing_roles(bandset_x, roles)
     if missing:
-        _message(
-            'Bands not found in the band set for: %s. Set the satellite in '
-            'the Wavelength menu, or add the missing bands.'
-            % ', '.join(m.upper() for m in missing)
-        )
+        if not quiet:
+            _message(_missing_message(name, missing))
         return False
-    return cfg.utils.set_rgb_color_composite(
+    numbers = [find_band(bandset_x, r) for r in roles]
+    return bool(cfg.utils.set_rgb_color_composite(
         '%s-%s-%s' % tuple(numbers), number
-    )
+    ))
+
+
+def apply_default():
+    """ Display the natural color composite of a new band set; when the
+    bands are not recognized, the first three bands are used. """
+    if not apply_composite(COMPOSITES[0][1], quiet=True):
+        number = cfg.project_registry[cfg.reg_active_bandset_number]
+        cfg.utils.set_rgb_color_composite('3-2-1', number)
+    for combo in COMBOS:
+        combo.blockSignals(True)
+        combo.setCurrentIndex(0)
+        combo.setProperty('previous', 0)
+        combo.blockSignals(False)
 
 
 def apply_index(label, roles, minimum, maximum, ramp_name):
     bandset_x, number = _active_bandset()
     if bandset_x is None:
         return False
+    name = label.split(' ')[0]
+    missing = missing_roles(bandset_x, roles)
+    if missing:
+        _message(_missing_message(name, missing))
+        return False
     first = find_band(bandset_x, roles[0])
     second = find_band(bandset_x, roles[1])
-    if first is None or second is None:
-        _message(
-            'Bands not found in the band set for %s (needs %s and %s). Set '
-            'the satellite in the Wavelength menu, or add the missing bands.'
-            % (label.split(' ')[0], roles[0].upper(), roles[1].upper())
-        )
-        return False
     entries = []
     layers = []
     for ref, band_number in (('a', first), ('b', second)):
@@ -158,7 +183,6 @@ def apply_index(label, roles, minimum, maximum, ramp_name):
         entries.append(entry)
     # use the grid of the finer band for the result
     base = min(layers, key=lambda x: x.rasterUnitsPerPixelX())
-    name = label.split(' ')[0]
     output = os.path.join(
         cfg.temp_dir, '%s_%s.tif' % (name, time.strftime('%Y%m%d_%H%M%S'))
     )
@@ -187,37 +211,64 @@ def apply_index(label, roles, minimum, maximum, ramp_name):
     return True
 
 
-def preset_selected(combo):
+class PresetCombo(QComboBox):
+    """ Combo of the predefined compositions; the entries whose bands are
+    not in the band set are greyed out, with the missing bands as tooltip. """
+
+    def showPopup(self):
+        try:
+            bandset_x, _n = _active_bandset(quiet=True)
+            model = self.model()
+            n = len(COMPOSITES)
+            for i in range(self.count()):
+                roles = COMPOSITES[i][1] if i < n else INDICES[i - n][1]
+                missing = missing_roles(bandset_x, roles)
+                item = model.item(i)
+                item.setEnabled(not missing)
+                item.setToolTip(
+                    '' if not missing else 'Missing: %s' % ', '.join(missing)
+                )
+        except Exception as err:
+            str(err)
+        QComboBox.showPopup(self)
+
+
+def preset_selected(combo, previous):
     index = combo.currentIndex()
-    if index <= 0:
-        return
     n = len(COMPOSITES)
+    ok = False
     try:
-        if index <= n:
-            apply_composite(COMPOSITES[index - 1][1])
+        if index < n:
+            ok = apply_composite(COMPOSITES[index][1], COMPOSITES[index][0])
         else:
-            apply_index(*INDICES[index - n - 1])
+            apply_index(*INDICES[index - n])
     except Exception as err:
         cfg.logger.log.error(str(err))
         _message(str(err))
-    finally:
-        # back to the title so the same preset can be chosen again
+    # the combo shows the displayed composition: go back if it failed, and
+    # after an index (which does not change the composition)
+    if ok:
+        combo.setProperty('previous', index)
+    else:
         combo.blockSignals(True)
-        combo.setCurrentIndex(0)
+        combo.setCurrentIndex(previous)
         combo.blockSignals(False)
 
 
 def create_combo(parent):
-    combo = QComboBox(parent)
-    combo.addItem(TITLE)
+    combo = PresetCombo(parent)
     for label, _roles in COMPOSITES:
         combo.addItem(label)
     for label, *_rest in INDICES:
         combo.addItem(label)
+    combo.setProperty('previous', 0)
     combo.setToolTip(
-        'Display a predefined color composite, or calculate a spectral '
-        'index, from the bands of the band set (bands are found from the '
-        'Wavelength setting or the Sentinel-2 band names)'
+        'Color composition of the band set (default: natural color), or '
+        'calculation of a spectral index. Entries that need bands missing '
+        'from the band set are greyed out.'
     )
-    combo.activated.connect(lambda _i, c=combo: preset_selected(c))
+    combo.activated.connect(
+        lambda _i, c=combo: preset_selected(c, c.property('previous') or 0)
+    )
+    COMBOS.append(combo)
     return combo

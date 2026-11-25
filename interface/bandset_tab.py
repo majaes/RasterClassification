@@ -1101,7 +1101,7 @@ def band_set_to_table_simplified():
             cfg.util_qt.add_table_item(table_w, str(band['wavelength']), c, 1)
         table_w.blockSignals(False)
         # add virtual raster
-        cfg.utils.set_rgb_color_composite(composite='3-2-1', bandset_number=1)
+        cfg.composition_presets.apply_default()
     else:
         table_w.blockSignals(True)
         cfg.util_qt.clear_table(table_w)
