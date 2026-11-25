@@ -1,11 +1,11 @@
-"""Generate the icons of the plugin (modern, flat, colored).
+"""Generate the icons of the plugin (modern, flat, neutral).
 
 Usage (from the repository root, with the Python of QGIS for the PNG):
     python dev/make_icons.py
 
-Each icon is a rounded square filled with a gradient (the color tells the
-kind of action) and a white glyph drawn with round strokes. The files keep the
-names that the interface already uses.
+Each icon is a single neutral grey glyph drawn with round strokes, readable on
+the light and the dark themes of QGIS. The files keep the names that the
+interface already uses.
 """
 import os
 
@@ -84,42 +84,38 @@ GLYPHS = {
 }
 
 
+NEUTRAL = '#8B929C'
+
+
 def svg(name):
-    color, glyph = GLYPHS[name]
-    c1, c2 = COLORS[color]
-    gid = 'g_' + name
+    glyph = GLYPHS[name][1].replace('#fff', NEUTRAL)
     return (
-        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">'
-        '<defs><linearGradient id="%s" x1="0" y1="0" x2="0" y2="1">'
-        '<stop offset="0" stop-color="%s"/><stop offset="1" stop-color="%s"/></linearGradient></defs>'
-        '<rect x="1" y="1" width="22" height="22" rx="6" fill="url(#%s)"/>'
-        '%s</svg>\n' % (gid, c1, c2, gid, glyph)
+        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" '
+        'viewBox="0 0 24 24">%s</svg>\n' % glyph
     )
 
 
 MAIN = (
     '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">'
-    '<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1E3A5F"/>'
-    '<stop offset="1" stop-color="#0B1B2E"/></linearGradient></defs>'
-    '<rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bg)"/>'
-    '<g stroke="#0B1B2E" stroke-width="1.5">'
-    '<rect x="11" y="11" width="13" height="13" rx="2.5" fill="#34D399"/>'
-    '<rect x="25.5" y="11" width="13" height="13" rx="2.5" fill="#22C55E"/>'
-    '<rect x="40" y="11" width="13" height="13" rx="2.5" fill="#FACC15"/>'
-    '<rect x="11" y="25.5" width="13" height="13" rx="2.5" fill="#38BDF8"/>'
-    '<rect x="25.5" y="25.5" width="13" height="13" rx="2.5" fill="#34D399"/>'
-    '<rect x="40" y="25.5" width="13" height="13" rx="2.5" fill="#FB923C"/>'
-    '<rect x="11" y="40" width="13" height="13" rx="2.5" fill="#3B82F6"/>'
-    '<rect x="25.5" y="40" width="13" height="13" rx="2.5" fill="#38BDF8"/>'
-    '<rect x="40" y="40" width="13" height="13" rx="2.5" fill="#F43F5E"/></g></svg>\n'
+    '<rect x="2" y="2" width="60" height="60" rx="14" fill="#343A46"/>'
+    '<g fill="#C9CED6">'
+    '<rect x="11" y="11" width="13" height="13" rx="2.5" opacity="0.95"/>'
+    '<rect x="25.5" y="11" width="13" height="13" rx="2.5" opacity="0.6"/>'
+    '<rect x="40" y="11" width="13" height="13" rx="2.5" opacity="0.35"/>'
+    '<rect x="11" y="25.5" width="13" height="13" rx="2.5" opacity="0.6"/>'
+    '<rect x="25.5" y="25.5" width="13" height="13" rx="2.5" opacity="0.95"/>'
+    '<rect x="40" y="25.5" width="13" height="13" rx="2.5" opacity="0.6"/>'
+    '<rect x="11" y="40" width="13" height="13" rx="2.5" opacity="0.35"/>'
+    '<rect x="25.5" y="40" width="13" height="13" rx="2.5" opacity="0.6"/>'
+    '<rect x="40" y="40" width="13" height="13" rx="2.5" opacity="0.95"/></g></svg>\n'
 )
 
 CURSOR = (
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">'
     '<circle cx="12" cy="12" r="7" fill="none" stroke="#fff" stroke-width="4"/>'
-    '<circle cx="12" cy="12" r="7" fill="none" stroke="#F97316" stroke-width="2"/>'
+    '<circle cx="12" cy="12" r="7" fill="none" stroke="#111" stroke-width="2"/>'
     '<path d="M12 2v5M12 17v5M2 12h5M17 12h5" stroke="#fff" stroke-width="4" stroke-linecap="round"/>'
-    '<path d="M12 2v5M12 17v5M2 12h5M17 12h5" stroke="#F97316" stroke-width="2" stroke-linecap="round"/></svg>\n'
+    '<path d="M12 2v5M12 17v5M2 12h5M17 12h5" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg>\n'
 )
 
 

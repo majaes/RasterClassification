@@ -4,13 +4,11 @@
 # (GPL v3 or later). This file is part of Raster Classification and is
 # distributed under the same license.
 
-""" Modern look of the buttons of the panel: flat, rounded, with an accent
-color on hover, press and check. The colors come from the palette of QGIS, so
+""" Modern look of the buttons of the panel: flat, rounded and neutral (grey
+shades on hover, press and check). The colors come from the palette of QGIS, so
 the look follows its light or dark theme. """
 
 from qgis.PyQt.QtWidgets import QPushButton, QToolButton
-
-ACCENT = '#3B82F6'
 
 STYLE = """
 QPushButton, QToolButton {
@@ -20,15 +18,15 @@ QPushButton, QToolButton {
     background-color: palette(button);
 }
 QPushButton:hover, QToolButton:hover {
-    border-color: %(accent)s;
-    background-color: rgba(59, 130, 246, 45);
+    border-color: palette(dark);
+    background-color: rgba(128, 128, 128, 40);
 }
 QPushButton:pressed, QToolButton:pressed {
-    background-color: rgba(59, 130, 246, 100);
+    background-color: rgba(128, 128, 128, 80);
 }
 QPushButton:checked, QToolButton:checked {
-    border-color: %(accent)s;
-    background-color: rgba(59, 130, 246, 120);
+    border-color: palette(dark);
+    background-color: rgba(128, 128, 128, 80);
 }
 QPushButton:disabled, QToolButton:disabled {
     color: palette(mid);
@@ -43,7 +41,7 @@ QToolButton#collapsibleHeader:hover {
     background-color: transparent;
     border: none;
 }
-""" % {'accent': ACCENT}
+"""
 
 
 def apply(widget):
