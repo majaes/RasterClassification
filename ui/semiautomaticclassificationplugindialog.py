@@ -24,7 +24,8 @@
 from qgis.PyQt.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplication,
                           QTranslator)
 from qgis.PyQt.QtWidgets import (
-    QDialog, QDockWidget, QTabWidget, QWidget, QVBoxLayout
+    QDialog, QDockWidget, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout,
+    QGridLayout, QLabel
 )
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
@@ -214,11 +215,72 @@ class DockClassSimplifiedDialog(QDockWidget):
         self.ui.setupUi(self)
         self._build_tabs()
 
+    def _rebuild_bandset_layout(self):
+        """ More ergonomic band set tab: the table takes the space, the
+        buttons are grouped around it, then composition and satellite. """
+        ui = self.ui
+        old = ui.gridLayout_5
+        # detach the old arrangement (the widgets are reused)
+        old.removeItem(ui.gridLayout_8)
+        old.removeItem(ui.horizontalLayout_4)
+        for layout, widgets in (
+                (ui.gridLayout_2, (
+                    ui.toolButton_input_raster, ui.add_loaded_bands_pushButton,
+                    ui.move_up_toolButton, ui.move_down_toolButton,
+                    ui.remove_toolButton, ui.clear_bandset_toolButton)),
+                (ui.horizontalLayout_4, (ui.label_150,
+                                         ui.wavelength_sat_combo))):
+            for widget in widgets:
+                layout.removeWidget(widget)
+        root = QVBoxLayout()
+        root.setSpacing(6)
+        # top: load the bands, reset
+        top = QHBoxLayout()
+        top.addWidget(ui.toolButton_input_raster)
+        top.addWidget(ui.add_loaded_bands_pushButton)
+        top.addStretch(1)
+        top.addWidget(ui.clear_bandset_toolButton)
+        root.addLayout(top)
+        # middle: the table of the bands (the plugin puts it in grid_bandset)
+        # and the buttons that act on the selected bands
+        middle = QHBoxLayout()
+        ui.grid_bandset = QGridLayout()
+        middle.addLayout(ui.grid_bandset, 1)
+        side = QVBoxLayout()
+        side.addWidget(ui.move_up_toolButton)
+        side.addWidget(ui.move_down_toolButton)
+        side.addWidget(ui.remove_toolButton)
+        side.addStretch(1)
+        middle.addLayout(side, 0)
+        root.addLayout(middle, 1)
+        # composition (the plugin adds the list and the R, G, B lists)
+        composition = QGridLayout()
+        row = QHBoxLayout()
+        label = QLabel('Composition', ui.frame_bandset)
+        label.setToolTip('Color composition displayed for the band set')
+        row.addWidget(label, 0)
+        ui.horizontalLayout = row
+        composition.addLayout(row, 0, 0, 1, 2)
+        ui.gridLayout_2 = composition
+        root.addLayout(composition)
+        # satellite (wavelengths of the bands)
+        satellite = QHBoxLayout()
+        ui.label_150.setText('Satellite')
+        ui.label_150.setToolTip(
+            'Satellite of the images: detected from the file names, '
+            'and can be changed here')
+        satellite.addWidget(ui.label_150, 0)
+        satellite.addWidget(ui.wavelength_sat_combo, 1)
+        root.addLayout(satellite)
+        old.addLayout(root, 1, 0, 1, 3)
+        ui.bandset_root_layout = root
+
     def _build_tabs(self):
         """ Two tabs: the band set (color composition) and the
         classification workflow (ROI & signatures, then classification). """
         try:
             ui = self.ui
+            self._rebuild_bandset_layout()
             grid = ui.gridLayout_14
             for frame in (ui.frame_bandset, ui.frame_2, ui.frame_3):
                 grid.removeWidget(frame)
@@ -244,7 +306,7 @@ class DockClassSimplifiedDialog(QDockWidget):
             ui.rgb_combo.setVisible(False)
             # progress bars under the Wavelength menu and the Algorithm row
             ui.bandset_progress = dock_progress.create_bar(ui.frame_bandset)
-            ui.gridLayout_5.addWidget(ui.bandset_progress, 3, 0, 1, 3)
+            ui.bandset_root_layout.addWidget(ui.bandset_progress)
             ui.classification_progress = dock_progress.create_bar(
                 ui.frame_3
             )
