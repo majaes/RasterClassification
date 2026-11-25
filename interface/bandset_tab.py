@@ -33,6 +33,7 @@ from qgis.PyQt.QtWidgets import (
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 from qgis.core import Qgis
 from ..core import dock_progress
+from ..core.language import tr
 from . import satellite_detection as sat_detect
 
 
@@ -123,8 +124,8 @@ def auto_detect_satellite(bandset_number):
         )
         cfg.iface.messageBar().pushMessage(
             'Raster Classification',
-            'Satellite detected: %s. You can change it in the Wavelength '
-            'menu.' % dock_combo.itemText(index).split(' [')[0],
+            tr('Satellite detected: %s. You can change it in the '
+               'Wavelength menu.') % dock_combo.itemText(index).split(' [')[0],
             level=Qgis.MessageLevel.Info, duration=6
         )
     except Exception as err:
@@ -1260,7 +1261,7 @@ def _create_bandset(files, bandset_number, unit, root_directory, wavelengths):
 
 def _loading_cancelled():
     cfg.iface.messageBar().pushMessage(
-        'Raster Classification', 'Loading cancelled.',
+        'Raster Classification', tr('Loading cancelled.'),
         level=Qgis.MessageLevel.Warning, duration=5
     )
 
@@ -1269,7 +1270,7 @@ def _loading_cancelled():
 def add_file_to_band_set(files):
     if len(files) > 0:
         # moving progress bar while the data are imported
-        dock_progress.busy('Loading bands ...')
+        dock_progress.busy(tr('Loading bands ...'))
         QApplication.instance().processEvents()
         try:
             _add_file_to_band_set(files)

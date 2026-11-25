@@ -42,6 +42,7 @@ from qgis.core import (
 from qgis.gui import QgsVertexMarker, QgsHighlight
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
+from ..core.language import tr
 
 try:
     from remotior_sensus.core.spectral_signatures import (
@@ -2529,7 +2530,7 @@ def select_class_from_tree():
 # message of the ROI tools
 def _roi_message(text, level=None):
     cfg.iface.messageBar().pushMessage(
-        'Raster Classification', text,
+        'Raster Classification', tr(text),
         level=Qgis.MessageLevel.Info if level is None else level, duration=8
     )
 
@@ -2552,14 +2553,14 @@ def create_class():
         return False
     catalog = cfg.scp_training.signature_catalog
     if class_id in catalog.macroclasses:
-        _roi_message('The class %s already exists: each class is unique.'
-                     % class_id, Qgis.MessageLevel.Warning)
+        _roi_message(tr('The class %s already exists: each class is '
+                        'unique.') % class_id, Qgis.MessageLevel.Warning)
         update_create_button()
         return False
     if name.casefold() in [
             str(n).casefold() for n in catalog.macroclasses.values()]:
-        _roi_message('A class named "%s" already exists: each class is '
-                     'unique.' % name, Qgis.MessageLevel.Warning)
+        _roi_message(tr('A class named "%s" already exists: each class '
+                        'is unique.') % name, Qgis.MessageLevel.Warning)
         update_create_button()
         return False
     cfg.project_registry[cfg.reg_roi_macroclass_id] = class_id
@@ -2573,9 +2574,9 @@ def create_class():
     if cfg.project_registry[cfg.reg_save_training_input_check] == 2:
         cfg.scp_training.save_signature_catalog()
     _roi_message(
-        'Class %s (%s) created: draw its ROIs with Polygon or Circle, the '
-        'right click adds each ROI to it. For another class, change the '
-        'number and the name, then Save.' % (class_id, name)
+        tr('Class %s (%s) created: draw its ROIs with Polygon or Circle, the '
+           'right click adds each ROI to it. For another class, change the '
+           'number and the name, then Save.') % (class_id, name)
     )
     return True
 

@@ -14,6 +14,7 @@ panel go through tr(). """
 from qgis.PyQt.QtCore import QCoreApplication, QSettings, QTranslator
 
 from .fr_translations import FR
+from .fr_extra import FR_EXTRA, REPLACE_RULES
 
 SETTING_KEY = 'RasterClassification/language'
 LANGUAGES = ('en', 'fr')
@@ -110,6 +111,29 @@ EXTRA = {
     'data of each provider.':
         'Contient des données Copernicus Sentinel modifiées. Respectez la '
         'licence des données de chaque fournisseur.',
+    'The class %s already exists: each class is unique.':
+        'La classe %s existe déjà : chaque classe est unique.',
+    '%s needs the band(s): %s. Add them to the band set.':
+        '%s nécessite la ou les bandes : %s. Ajoutez-les au jeu de bandes.',
+    'Unable to open band %s': 'Impossible d\'ouvrir la bande %s',
+    'Calculating %s in the background (progress in the Tasks panel, you '
+    'can keep working). The result is added to the map when finished.':
+        'Calcul de %s en arrière-plan (progression dans le panneau des '
+        'tâches, vous pouvez continuer à travailler). Le résultat est '
+        'ajouté à la carte à la fin.',
+    '%s calculation stopped.': 'Le calcul de %s est arrêté.',
+    'Unable to open the %s result': 'Impossible d\'ouvrir le résultat %s',
+    '%s calculated: %s': '%s calculé : %s',
+    'Classification failed: %s': 'La classification a échoué : %s',
+    'Preview failed: %s': "L'aperçu a échoué : %s",
+    'Satellite detected: %s. You can change it in the Wavelength menu.':
+        'Satellite détecté : %s. Vous pouvez le changer dans le menu '
+        'Satellite.',
+    'Loading cancelled.': 'Chargement annulé.',
+    'Loading bands ...': 'Chargement des bandes ...',
+    'Add bands to the band set first (Open file or Add layer).':
+        "Ajoutez d'abord des bandes au jeu de bandes (Ouvrir un fichier ou "
+        "Ajouter une couche).",
     # Settings tab
     'Language': 'Langue',
     'Interface language of the plugin': "Langue de l'interface du plugin",
@@ -222,17 +246,38 @@ def current_language():
     return _state['code']
 
 
+def _lookup_plain(source):
+    text = EXTRA.get(source)
+    if text is None:
+        text = FR_EXTRA.get(source)
+    if text is None:
+        text = FR.get(source)
+    return text
+
+
 def lookup(source):
     """ French text of a source text (None when there is none). """
     if not source:
         return None
-    text = EXTRA.get(source)
-    if text is None:
-        text = FR.get(source)
+    text = _lookup_plain(source)
+    if text is None and source.startswith('<html><head/><body><p>') and (
+            source.endswith('</p></body></html>')):
+        # tooltips of the generated interfaces
+        inner = source[len('<html><head/><body><p>'):-len('</p></body></html>')]
+        translated = lookup(inner)
+        if translated is not None:
+            text = '<html><head/><body><p>%s</p></body></html>' % translated
+    if text is None and ('<' in source):
+        # rich texts: parts are replaced
+        changed = source
+        for english, french in REPLACE_RULES:
+            changed = changed.replace(english, french)
+        if changed != source:
+            text = changed
     if text is None:
         stripped = source.strip()
         if stripped and stripped != source:
-            text = EXTRA.get(stripped) or FR.get(stripped)
+            text = _lookup_plain(stripped)
             if text is not None:
                 lead = source[:len(source) - len(source.lstrip())]
                 trail = source[len(source.rstrip()):]

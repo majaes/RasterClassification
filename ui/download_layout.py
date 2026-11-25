@@ -102,13 +102,9 @@ def build(ui):
     find.addWidget(w['label_35'])
     find.addWidget(w['find_images_toolButton'])
     grid.addLayout(find, 5, 3, 1, 2)
-    osm = QHBoxLayout()
-    osm.addWidget(w['toolButton_OSM'])
-    osm.addWidget(w['label_205'], 1)
-    grid.addLayout(osm, 6, 0, 1, 5)
-    w['label_206'].setWordWrap(True)
-    w['label_206'].setOpenExternalLinks(True)
-    grid.addWidget(w['label_206'], 7, 0, 1, 5)
+    # the OpenStreetMap button and its attribution are not part of the panel
+    for name in ('toolButton_OSM', 'label_205', 'label_206'):
+        w[name].setVisible(False)
     grid.setColumnStretch(1, 1)
     grid.setColumnStretch(2, 1)
     root.addWidget(box_search)
@@ -160,6 +156,7 @@ def build(ui):
     scroll.setWidgetResizable(True)
     scroll.setFrameShape(QFrame.Shape.NoFrame)
     scroll.setWidget(page)
-    for widget in widgets.values():
-        widget.setVisible(True)
+    hidden = ('toolButton_OSM', 'label_205', 'label_206')
+    for name, widget in widgets.items():
+        widget.setVisible(name not in hidden)
     return scroll, (box_search, box_results, box_download)

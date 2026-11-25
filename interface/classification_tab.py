@@ -31,6 +31,7 @@ import ast
 from qgis.PyQt.QtGui import QIcon, QPixmap, QCursor
 from qgis.PyQt.QtWidgets import QApplication
 from qgis.core import Qgis
+from ..core.language import tr
 
 cfg = __import__(str(__name__).split('.')[0] + '.core.config', fromlist=[''])
 
@@ -165,7 +166,7 @@ def run_classification_action_simplified():
         cfg.logger.log.error(str(err))
         cfg.ui_utils.remove_progress_bar(sound=False, failed=True)
         cfg.iface.messageBar().pushMessage(
-            'Raster Classification', 'Classification failed: %s' % err,
+            'Raster Classification', tr('Classification failed: %s') % err,
             level=Qgis.MessageLevel.Critical, duration=10
         )
         return
@@ -175,7 +176,7 @@ def run_classification_action_simplified():
     if output is not None and getattr(output, 'check', False):
         cfg.iface.messageBar().pushMessage(
             'Raster Classification',
-            'Classification finished: the map is added to the layers.',
+            tr('Classification finished: the map is added to the layers.'),
             level=Qgis.MessageLevel.Success, duration=6
         )
 
@@ -763,7 +764,7 @@ def preview_button_clicked(checked=None):
         else:
             cfg.iface.actionPan().trigger()
         cfg.iface.messageBar().pushMessage(
-            'Raster Classification', 'Preview switched off.',
+            'Raster Classification', tr('Preview switched off.'),
             level=Qgis.MessageLevel.Info, duration=3
         )
 
@@ -788,8 +789,8 @@ def pointer_classification_preview_active():
     cfg.map_canvas.setCursor(cursor)
     cfg.iface.messageBar().pushMessage(
         'Raster Classification',
-        'Preview: click on the map where you want to see the '
-        'classification (a small area around the click is classified).',
+        tr('Preview: click on the map where you want to see the '
+           'classification (a small area around the click is classified).'),
         level=Qgis.MessageLevel.Info, duration=8
     )
 
@@ -800,13 +801,14 @@ def pointer_left_click(point):
         if create_preview(point):
             cfg.iface.messageBar().pushMessage(
                 'Raster Classification',
-                'Preview added to the map (layer at the top of the list).',
+                tr('Preview added to the map (layer at the top of the '
+                   'list).'),
                 level=Qgis.MessageLevel.Success, duration=5
             )
     except Exception as err:
         cfg.logger.log.error(str(err))
         cfg.iface.messageBar().pushMessage(
-            'Raster Classification', 'Preview failed: %s' % err,
+            'Raster Classification', tr('Preview failed: %s') % err,
             level=Qgis.MessageLevel.Critical, duration=10
         )
 

@@ -108,7 +108,7 @@ def find_band(bandset_x, role):
 
 def _message(text, level=Qgis.MessageLevel.Warning):
     cfg.iface.messageBar().pushMessage(
-        'Raster Classification', text, level=level, duration=8
+        'Raster Classification', tr(text), level=level, duration=8
     )
 
 
@@ -131,7 +131,7 @@ def missing_roles(bandset_x, roles):
 
 
 def _missing_message(name, missing):
-    return '%s needs the band(s): %s. Add them to the band set.' % (
+    return tr('%s needs the band(s): %s. Add them to the band set.') % (
         name, ', '.join(missing))
 
 
@@ -184,7 +184,7 @@ def apply_index(label, roles, minimum, maximum, ramp_name):
     for ref, band_number in (('a', first), ('b', second)):
         layer = QgsRasterLayer(bandset_x.get_absolute_path(band_number))
         if not layer.isValid():
-            _message('Unable to open band %s' % band_number)
+            _message(tr('Unable to open band %s') % band_number)
             return False
         layers.append(layer)
         entry = QgsRasterCalculatorEntry()
@@ -211,9 +211,9 @@ def apply_index(label, roles, minimum, maximum, ramp_name):
     dock_progress.start(task.cancel)
     task.progressChanged.connect(dock_progress.update)
     _message(
-        'Calculating %s in the background (progress in the Tasks panel, you '
-        'can keep working). The result is added to the map when finished.'
-        % name, Qgis.MessageLevel.Info
+        tr('Calculating %s in the background (progress in the Tasks panel, '
+           'you can keep working). The result is added to the map when '
+           'finished.') % name, Qgis.MessageLevel.Info
     )
     return True
 
@@ -285,14 +285,14 @@ class IndexTask(QgsTask):
                     os.remove(self.output)
                 except OSError:
                     pass
-            _message('%s calculation stopped.' % self.name)
+            _message(tr('%s calculation stopped.') % self.name)
             _combo_back_to_composition()
             return
         layer = QgsRasterLayer(
             self.output, '%s %s' % (self.name, self.number)
         )
         if not layer.isValid():
-            _message('Unable to open the %s result' % self.name)
+            _message(tr('Unable to open the %s result') % self.name)
             _combo_back_to_composition()
             return
         ramp = QgsStyle.defaultStyle().colorRamp(self.ramp_name)
@@ -305,7 +305,7 @@ class IndexTask(QgsTask):
         ))
         QgsProject.instance().addMapLayer(layer)
         INDEX_LAYER_IDS.append(layer.id())
-        _message('%s calculated: %s' % (self.name, self.output),
+        _message(tr('%s calculated: %s') % (self.name, self.output),
                  Qgis.MessageLevel.Info)
 
 
