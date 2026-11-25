@@ -1397,7 +1397,9 @@ def connect_gui():
         )
         roi_spin = cfg.dock_class_simpl_dlg.ui.ROI_Macroclass_ID_spin
         roi_spin.valueChanged.connect(cfg.scp_dock.roi_macroclass_id_value)
+        roi_spin.valueChanged.connect(cfg.scp_dock.update_create_button)
         roi_line = cfg.dock_class_simpl_dlg.ui.ROI_Macroclass_line
+        roi_line.textChanged.connect(cfg.scp_dock.update_create_button)
         roi_line.editingFinished.connect(cfg.scp_dock.roi_macroclass_name_info)
         cfg.dock_class_simpl_dlg.ui.toolButton_input_raster.clicked.connect(
             cfg.bst.add_file_to_band_set_action

@@ -546,6 +546,8 @@ class TrainingVectorLayer:
         # connect signature threshold table
         cfg.signature_threshold.signature_thresholds_to_table()
         cfg.scp_training = self
+        if cfg.simplified:
+            update_create_button()
         return self.tree
 
     # add signature item
@@ -699,6 +701,8 @@ class TrainingVectorLayer:
         tree_widget.header().setStretchLastSection(False)
         # connect to edited cell
         tree_widget.itemChanged.connect(self.edited_cell_tree)
+        if cfg.simplified:
+            tree_widget.itemSelectionChanged.connect(select_class_from_tree)
         # connect to signature list double click
         tree_widget.itemDoubleClicked.connect(self.signature_tree_double_click)
         #  context menu
@@ -2476,6 +2480,50 @@ def right_click_manual(point):
     return None
 
 
+# Create button: available only when the class does not exist yet; the
+# classes are unique (by number and by name)
+def update_create_button(*_args):
+    try:
+        ui = cfg.dock_class_simpl_dlg.ui
+        name = str(ui.ROI_Macroclass_line.text()).strip()
+        class_id = int(ui.ROI_Macroclass_ID_spin.value())
+        enabled = bool(name)
+        tip = 'Create the class (number and name) that receives the ROIs'
+        catalog = None
+        if cfg.scp_training is not None:
+            catalog = cfg.scp_training.signature_catalog
+        if catalog is not None and catalog.macroclasses:
+            if class_id in catalog.macroclasses:
+                enabled = False
+                tip = ('The class %s already exists: change the number to '
+                       'create another class' % class_id)
+            elif name.casefold() in [
+                    str(n).casefold() for n in catalog.macroclasses.values()]:
+                enabled = False
+                tip = 'This class name is already used: choose another name'
+        ui.button_Save_ROI.setEnabled(enabled)
+        ui.button_Save_ROI.setToolTip(tip)
+    except Exception as err:
+        cfg.logger.log.error(str(err))
+
+
+# a class or a ROI selected in the list becomes the class of the new ROIs
+def select_class_from_tree():
+    try:
+        tree = cfg.dock_class_simpl_dlg.ui.signature_list_treeWidget
+        item = tree.currentItem()
+        if item is None or not item.isSelected():
+            return
+        class_id = int(item.text(0))
+        spin = cfg.dock_class_simpl_dlg.ui.ROI_Macroclass_ID_spin
+        if spin.value() != class_id:
+            spin.setValue(class_id)
+        else:
+            update_create_button()
+    except Exception as err:
+        cfg.logger.log.error(str(err))
+
+
 # message of the ROI tools
 def _roi_message(text, level=None):
     cfg.iface.messageBar().pushMessage(
@@ -2500,9 +2548,20 @@ def create_class():
     if not name:
         _roi_message('Enter a name for the class.', Qgis.MessageLevel.Warning)
         return False
+    catalog = cfg.scp_training.signature_catalog
+    if class_id in catalog.macroclasses:
+        _roi_message('The class %s already exists: each class is unique.'
+                     % class_id, Qgis.MessageLevel.Warning)
+        update_create_button()
+        return False
+    if name.casefold() in [
+            str(n).casefold() for n in catalog.macroclasses.values()]:
+        _roi_message('A class named "%s" already exists: each class is '
+                     'unique.' % name, Qgis.MessageLevel.Warning)
+        update_create_button()
+        return False
     cfg.project_registry[cfg.reg_roi_macroclass_id] = class_id
     cfg.project_registry[cfg.reg_roi_macroclass_name] = name
-    catalog = cfg.scp_training.signature_catalog
     catalog.macroclasses[class_id] = name
     if class_id not in catalog.macroclasses_color_string:
         catalog.macroclasses_color_string[class_id] = (

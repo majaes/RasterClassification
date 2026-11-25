@@ -25,7 +25,8 @@ from qgis.PyQt.QtCore import (Qt, QFileInfo, QSettings, qVersion, QCoreApplicati
                           QTranslator)
 from qgis.PyQt.QtWidgets import (
     QDialog, QDockWidget, QTabWidget, QWidget, QVBoxLayout, QHBoxLayout,
-    QGridLayout, QLabel, QPushButton, QSpacerItem, QSizePolicy
+    QGridLayout, QLabel, QPushButton, QSpacerItem, QSizePolicy,
+    QGroupBox
 )
 # noinspection PyUnresolvedReferences
 from qgis.core import QgsApplication
@@ -275,6 +276,72 @@ class DockClassSimplifiedDialog(QDockWidget):
         old.addLayout(root, 1, 0, 1, 3)
         ui.bandset_root_layout = root
 
+    def _rebuild_roi_layout(self):
+        """ ROI tab in the order of the work: training file, class, drawing
+        tools, then the list of the classes and ROIs (the largest part). """
+        ui = self.ui
+        ui.gridLayout_12.removeItem(ui.gridLayout_13)
+        for layout, widgets in (
+                (ui.gridLayout_4, (
+                    ui.trainingFile_toolButton, ui.button_new_input,
+                    ui.import_library_toolButton,
+                    ui.export_signature_list_toolButton,
+                    ui.delete_Signature_Button, ui.polygonROI_Button,
+                    ui.pointerButton, ui.signature_spectral_plot_toolButton,
+                    ui.delete_class_Button)),
+                (ui.gridLayout_27, (
+                    ui.undo_save_Button, ui.redo_save_Button, ui.label_44,
+                    ui.ROI_Macroclass_ID_spin, ui.label_45,
+                    ui.ROI_Macroclass_line, ui.button_Save_ROI)),
+                (ui.gridLayout_10, (
+                    ui.trainingFile_lineEdit, ui.button_reset_input))):
+            for widget in widgets:
+                layout.removeWidget(widget)
+        ui.gridLayout_11.removeItem(ui.gridLayout_10)
+        frame = ui.frame_2
+        root = QVBoxLayout()
+        root.setSpacing(6)
+        # 1. training file
+        box_file = QGroupBox('Training file', frame)
+        grid_file = QGridLayout(box_file)
+        for column, widget in enumerate((
+                ui.button_new_input, ui.trainingFile_toolButton,
+                ui.import_library_toolButton,
+                ui.export_signature_list_toolButton)):
+            grid_file.addWidget(widget, 0, column)
+            grid_file.setColumnStretch(column, 1)
+        grid_file.addWidget(ui.trainingFile_lineEdit, 1, 0, 1, 3)
+        grid_file.addWidget(ui.button_reset_input, 1, 3)
+        root.addWidget(box_file)
+        # 2. class: number, name, create, delete
+        box_class = QGroupBox('Class', frame)
+        row_class = QHBoxLayout(box_class)
+        row_class.addWidget(ui.label_44)
+        row_class.addWidget(ui.ROI_Macroclass_ID_spin)
+        row_class.addWidget(ui.label_45)
+        row_class.addWidget(ui.ROI_Macroclass_line, 1)
+        row_class.addWidget(ui.button_Save_ROI)
+        row_class.addWidget(ui.delete_class_Button)
+        root.addWidget(box_class)
+        # 3. ROI: drawing tools, undo and redo, delete, spectral plot
+        box_roi = QGroupBox('ROI', frame)
+        grid_roi = QGridLayout(box_roi)
+        grid_roi.addWidget(ui.polygonROI_Button, 0, 0)
+        grid_roi.addWidget(ui.pointerButton, 0, 1)
+        grid_roi.addWidget(ui.undo_save_Button, 0, 2)
+        grid_roi.addWidget(ui.redo_save_Button, 0, 3)
+        grid_roi.addWidget(ui.delete_Signature_Button, 1, 0, 1, 2)
+        grid_roi.addWidget(ui.signature_spectral_plot_toolButton, 1, 2, 1, 2)
+        for column in range(4):
+            grid_roi.setColumnStretch(column, 1)
+        root.addWidget(box_roi)
+        # 4. the list takes the free space
+        ui.sig_widget.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        root.addWidget(ui.sig_widget, 1)
+        ui.gridLayout_12.addLayout(root, 1, 0, 1, 1)
+        ui.gridLayout_12.setRowStretch(1, 1)
+
     def _build_tabs(self):
         """ Two tabs: the band set (color composition) and the
         classification workflow (ROI & signatures, then classification). """
@@ -327,6 +394,7 @@ class DockClassSimplifiedDialog(QDockWidget):
             grid.addItem(QSpacerItem(
                 20, 40, QSizePolicy.Policy.Minimum,
                 QSizePolicy.Policy.Expanding), 5, 0, 1, 1)
+            self._rebuild_roi_layout()
             # the Preview button switches the preview on and off
             ui.previewButton.setCheckable(True)
             ui.previewButton.setToolTip(
